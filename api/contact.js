@@ -22,7 +22,7 @@ export default async function handler(req, res) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
     const { error } = await resend.emails.send({
-      from:    process.env.MAIL_FROM || 'REISTI <noreply@reisti.org>',
+      from:    process.env.MAIL_FROM || 'noreply@reisti.org',
       to:      process.env.MAIL_TO   || 'chenytbiz@reisti.org',
       replyTo: email,
       subject: `【お問い合わせ】${name}（${company}）`,
