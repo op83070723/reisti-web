@@ -81,6 +81,26 @@
         </table>
       </div>
     </div>
+
+    <!-- Related docs -->
+    <div v-if="fam.docs?.length" class="mt-10">
+      <h2 class="mb-3 text-lg font-bold text-zinc-900">{{ lang === 'ja' ? '関連資料' : 'Documents' }}</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a
+          v-for="doc in fam.docs" :key="doc.file"
+          :href="doc.file"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400 hover:bg-zinc-50">
+          <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-lg">📄</span>
+          <div>
+            <p class="font-semibold text-zinc-700">{{ tField(doc.label) }}</p>
+            <p class="text-xs text-zinc-400">PDF</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
   </div>
 </template>
 

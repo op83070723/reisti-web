@@ -1,15 +1,11 @@
 <template>
   <header class="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/95 backdrop-blur-sm">
-    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+    <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
 
       <!-- Logo -->
-      <RouterLink to="/" class="flex items-center gap-1.5 shrink-0">
-        <div class="h-10 w-10 overflow-hidden flex items-center justify-center shrink-0">
-          <img src="/logo.png" class="w-[180%] h-auto" alt="" />
-        </div>
-        <div class="h-10 overflow-hidden flex items-center shrink-0 w-[110px]">
-          <img src="/logo-text.png" class="w-full h-auto" alt="REISTI" style="margin-left: -26px" />
-        </div>
+      <RouterLink to="/" class="flex items-center gap-1 shrink-0">
+        <img src="/logo.png" class="h-[42px] w-auto" alt="" />
+        <img src="/logo-text.png" class="h-[60px] w-auto -ml-7 translate-y-[2.5px]" alt="REISTI" />
       </RouterLink>
 
       <!-- Desktop nav -->

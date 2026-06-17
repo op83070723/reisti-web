@@ -155,6 +155,9 @@ Compatible tools: Electric drills / Drill drivers (rotation mode)`,
         specs: [],
       },
     ],
+    docs: [
+      { label: { ja: '取扱説明書', en: 'Instruction Manual' }, file: '/pdf/REISTI_ハイスホールソー_取扱説明書.pdf' },
+    ],
   },
   {
     category: 'hole-saw',
@@ -181,6 +184,9 @@ Compatible tools: Electric drills / Hammer drills (rotation mode)`,
         popularSizes: ['32', '45', '65'],
         specs: [],
       },
+    ],
+    docs: [
+      { label: { ja: '取扱説明書', en: 'Instruction Manual' }, file: '/pdf/REISTI_超硬ホールソー_取扱説明書.pdf' },
     ],
   },
 ]
