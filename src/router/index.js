@@ -6,16 +6,23 @@ import AboutView    from '../views/AboutView.vue'
 import OemView      from '../views/OemView.vue'
 import ContactView  from '../views/ContactView.vue'
 
-export default createRouter({
+const DEFAULT_DESC = 'REISTI 公式サイト。台湾で約30年の実績を持つ工具ブランド。充電マルチドリルビット・コバルトドリル・ハイス／超硬ホールソーを自社製造。OEMも対応。'
+
+const router = createRouter({
   history: createWebHistory(),
   scrollBehavior: () => ({ top: 0 }),
   routes: [
-    { path: '/',                         name: 'home',     component: HomeView     },
-    { path: '/products',                 name: 'products', component: ProductsView },
+    { path: '/',                         name: 'home',     component: HomeView,
+      meta: { title: 'REISTI｜台湾発のプロ向けドリルビット・ホールソー', desc: DEFAULT_DESC } },
+    { path: '/products',                 name: 'products', component: ProductsView,
+      meta: { title: '製品一覧｜REISTI', desc: 'REISTI の製品一覧。ドリルビット・ホールソーなどプロ仕様の切削工具をご紹介します。' } },
     { path: '/products/:category/:slug', name: 'family',   component: FamilyDetail },
-    { path: '/about',                    name: 'about',    component: AboutView    },
-    { path: '/oem',                      name: 'oem',      component: OemView      },
-    { path: '/contact',                  name: 'contact',  component: ContactView  },
+    { path: '/about',                    name: 'about',    component: AboutView,
+      meta: { title: '会社概要｜REISTI', desc: '瑞士釘（REISTI）の会社概要。台湾で約30年、金物・工具卸売業界を牽引してきた工具ブランドです。' } },
+    { path: '/oem',                      name: 'oem',      component: OemView,
+      meta: { title: 'OEM・PB供給｜REISTI', desc: 'REISTI の OEM・プライベートブランド供給。台湾の製造ネットワークで高品質な工具をお届けします。' } },
+    { path: '/contact',                  name: 'contact',  component: ContactView,
+      meta: { title: 'お問い合わせ｜REISTI', desc: 'REISTI へのお問い合わせ・見積依頼はこちら。' } },
     // Legacy redirects
     { path: '/products/concrete-drill/:slug', redirect: '/products' },
     { path: '/products/step-drill/:slug',     redirect: '/products' },
@@ -24,3 +31,25 @@ export default createRouter({
     { path: '/products/hex-shank',            redirect: '/products' },
   ],
 })
+
+// Set <title> and <meta description> per route.
+// FamilyDetail sets its own (product-dependent) title inside the component.
+export function setMeta(title, desc) {
+  if (title) document.title = title
+  if (desc) {
+    let el = document.querySelector('meta[name="description"]')
+    if (!el) {
+      el = document.createElement('meta')
+      el.setAttribute('name', 'description')
+      document.head.appendChild(el)
+    }
+    el.setAttribute('content', desc)
+  }
+}
+
+router.afterEach((to) => {
+  if (to.name === 'family') return // handled in FamilyDetail
+  setMeta(to.meta?.title || 'REISTI｜公式サイト', to.meta?.desc || DEFAULT_DESC)
+})
+
+export default router

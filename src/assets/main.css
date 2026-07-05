@@ -2,13 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-EL.otf') format('opentype'); font-weight: 200; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-L.otf')  format('opentype'); font-weight: 300; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-N.otf')  format('opentype'); font-weight: 350; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-R.otf')  format('opentype'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-M.otf')  format('opentype'); font-weight: 500; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-B.otf')  format('opentype'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/GenYoGothic2JP-otf/GenYoGothic2JP-H.otf')  format('opentype'); font-weight: 900; font-display: swap; }
+/* Subset woff2 (only glyphs used on the site) — regenerate via scripts/subset-fonts.sh after editing copy */
+@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-900.woff2') format('woff2'); font-weight: 900; font-display: swap; }
 
 @layer base {
   body { @apply antialiased bg-white text-zinc-900; font-family: 'GenYoGothic2JP', system-ui, sans-serif; }

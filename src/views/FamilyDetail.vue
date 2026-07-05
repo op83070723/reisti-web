@@ -122,8 +122,14 @@ function load() {
   const match  = findFamily(route.params.category, route.params.slug)
   fam.value    = match?.family  ?? null
   variant.value = match?.variant ?? null
+  if (fam.value) {
+    document.title = `${tField(fam.value.name)}｜REISTI`
+    const desc = tField(fam.value.intro)
+    if (desc) document.querySelector('meta[name="description"]')?.setAttribute('content', desc)
+  }
 }
 watch(() => route.fullPath, load, { immediate: true })
+watch(lang, load) // re-apply localized title when language switches
 
 const goVariant = (slug) => router.replace({ name: 'family', params: { category: fam.value.category, slug } })
 
