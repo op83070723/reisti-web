@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.reisti.org/sitemap.xml
+Sitemap: https://www.reisti.com/sitemap.xml
