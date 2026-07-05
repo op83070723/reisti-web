@@ -15,7 +15,7 @@ export default {
     btn_contact: 'お問い合わせ',
     trust_title: 'REISTIが選ばれる理由',
     trust: [
-      { n: '30+', label: '年の業歴', sub: '台湾発の工具ブランド' },
+      { n: '30', label: '年の業歴', sub: '台湾発の工具ブランド' },
       { n: '4',   label: 'REISTIブランド製品', sub: '自社工場製造・OEM対応' },
       { n: 'OEM', label: '対応', sub: 'カスタム仕様・プライベートブランド' },
       { n: 'JIS', label: '品質基準', sub: 'ロット管理・精度測定・耐久テスト' },

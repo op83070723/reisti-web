@@ -15,7 +15,7 @@ export default {
     btn_contact: 'Contact Us',
     trust_title: 'Why REISTI',
     trust: [
-      { n: '30+', label: 'Years in the Industry', sub: 'A professional tool brand from Taiwan' },
+      { n: '30', label: 'Years in the Industry', sub: 'A professional tool brand from Taiwan' },
       { n: '4',   label: 'REISTI Brand Products', sub: 'Own factory · OEM available' },
       { n: 'OEM', label: 'Capable', sub: 'Custom specs & private label' },
       { n: 'JIS', label: 'Quality Standard', sub: 'Lot control & precision testing' },
