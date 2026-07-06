@@ -20,7 +20,7 @@
           v-for="(p, i) in items"
           :key="i"
           :to="p.to || '#'"
-          class="card snap-start shrink-0">
+          class="card snap-center sm:snap-start shrink-0">
           <div class="relative h-full overflow-hidden">
             <div class="copy px-4 pt-4">
               <p v-if="p.badge" class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">{{ p.badge }}</p>
