@@ -71,8 +71,9 @@ function sync() {
   const el = track.value
   if (!el) return
   const max = el.scrollWidth - el.clientWidth
-  canL.value = el.scrollLeft > 2
-  canR.value = el.scrollLeft < max - 2
+  // 8px 容差：iOS smooth scroll 常停在離邊界 1〜2px 處
+  canL.value = el.scrollLeft > 8
+  canR.value = el.scrollLeft < max - 8
 }
 
 function onWheel(e) {
@@ -85,7 +86,11 @@ function scroll(dir) {
   if (!el) return
   const card = el.querySelector('.card')
   const gap  = parseFloat(getComputedStyle(el).columnGap || 16)
-  el.scrollBy({ left: (card ? card.getBoundingClientRect().width + gap : el.clientWidth * 0.8) * props.step * dir, behavior: 'smooth' })
+  const step = (card ? card.getBoundingClientRect().width + gap : el.clientWidth * 0.8) * props.step * dir
+  // 目標位置手動夾在 [0, max]：iOS Safari 的 scrollBy+snap 不會可靠夾邊界，超出會停在空白區
+  const max = el.scrollWidth - el.clientWidth
+  const target = Math.max(0, Math.min(max, el.scrollLeft + step))
+  el.scrollTo({ left: target, behavior: 'smooth' })
   requestAnimationFrame(() => setTimeout(sync, 120))
 }
 
@@ -151,11 +156,10 @@ watch(() => props.items, () => requestAnimationFrame(sync))
 .track {
   overscroll-behavior-inline: contain;
   scrollbar-width: none;
-  /* 上下留空間給 hover 浮起與陰影，負 margin 抵銷視覺位移 */
-  padding: 1rem 0.25rem;
-  margin: -1rem -0.25rem;
-  /* 吸附點把內距算進去：第一張卡的 snap 位置回到 scrollLeft=0（否則載入時停在 4px，左側霧氣被誤觸發） */
-  scroll-padding-inline: 0.25rem;
+  /* 上下留空間給 hover 浮起與陰影，負 margin 抵銷視覺位移。
+     水平方向不加 padding：會偏移 snap 吸附點（桌機霧氣誤觸發、iOS 越界怪行為的來源） */
+  padding: 1rem 0;
+  margin: -1rem 0;
 }
 /* 手機：兩端加 (滑軌寬 − 卡寬)/2 的緩衝，讓第一張/最後一張也能置中吸附 */
 @media (max-width: 639px) {
