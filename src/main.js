@@ -1,8 +1,10 @@
-import { createApp } from 'vue'
+import { ViteSSG } from 'vite-ssg'
 import App from './App.vue'
-import router from './router/index.js'
+import { routes } from './router/index.js'
 import './assets/main.css'
-import { lang } from './i18n/index.js'
 
-document.documentElement.lang = lang.value
-createApp(App).use(router).mount('#app')
+// SSG エントリ：ビルド時は各ルートを静的 HTML に書き出し、ブラウザではそのままハイドレートされる
+export const createApp = ViteSSG(App, {
+  routes,
+  scrollBehavior: () => ({ top: 0 }),
+})

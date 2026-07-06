@@ -93,7 +93,8 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-zinc-100">
-            <tr v-for="row in shownRows" :key="row.code || row.size" class="hover:bg-zinc-50">
+            <!-- v-show（CSS 隠し）を使う：収合中も全行が静的 HTML に含まれ、品番・JAN が検索エンジンに読まれる -->
+            <tr v-for="(row, i) in rows" :key="row.code || row.size" v-show="expanded || i < COLLAPSE_AT" class="hover:bg-zinc-50">
               <td v-for="c in cols" :key="c" class="px-4 py-3 whitespace-nowrap"
                   :class="c === 'code' || c === 'jan' ? 'font-mono text-xs text-zinc-500' : c === 'size' ? 'font-medium' : 'text-zinc-600'">
                 <template v-if="c === 'size'">
@@ -150,15 +151,15 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import { useI18n, tField } from '../i18n/index.js'
 import { findFamily } from '../data/products.js'
 import ProductGallery    from '../components/ProductGallery.vue'
 import SuitabilityMatrix from '../components/SuitabilityMatrix.vue'
 
 const COLLAPSE_AT = 12
-const JSONLD_ID = 'product-jsonld'
 
 const { t, lang } = useI18n()
 const route  = useRoute()
@@ -167,41 +168,38 @@ const fam    = ref(null)
 const variant = ref(null)
 const expanded = ref(false)
 
-function updateMeta() {
-  if (!fam.value) return
-  document.title = `${tField(fam.value.name)}｜REISTI`
-  const desc = tField(fam.value.intro)
-  if (desc) document.querySelector('meta[name="description"]')?.setAttribute('content', desc)
-
-  // Product structured data (JSON-LD)
-  document.getElementById(JSONLD_ID)?.remove()
-  const s = document.createElement('script')
-  s.type = 'application/ld+json'
-  s.id = JSONLD_ID
-  s.textContent = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name: fam.value.name.ja,
-    alternateName: fam.value.name.en,
-    brand: { '@type': 'Brand', name: 'REISTI' },
-    manufacturer: { '@type': 'Organization', name: '瑞士釘株式会社', '@id': 'https://www.reisti.com/#org' },
-    image: `https://www.reisti.com${variant.value?.hero || ''}`,
-    description: fam.value.intro.ja,
-  })
-  document.head.appendChild(s)
-}
-
 function load() {
   const match  = findFamily(route.params.category, route.params.slug)
   fam.value    = match?.family  ?? null
   variant.value = match?.variant ?? null
   expanded.value = false
-  updateMeta()
 }
 watch(() => route.fullPath, load, { immediate: true })
-watch(lang, updateMeta) // re-apply localized title when language switches
 
-onBeforeUnmount(() => document.getElementById(JSONLD_ID)?.remove())
+/* 製品ごとの title / description / Product 構造化データ。
+   useHead は SSG 時に静的 HTML へ焼き込み、言語切替にもリアクティブに追従する */
+useHead({
+  title: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト'),
+  meta: [
+    { name: 'description', content: computed(() => tField(fam.value?.intro) || '') },
+  ],
+  script: [
+    {
+      id: 'product-jsonld',
+      type: 'application/ld+json',
+      innerHTML: computed(() => fam.value ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: fam.value.name.ja,
+        alternateName: fam.value.name.en,
+        brand: { '@type': 'Brand', name: 'REISTI' },
+        manufacturer: { '@type': 'Organization', name: '瑞士釘株式会社', '@id': 'https://www.reisti.com/#org' },
+        image: `https://www.reisti.com${variant.value?.hero || ''}`,
+        description: fam.value.intro.ja,
+      }) : ''),
+    },
+  ],
+})
 
 const goVariant = (slug) => router.replace({ name: 'family', params: { category: fam.value.category, slug } })
 
@@ -223,7 +221,4 @@ const rows = computed(() => {
   const pop = new Set(variant.value?.popularSizes || [])
   return (variant.value?.specs || []).map(r => ({ ...r, popular: pop.has(String(r.size)) }))
 })
-const shownRows = computed(() =>
-  expanded.value || rows.value.length <= COLLAPSE_AT ? rows.value : rows.value.slice(0, COLLAPSE_AT)
-)
 </script>

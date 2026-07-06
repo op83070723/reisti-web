@@ -3,12 +3,19 @@ import ja from './ja.js'
 import en from './en.js'
 
 const messages = { ja, en }
-export const lang = ref(localStorage.getItem('lang') || 'ja')
+
+// SSG 建置時（Node 環境）固定為 ja；瀏覽器端由 App.vue onMounted 呼叫 initLang() 讀取使用者偏好
+export const lang = ref('ja')
+
+export function initLang() {
+  if (typeof localStorage === 'undefined') return
+  const saved = localStorage.getItem('lang')
+  if (saved && saved !== lang.value) lang.value = saved
+}
 
 export function setLang(l) {
   lang.value = l
-  localStorage.setItem('lang', l)
-  document.documentElement.lang = l
+  if (typeof localStorage !== 'undefined') localStorage.setItem('lang', l)
 }
 
 export function useI18n() {

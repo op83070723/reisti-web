@@ -163,7 +163,7 @@
 </template>
 
 <script setup>
-import { onMounted, onBeforeUnmount } from 'vue'
+import { useHead } from '@unhead/vue'
 import { useI18n, tField } from '../i18n/index.js'
 import { FAMILIES, OEM_FAMILIES } from '../data/products.js'
 import ja from '../i18n/ja.js'
@@ -173,22 +173,22 @@ const { t, lang } = useI18n()
 const ownProducts     = FAMILIES
 const partnerProducts = OEM_FAMILIES
 
-/* FAQ structured data (always Japanese — matches the indexed audience) */
-const JSONLD_ID = 'oem-faq-jsonld'
-onMounted(() => {
-  const s = document.createElement('script')
-  s.type = 'application/ld+json'
-  s.id = JSONLD_ID
-  s.textContent = JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: ja.oem.faqs.map(f => ({
-      '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
-    })),
-  })
-  document.head.appendChild(s)
+/* FAQ structured data（常に日本語＝インデックス対象と一致）。SSG 時に静的 HTML へ焼き込み */
+useHead({
+  script: [
+    {
+      id: 'oem-faq-jsonld',
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: ja.oem.faqs.map(f => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }),
+    },
+  ],
 })
-onBeforeUnmount(() => document.getElementById(JSONLD_ID)?.remove())
 </script>
