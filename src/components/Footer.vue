@@ -11,7 +11,8 @@
             <img src="/logo.png" class="h-8 w-auto brightness-0 invert" alt="REISTI" />
             <span class="text-sm font-semibold text-white">REISTI</span>
           </div>
-          <p class="mt-3 text-xs leading-relaxed text-zinc-400">{{ t('footer.tagline') }}</p>
+          <p class="mt-3 text-sm font-bold tracking-wide text-pink-400">No Dull Moments.</p>
+          <p class="mt-1.5 text-xs leading-relaxed text-zinc-400">{{ t('footer.tagline') }}</p>
           <p class="mt-3 text-xs text-zinc-500">{{ t('footer.address') }}</p>
           <a href="tel:05088948687" class="mt-2 block text-xs text-zinc-400 hover:text-white transition-colors">
             TEL: 050-8894-8687

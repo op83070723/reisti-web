@@ -5,8 +5,8 @@
     </div>
 
     <div class="relative" :style="sizeVars">
-      <div class="fade fade-l" aria-hidden="true" />
-      <div class="fade fade-r" aria-hidden="true" />
+      <div class="fade fade-l" :class="{ 'opacity-0': !canL }" aria-hidden="true" />
+      <div class="fade fade-r" :class="{ 'opacity-0': !canR }" aria-hidden="true" />
 
       <div
         ref="track"
@@ -141,6 +141,7 @@ watch(() => props.items, () => requestAnimationFrame(sync))
   width: 40px;
   z-index: 4;
   pointer-events: none;
+  transition: opacity .2s ease;
 }
 .fade-l { left:  0; background: linear-gradient(90deg,  #fafafa, transparent); }
 .fade-r { right: 0; background: linear-gradient(-90deg, #fafafa, transparent); }

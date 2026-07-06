@@ -8,9 +8,9 @@ export default {
     quote: 'お見積もり',
   },
   home: {
-    hero_lead: '日本市場で選ばれる',
+    hero_lead: 'No Dull Moments.',
     hero_title: 'プロ仕様ドリルビット・REISTI',
-    hero_sub: '台湾に30年の業歴を持つ工具ブランド。充電マルチドリルビット・コバルトドリル・ハイス／超硬ホールソーを自社製造。OEM代工も承ります。',
+    hero_sub: '日本市場で選ばれる、台湾30年の業歴を持つ工具ブランド。充電マルチドリルビット・コバルトドリル・ハイス／超硬ホールソーを自社製造。OEM代工も承ります。',
     btn_products: '製品を見る',
     btn_contact: 'お問い合わせ',
     trust_title: 'REISTIが選ばれる理由',

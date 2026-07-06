@@ -8,7 +8,7 @@ export default {
     quote: 'Get a Quote',
   },
   home: {
-    hero_lead: 'Trusted by Japanese Professionals',
+    hero_lead: 'No Dull Moments.',
     hero_title: 'Pro-Grade Drill Bits · REISTI',
     hero_sub: 'A professional tool brand rooted in 30 years of Taiwan\'s hardware industry. Cordless multi drill bits, cobalt drills, and HSS/carbide hole saws — manufactured in-house. OEM available.',
     btn_products: 'View Products',
