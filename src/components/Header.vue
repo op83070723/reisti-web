@@ -96,7 +96,7 @@
           <!-- Products accordion -->
           <div>
             <button
-              class="m-link w-full flex items-center justify-between"
+              class="m-link w-full !flex items-center justify-between text-left"
               @click="mProd = !mProd">
               <span>{{ t('nav.products') }}</span>
               <span class="text-zinc-400">{{ mProd ? '−' : '+' }}</span>
