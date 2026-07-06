@@ -105,7 +105,7 @@ const FEATURED_DATA = [
   {
     badge: 'REISTI',
     title: { ja: '充電マルチドリルビット', en: 'Cordless Multi Drill Bit' },
-    subtitle: { ja: '充電工具に最適化した万能ビット。', en: 'One bit for wood, plastic & thin metal.' },
+    subtitle: { ja: '超硬チップで薄鉄板からタイルまで。', en: 'Carbide-tipped bit for steel, concrete & tile.' },
     img: '/products/hex-635.png',
     to: '/products/drill-bit/multi',
     artW: 280, artX: -50, artY: 40, rotate: 0,
@@ -129,7 +129,7 @@ const FEATURED_DATA = [
   {
     badge: 'REISTI',
     title: { ja: '超硬ホールソー', en: 'Carbide-Tipped Hole Saw' },
-    subtitle: { ja: 'ALC・窯業系サイディングに超硬チップ。', en: 'Carbide tips for ALC and fiber-cement siding.' },
+    subtitle: { ja: 'ステンレス板・FRPも切れるトリプル刃。', en: 'Triple-blade carbide for stainless, steel & FRP.' },
     img: '/products/holesaw-tct.png',
     to: '/products/hole-saw/tct',
     artW: 255, artX: -50, artY: 50, rotate: 0,

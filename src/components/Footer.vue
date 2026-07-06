@@ -13,7 +13,10 @@
           </div>
           <p class="mt-3 text-xs leading-relaxed text-zinc-400">{{ t('footer.tagline') }}</p>
           <p class="mt-3 text-xs text-zinc-500">{{ t('footer.address') }}</p>
-          <a href="mailto:chenytbiz@reisti.org" class="mt-2 block text-xs text-zinc-400 hover:text-white transition-colors">
+          <a href="tel:05088948687" class="mt-2 block text-xs text-zinc-400 hover:text-white transition-colors">
+            TEL: 050-8894-8687
+          </a>
+          <a href="mailto:chenytbiz@reisti.org" class="mt-1 block text-xs text-zinc-400 hover:text-white transition-colors">
             chenytbiz@reisti.org
           </a>
         </div>
@@ -42,7 +45,8 @@
           <h3 class="footer-title">{{ t('footer.col_support') }}</h3>
           <ul class="mt-3 space-y-2 text-sm">
             <li><RouterLink class="footer-link" to="/contact">{{ t('footer.link_contact') }}</RouterLink></li>
-            <li><span class="text-zinc-500 text-sm">{{ t('footer.link_catalog') }}</span></li>
+            <li><a class="footer-link" :href="CATALOG_PDF" target="_blank" rel="noopener">{{ t('footer.link_catalog') }}</a></li>
+            <li><a class="footer-link" href="https://lin.ee/yLb33tW" target="_blank" rel="noopener">LINE</a></li>
           </ul>
         </div>
       </div>
@@ -60,6 +64,7 @@
 
 <script setup>
 import { useI18n } from '../i18n/index.js'
+import { CATALOG_PDF } from '../data/products.js'
 const { t } = useI18n()
 </script>
 

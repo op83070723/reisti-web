@@ -71,7 +71,14 @@
     <!-- Alternative contact methods -->
     <div class="mt-12 border-t border-zinc-100 pt-10">
       <p class="text-sm font-semibold text-zinc-400 uppercase tracking-widest">{{ t('contact.also_label') }}</p>
-      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <div class="mt-4 grid gap-4 sm:grid-cols-3">
+        <a href="tel:05088948687" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-lg">☎</span>
+          <div>
+            <p class="font-semibold text-zinc-700">{{ t('contact.phone_label') }}</p>
+            <p class="text-zinc-400 text-xs">050-8894-8687</p>
+          </div>
+        </a>
         <a href="mailto:chenytbiz@reisti.org" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-lg">✉</span>
           <div>
@@ -79,13 +86,14 @@
             <p class="text-zinc-400 text-xs">chenytbiz@reisti.org</p>
           </div>
         </a>
-        <div class="flex items-center gap-3 rounded-xl border border-zinc-100 bg-zinc-50 px-4 py-4 text-sm">
-          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-200 text-lg">💬</span>
-          <div>
-            <p class="font-semibold text-zinc-500">{{ t('contact.line_label') }}</p>
-            <p class="text-zinc-400 text-xs">{{ t('contact.line_coming') }}</p>
+        <a href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#06C755] text-lg text-white font-bold">L</span>
+          <div class="min-w-0 flex-1">
+            <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
+            <p class="text-zinc-400 text-xs">@503wuawu ・ {{ t('contact.line_add') }}</p>
           </div>
-        </div>
+          <img src="/line-qr.png" :alt="t('contact.line_add')" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
+        </a>
       </div>
     </div>
   </div>

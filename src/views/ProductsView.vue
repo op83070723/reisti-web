@@ -8,6 +8,24 @@
       <p class="mt-2 text-zinc-500">{{ t('products.sub') }}</p>
     </header>
 
+    <!-- Catalog download -->
+    <a
+      :href="CATALOG_PDF" target="_blank" rel="noopener"
+      class="group mb-10 flex flex-wrap items-center gap-4 rounded-2xl border border-pink-200 bg-pink-50/60 px-6 py-5 transition-colors hover:border-pink-400">
+      <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pink-500 text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M3 17v2a2 2 0 002 2h14a2 2 0 002-2v-2" />
+        </svg>
+      </span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-bold text-zinc-900">{{ t('products.catalog_title') }}</span>
+        <span class="mt-0.5 block text-xs text-zinc-500">{{ t('products.catalog_sub') }}</span>
+      </span>
+      <span class="shrink-0 text-sm font-semibold text-pink-600 group-hover:text-pink-700 transition-colors">
+        {{ t('products.catalog_btn') }} →
+      </span>
+    </a>
+
     <!-- Featured -->
     <ProductScroller class="mb-14" :heading="t('products.featured')" :items="featured" />
 
@@ -38,10 +56,10 @@
         <div
           v-for="p in oemProducts" :key="p.family"
           class="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
-          <p class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">OEM Only</p>
+          <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 text-base font-extrabold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-1 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>
@@ -54,7 +72,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n, tField } from '../i18n/index.js'
-import { OEM_FAMILIES } from '../data/products.js'
+import { OEM_FAMILIES, CATALOG_PDF } from '../data/products.js'
 import ProductScroller from '../components/ProductScroller.vue'
 
 const { t, lang } = useI18n()
@@ -65,7 +83,7 @@ const oemProducts = OEM_FAMILIES
 const DRILL_DATA = [
   {
     title: { ja: '充電マルチドリルビット', en: 'Cordless Multi Drill Bit' },
-    subtitle: { ja: '充電工具に最適化した万能ビット。', en: 'One bit for wood, plastic & thin metal.' },
+    subtitle: { ja: '超硬チップで薄鉄板からタイルまで。', en: 'Carbide-tipped bit for steel, concrete & tile.' },
     img: '/products/hex-635.png',
     to: '/products/drill-bit/multi',
     artW: 280, artX: -50, artY: 40, rotate: 0,
@@ -89,7 +107,7 @@ const HOLESAW_DATA = [
   },
   {
     title: { ja: '超硬ホールソー', en: 'Carbide-Tipped Hole Saw' },
-    subtitle: { ja: 'ALC・窯業系サイディングに超硬チップ。', en: 'Carbide tips for ALC and fiber-cement siding.' },
+    subtitle: { ja: 'ステンレス板・FRPも切れるトリプル刃。', en: 'Triple-blade carbide for stainless, steel & FRP.' },
     img: '/products/holesaw-tct.png',
     to: '/products/hole-saw/tct',
     artW: 255, artX: -50, artY: 50, rotate: 0,

@@ -34,9 +34,38 @@
         <div class="rounded-xl border border-zinc-100 bg-zinc-50 p-5 text-sm leading-7 text-zinc-700 whitespace-pre-line">
           {{ tField(variant.detail) || tField(fam.intro) }}
         </div>
+
+        <!-- Features -->
+        <div v-if="variant.features?.length" class="mt-5">
+          <h2 class="mb-3 text-base font-bold text-zinc-900">{{ t('product.features_title') }}</h2>
+          <ul class="space-y-2.5">
+            <li v-for="(f, i) in variant.features" :key="i" class="flex gap-2.5 text-sm leading-relaxed text-zinc-600">
+              <svg class="mt-1 h-4 w-4 shrink-0 text-pink-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+              </svg>
+              <span>{{ tField(f) }}</span>
+            </li>
+          </ul>
+        </div>
       </div>
       <div class="md:col-span-7">
         <ProductGallery :key="variant.slug" :images="gallery" ratio="4/3" :interval="4200" />
+      </div>
+    </div>
+
+    <!-- Quick specs: materials / shank / tools -->
+    <div v-if="variant.materials || variant.shank || variant.tools" class="mt-8 grid gap-3 sm:grid-cols-3">
+      <div v-if="variant.materials" class="rounded-xl border border-zinc-200 p-5">
+        <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ t('product.materials_label') }}</p>
+        <p class="mt-2 text-sm leading-relaxed text-zinc-700">{{ tField(variant.materials) }}</p>
+      </div>
+      <div v-if="variant.shank" class="rounded-xl border border-zinc-200 p-5">
+        <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ t('product.shank_label') }}</p>
+        <p class="mt-2 text-sm leading-relaxed text-zinc-700">{{ tField(variant.shank) }}</p>
+      </div>
+      <div v-if="variant.tools" class="rounded-xl border border-zinc-200 p-5">
+        <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ t('product.tools_label') }}</p>
+        <p class="mt-2 text-sm leading-relaxed text-zinc-700">{{ tField(variant.tools) }}</p>
       </div>
     </div>
 
@@ -49,36 +78,52 @@
 
     <!-- Spec table -->
     <div class="mt-10">
-      <div class="mb-3 flex items-center gap-3">
+      <div class="mb-3 flex flex-wrap items-center gap-3">
         <h2 class="text-lg font-bold text-zinc-900">{{ t('product.size_title') }}</h2>
-        <span class="text-xs text-zinc-400">⭐ = {{ t('product.popular') }}</span>
+        <span v-if="variant.sizeNote" class="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600">
+          {{ tField(variant.sizeNote) }}
+        </span>
         <RouterLink to="/contact" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
       </div>
       <div class="overflow-x-auto rounded-xl border border-zinc-200">
         <table class="min-w-full text-sm">
           <thead class="bg-zinc-50 text-xs font-semibold uppercase tracking-wide text-zinc-500">
             <tr>
-              <th class="px-4 py-3 text-left">{{ t('product.col_diameter') }}</th>
-              <th class="px-4 py-3 text-left">{{ t('product.col_overall') }}</th>
-              <th class="px-4 py-3 text-left">{{ t('product.col_effective') }}</th>
-              <th class="px-4 py-3 text-left">{{ t('product.col_price') }}</th>
+              <th v-for="c in cols" :key="c" class="px-4 py-3 text-left whitespace-nowrap">{{ colLabels[c] }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-zinc-100">
-            <tr v-for="row in rows" :key="row.size" class="hover:bg-zinc-50">
-              <td class="px-4 py-3 font-medium">Ø{{ row.size }}mm <span v-if="row.popular">⭐</span></td>
-              <td class="px-4 py-3 text-zinc-600">{{ row.overall ?? '—' }}</td>
-              <td class="px-4 py-3 text-zinc-600">{{ row.effective ?? '—' }}</td>
-              <td class="px-4 py-3 text-zinc-600">
-                <span v-if="row.priceJPY == null" class="text-zinc-400">—</span>
-                <span v-else>¥{{ row.priceJPY.toLocaleString() }}</span>
+            <tr v-for="row in shownRows" :key="row.code || row.size" class="hover:bg-zinc-50">
+              <td v-for="c in cols" :key="c" class="px-4 py-3 whitespace-nowrap"
+                  :class="c === 'code' || c === 'jan' ? 'font-mono text-xs text-zinc-500' : c === 'size' ? 'font-medium' : 'text-zinc-600'">
+                <template v-if="c === 'size'">
+                  Ø{{ row.size }}mm
+                  <span v-if="row.popular" class="ml-1.5 inline-flex items-center rounded-full bg-pink-50 px-2 py-0.5 text-[10px] font-semibold text-pink-600 ring-1 ring-inset ring-pink-200">
+                    {{ t('product.popular') }}
+                  </span>
+                </template>
+                <template v-else-if="c === 'overall' || c === 'effective'">{{ row[c] != null ? row[c] + 'mm' : '—' }}</template>
+                <template v-else-if="c === 'shank'">{{ tField(row.shank) }}</template>
+                <template v-else-if="c === 'jan'">{{ row.jan ?? t('product.jan_pending') }}</template>
+                <template v-else>{{ row[c] ?? '—' }}</template>
               </td>
             </tr>
             <tr v-if="!rows.length">
-              <td colspan="4" class="px-4 py-6 text-center text-zinc-400">{{ t('product.pending') }}</td>
+              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-400">{{ t('product.pending') }}</td>
             </tr>
           </tbody>
         </table>
+      </div>
+      <div class="mt-3 flex flex-wrap items-center gap-4">
+        <button
+          v-if="rows.length > COLLAPSE_AT"
+          class="btn-outline text-xs"
+          @click="expanded = !expanded">
+          {{ expanded
+            ? (lang === 'ja' ? '折りたたむ' : 'Collapse')
+            : (lang === 'ja' ? `全${rows.length}サイズを表示` : `Show all ${rows.length} sizes`) }}
+        </button>
+        <p class="text-xs text-zinc-400">{{ t('product.price_note') }}</p>
       </div>
     </div>
 
@@ -105,39 +150,80 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n, tField } from '../i18n/index.js'
 import { findFamily } from '../data/products.js'
 import ProductGallery    from '../components/ProductGallery.vue'
 import SuitabilityMatrix from '../components/SuitabilityMatrix.vue'
 
+const COLLAPSE_AT = 12
+const JSONLD_ID = 'product-jsonld'
+
 const { t, lang } = useI18n()
 const route  = useRoute()
 const router = useRouter()
 const fam    = ref(null)
 const variant = ref(null)
+const expanded = ref(false)
+
+function updateMeta() {
+  if (!fam.value) return
+  document.title = `${tField(fam.value.name)}｜REISTI`
+  const desc = tField(fam.value.intro)
+  if (desc) document.querySelector('meta[name="description"]')?.setAttribute('content', desc)
+
+  // Product structured data (JSON-LD)
+  document.getElementById(JSONLD_ID)?.remove()
+  const s = document.createElement('script')
+  s.type = 'application/ld+json'
+  s.id = JSONLD_ID
+  s.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: fam.value.name.ja,
+    alternateName: fam.value.name.en,
+    brand: { '@type': 'Brand', name: 'REISTI' },
+    manufacturer: { '@type': 'Organization', name: '瑞士釘株式会社', '@id': 'https://www.reisti.com/#org' },
+    image: `https://www.reisti.com${variant.value?.hero || ''}`,
+    description: fam.value.intro.ja,
+  })
+  document.head.appendChild(s)
+}
 
 function load() {
   const match  = findFamily(route.params.category, route.params.slug)
   fam.value    = match?.family  ?? null
   variant.value = match?.variant ?? null
-  if (fam.value) {
-    document.title = `${tField(fam.value.name)}｜REISTI`
-    const desc = tField(fam.value.intro)
-    if (desc) document.querySelector('meta[name="description"]')?.setAttribute('content', desc)
-  }
+  expanded.value = false
+  updateMeta()
 }
 watch(() => route.fullPath, load, { immediate: true })
-watch(lang, load) // re-apply localized title when language switches
+watch(lang, updateMeta) // re-apply localized title when language switches
+
+onBeforeUnmount(() => document.getElementById(JSONLD_ID)?.remove())
 
 const goVariant = (slug) => router.replace({ name: 'family', params: { category: fam.value.category, slug } })
 
 const gallery = computed(() =>
   (variant.value?.gallery || []).map(src => ({ src, alt: tField(fam.value?.name) || '' }))
 )
+
+/* --- spec table --- */
+const cols = computed(() => variant.value?.specCols || ['size', 'overall', 'effective'])
+const colLabels = computed(() => ({
+  code:      t('product.col_code'),
+  size:      t('product.col_diameter'),
+  overall:   t('product.col_overall'),
+  effective: t('product.col_effective'),
+  shank:     t('product.col_shank'),
+  jan:       t('product.col_jan'),
+}))
 const rows = computed(() => {
   const pop = new Set(variant.value?.popularSizes || [])
   return (variant.value?.specs || []).map(r => ({ ...r, popular: pop.has(String(r.size)) }))
 })
+const shownRows = computed(() =>
+  expanded.value || rows.value.length <= COLLAPSE_AT ? rows.value : rows.value.slice(0, COLLAPSE_AT)
+)
 </script>

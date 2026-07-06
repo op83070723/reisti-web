@@ -68,10 +68,10 @@
         <div
           v-for="p in partnerProducts" :key="p.family"
           class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
-          <p class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">OEM Only</p>
+          <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 font-bold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors">
+          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>
@@ -83,14 +83,15 @@
   <section class="bg-zinc-50 py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10 text-center">
-        <h2 class="text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.process_title') }}</h2>
+        <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Process</p>
+        <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.process_title') }}</h2>
       </div>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="(step, i) in t('oem.steps')" :key="i"
           class="relative rounded-2xl bg-white border border-zinc-200 p-6 shadow-sm">
-          <div v-if="i < 3" class="absolute right-0 top-10 hidden h-px w-4 translate-x-full bg-zinc-200 lg:block" />
-          <p class="text-3xl font-black text-zinc-100">{{ step.n }}</p>
+          <div v-if="(i + 1) % 3 !== 0 && i < t('oem.steps').length - 1" class="absolute right-0 top-10 hidden h-px w-4 translate-x-full bg-pink-200 lg:block" />
+          <p class="text-3xl font-black text-pink-200">{{ step.n }}</p>
           <h3 class="mt-2 font-bold text-zinc-900">{{ step.title }}</h3>
           <p class="mt-1.5 text-sm text-zinc-500 leading-relaxed">{{ step.body }}</p>
         </div>
@@ -102,7 +103,10 @@
   <section class="py-16 sm:py-20">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mx-auto max-w-2xl">
-        <h2 class="mb-8 text-3xl font-extrabold text-zinc-900 sm:text-4xl text-center">{{ t('oem.specs_title') }}</h2>
+        <div class="mb-8 text-center">
+          <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Capabilities</p>
+          <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.specs_title') }}</h2>
+        </div>
         <div class="divide-y divide-zinc-100 rounded-2xl border border-zinc-200 overflow-hidden">
           <div class="grid grid-cols-2 gap-4 px-6 py-5 text-sm">
             <dt class="font-semibold text-zinc-500">{{ t('oem.spec_moq_label') }}</dt>
@@ -116,6 +120,33 @@
             <dt class="font-semibold text-zinc-500">{{ t('oem.spec_custom_label') }}</dt>
             <dd class="text-zinc-900">{{ t('oem.spec_custom') }}</dd>
           </div>
+          <div class="grid grid-cols-2 gap-4 px-6 py-5 text-sm">
+            <dt class="font-semibold text-zinc-500">{{ t('oem.spec_items_label') }}</dt>
+            <dd class="text-zinc-900">{{ t('oem.spec_items') }}</dd>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-zinc-50 py-16 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-8 text-center">
+          <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">FAQ</p>
+          <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.faq_title') }}</h2>
+        </div>
+        <div class="space-y-3">
+          <details
+            v-for="(f, i) in t('oem.faqs')" :key="i"
+            class="group rounded-2xl border border-zinc-200 bg-white px-6 py-4">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-zinc-900 [&::-webkit-details-marker]:hidden">
+              <span>{{ f.q }}</span>
+              <span class="shrink-0 text-pink-400 transition-transform group-open:rotate-45 text-xl leading-none" aria-hidden="true">＋</span>
+            </summary>
+            <p class="mt-3 text-sm leading-relaxed text-zinc-600">{{ f.a }}</p>
+          </details>
         </div>
       </div>
     </div>
@@ -132,11 +163,32 @@
 </template>
 
 <script setup>
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useI18n, tField } from '../i18n/index.js'
 import { FAMILIES, OEM_FAMILIES } from '../data/products.js'
+import ja from '../i18n/ja.js'
 
 const { t, lang } = useI18n()
 
 const ownProducts     = FAMILIES
 const partnerProducts = OEM_FAMILIES
+
+/* FAQ structured data (always Japanese — matches the indexed audience) */
+const JSONLD_ID = 'oem-faq-jsonld'
+onMounted(() => {
+  const s = document.createElement('script')
+  s.type = 'application/ld+json'
+  s.id = JSONLD_ID
+  s.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: ja.oem.faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  })
+  document.head.appendChild(s)
+})
+onBeforeUnmount(() => document.getElementById(JSONLD_ID)?.remove())
 </script>

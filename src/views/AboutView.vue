@@ -65,11 +65,13 @@ const storyParagraphs = ['about.story_p1', 'about.story_p2', 'about.story_p3']
 
 const companyRows = [
   { label: 'about.label_name',     value: '瑞士釘株式会社 REISTI（レイスティ）' },
-  { label: 'about.label_address',  value: '神奈川県川崎市中原区上新城 2-4-15' },
+  { label: 'about.label_address',  value: '〒211-0045 神奈川県川崎市中原区上新城 2-4-15' },
   { label: 'about.label_founded',  value: '2025年8月1日' },
   { label: 'about.label_ceo',      value: '代表取締役社長　陳 兪岑' },
   { label: 'about.label_capital',  value: '500万円' },
-  { label: 'about.label_business', value: '金物・工具・各種電動先端工具の製造販売' },
+  { label: 'about.label_business', value: '金物・工具・各種電動先端工具の製造販売、OEM／ODM・プライベートブランド供給' },
+  { label: 'about.label_tel',      value: '050-8894-8687' },
+  { label: 'about.label_web',      value: 'www.reisti.com' },
 ]
 
 const cards = [

@@ -10,7 +10,7 @@
 
       <div
         ref="track"
-        class="track hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
+        class="track hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto py-4 -my-4 px-1 -mx-1"
         @wheel.passive="onWheel"
         @scroll.passive="sync"
         tabindex="0"
@@ -43,7 +43,7 @@
         </RouterLink>
       </div>
 
-      <div class="pointer-events-none absolute inset-y-0 flex w-full items-center justify-between">
+      <div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-between">
         <button class="ctrl pointer-events-auto" :class="{ 'opacity-30 pointer-events-none': !canL }" @click="scroll(-1)" aria-label="Previous">‹</button>
         <button class="ctrl pointer-events-auto" :class="{ 'opacity-30 pointer-events-none': !canR }" @click="scroll(1)"  aria-label="Next">›</button>
       </div>
@@ -97,12 +97,17 @@ watch(() => props.items, () => requestAnimationFrame(sync))
 <style scoped>
 .card {
   position: relative;
-  width: var(--cw, 400px);
+  width: min(var(--cw, 400px), 85vw);
   height: var(--ch, 500px);
   border-radius: 24px;
   background: #fff;
   box-shadow: 0 4px 20px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.04);
   overflow: hidden;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.05);
 }
 .copy { position: relative; z-index: 2; max-width: 54%; }
 .art {
