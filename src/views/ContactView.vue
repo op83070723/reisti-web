@@ -90,7 +90,7 @@
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#06C755] text-lg text-white font-bold">L</span>
           <div class="min-w-0 flex-1">
             <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
-            <p class="text-zinc-400 text-xs">@503wuawu ・ {{ t('contact.line_add') }}</p>
+            <p class="text-zinc-400 text-xs"><span class="whitespace-nowrap">@503wuawu</span> <span class="whitespace-nowrap">・{{ t('contact.line_add') }}</span></p>
           </div>
           <img src="/line-qr.png" :alt="t('contact.line_add')" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
         </a>

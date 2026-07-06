@@ -10,6 +10,10 @@
 
 @layer base {
   body { @apply antialiased bg-white text-zinc-900; font-family: 'GenYoGothic2JP', system-ui, sans-serif; }
+  /* 換行平均分配字數，避免末行只剩一兩個字（孤字行）。
+     balance 只作用於 ≤6 行的區塊（Chrome），長文自動維持原樣；不支援的瀏覽器忽略。
+     pretty 對 CJK 無效，故段落也用 balance */
+  h1, h2, h3, h4, p { text-wrap: balance; }
 }
 
 @layer components {
