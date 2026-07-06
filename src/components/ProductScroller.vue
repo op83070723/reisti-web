@@ -10,7 +10,7 @@
 
       <div
         ref="track"
-        class="track hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto py-4 -my-4 px-1 -mx-1"
+        class="track hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
         @wheel.passive="onWheel"
         @scroll.passive="sync"
         tabindex="0"
@@ -144,6 +144,21 @@ watch(() => props.items, () => requestAnimationFrame(sync))
 }
 .fade-l { left:  0; background: linear-gradient(90deg,  #fafafa, transparent); }
 .fade-r { right: 0; background: linear-gradient(-90deg, #fafafa, transparent); }
-.track { overscroll-behavior-inline: contain; scrollbar-width: none; }
+.track {
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  /* 上下留空間給 hover 浮起與陰影，負 margin 抵銷視覺位移 */
+  padding: 1rem 0.25rem;
+  margin: -1rem -0.25rem;
+}
+/* 手機：兩端加 (滑軌寬 − 卡寬)/2 的緩衝，讓第一張/最後一張也能置中吸附 */
+@media (max-width: 639px) {
+  .track {
+    padding-left:  calc((100% - min(var(--cw, 400px), 85vw)) / 2);
+    padding-right: calc((100% - min(var(--cw, 400px), 85vw)) / 2);
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 .track::-webkit-scrollbar { display: none; }
 </style>
