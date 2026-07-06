@@ -21,7 +21,7 @@
           :key="i"
           :to="p.to || '#'"
           class="card snap-center sm:snap-start shrink-0">
-          <div class="relative h-full overflow-hidden">
+          <div class="card-inner relative h-full overflow-hidden">
             <div class="copy px-4 pt-4">
               <p v-if="p.badge" class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">{{ p.badge }}</p>
               <h3 class="mt-1 text-xl font-extrabold leading-tight text-zinc-900">{{ p.title }}</h3>
@@ -95,17 +95,20 @@ watch(() => props.items, () => requestAnimationFrame(sync))
 </script>
 
 <style scoped>
+/* .card＝吸附元素：只負責尺寸，不能加 transform（會觸發 scroll-snap 重新吸附而跳動） */
 .card {
   position: relative;
   width: min(var(--cw, 400px), 85vw);
   height: var(--ch, 500px);
+}
+/* 視覺與 hover 浮起放在內層，不影響吸附計算 */
+.card-inner {
   border-radius: 24px;
   background: #fff;
   box-shadow: 0 4px 20px rgba(0,0,0,.07), 0 1px 4px rgba(0,0,0,.04);
-  overflow: hidden;
   transition: transform .2s ease, box-shadow .2s ease;
 }
-.card:hover {
+.card:hover .card-inner {
   transform: translateY(-4px);
   box-shadow: 0 12px 28px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.05);
 }
@@ -151,6 +154,8 @@ watch(() => props.items, () => requestAnimationFrame(sync))
   /* 上下留空間給 hover 浮起與陰影，負 margin 抵銷視覺位移 */
   padding: 1rem 0.25rem;
   margin: -1rem -0.25rem;
+  /* 吸附點把內距算進去：第一張卡的 snap 位置回到 scrollLeft=0（否則載入時停在 4px，左側霧氣被誤觸發） */
+  scroll-padding-inline: 0.25rem;
 }
 /* 手機：兩端加 (滑軌寬 − 卡寬)/2 的緩衝，讓第一張/最後一張也能置中吸附 */
 @media (max-width: 639px) {
