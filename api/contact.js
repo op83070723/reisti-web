@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       from:    process.env.MAIL_FROM || 'noreply@reisti.org',
       to:      process.env.MAIL_TO   || 'chenytbiz@reisti.org',
       replyTo: email,
-      subject: `【お問い合わせ】${name}（${company}）`,
+      subject: `【${type || 'お問い合わせ'}】${name}（${company}）`,
       html: `
         <div style="font-family:system-ui,-apple-system,sans-serif;max-width:600px">
           <h2 style="color:#18181b">REISTI お問い合わせ</h2>

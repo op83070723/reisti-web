@@ -166,6 +166,56 @@ export default {
     line_label: 'LINE Official Account',
     line_add: 'Add Friend',
   },
+  notfound: {
+    title: 'Page Not Found',
+    sub: 'The page you are looking for may have been moved or deleted. Please check the URL or use the links below.',
+    btn_home: 'Back to Home',
+    btn_products: 'View Products',
+    btn_contact: 'Contact Us',
+  },
+  privacy: {
+    title: 'Privacy Policy',
+    intro: 'REISTI Co., Ltd. ("we", "us") handles the personal information of visitors to the official REISTI website (the "Site") in accordance with the following policy.',
+    sections: [
+      {
+        h: 'Business Operator',
+        body: 'Company: REISTI Co., Ltd. (瑞士釘株式会社)\nAddress: 2-4-15 Kamishinjō, Nakahara-ku, Kawasaki, Kanagawa, Japan\nContact: chenytbiz@reisti.org / TEL +81-50-8894-8687',
+      },
+      {
+        h: 'Information We Collect',
+        body: 'Through the contact form on this Site, or via email, phone, or LINE, we collect information such as your company name, name, email address, phone number, and the content of your inquiry.',
+      },
+      {
+        h: 'Purpose of Use',
+        body: 'We use the collected personal information only for the following purposes:\n・Responding to inquiries, quotation requests, and sample requests\n・Communications and document delivery related to business transactions\n・Providing information about our products and services\nWe do not use it for any other purpose.',
+      },
+      {
+        h: 'Disclosure to Third Parties',
+        body: 'We do not provide personal information to third parties without your consent, except where required by law.',
+      },
+      {
+        h: 'External Services',
+        body: 'This Site relies on the following external services:\n・Email delivery for form submissions: Resend (US)\n・Hosting and site analytics: Vercel (US)\nSite analytics (Vercel Analytics) does not use cookies and collects data in a form that does not identify individuals. We also use your browser’s localStorage to remember your language preference; it contains no personal information.',
+      },
+      {
+        h: 'Security',
+        body: 'We take appropriate security measures to prevent unauthorized access to, loss of, or leakage of personal information.',
+      },
+      {
+        h: 'Disclosure, Correction, and Deletion',
+        body: 'Upon request and after identity verification, we will promptly disclose, correct, suspend the use of, or delete your personal information. Please contact us at the address below.',
+      },
+      {
+        h: 'Revisions to This Policy',
+        body: 'This policy may be revised in response to changes in laws or our operations. Revisions take effect when posted on this page.',
+      },
+      {
+        h: 'Contact',
+        body: 'REISTI Co., Ltd.\nEmail: chenytbiz@reisti.org\nTEL: +81-50-8894-8687',
+      },
+    ],
+    established: 'Established: July 7, 2026',
+  },
   footer: {
     tagline: 'Pro-Grade Drill Bits for the Japanese Market',
     col_products: 'Products',

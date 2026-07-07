@@ -55,7 +55,7 @@
       <!-- Bottom -->
       <div class="mt-10 flex flex-col gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-xs text-zinc-500">{{ t('footer.copyright') }}</p>
-        <RouterLink to="/contact" class="text-xs text-zinc-400 hover:text-white transition-colors">
+        <RouterLink to="/privacy" class="text-xs text-zinc-400 hover:text-white transition-colors">
           {{ t('footer.privacy') }}
         </RouterLink>
       </div>

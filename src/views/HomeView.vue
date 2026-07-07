@@ -77,7 +77,7 @@
         <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{{ t('home.cta_title') }}</h2>
         <p class="mt-4 text-zinc-400">{{ t('home.cta_sub') }}</p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <RouterLink to="/contact" class="btn-red">{{ t('home.cta_contact') }}</RouterLink>
+          <RouterLink to="/contact?type=oem" class="btn-red">{{ t('home.cta_contact') }}</RouterLink>
           <RouterLink to="/oem" class="inline-flex items-center justify-center rounded-xl border border-zinc-600 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white">
             {{ t('home.cta_oem') }}
           </RouterLink>

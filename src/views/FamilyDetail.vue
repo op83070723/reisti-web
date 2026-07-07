@@ -83,7 +83,7 @@
         <span v-if="variant.sizeNote" class="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600">
           {{ tField(variant.sizeNote) }}
         </span>
-        <RouterLink to="/contact" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
+        <RouterLink :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
       </div>
       <div class="overflow-x-auto rounded-xl border border-zinc-200">
         <table class="min-w-full text-sm">
@@ -156,6 +156,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { useI18n, tField } from '../i18n/index.js'
 import { findFamily } from '../data/products.js'
+import { SITE } from '../router/index.js'
 import ProductGallery    from '../components/ProductGallery.vue'
 import SuitabilityMatrix from '../components/SuitabilityMatrix.vue'
 
@@ -182,6 +183,10 @@ useHead({
   title: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト'),
   meta: [
     { name: 'description', content: computed(() => tField(fam.value?.intro) || '') },
+    // OG は App.vue の全站定義を property キーで上書き（og:image は製品写真）
+    { property: 'og:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
+    { property: 'og:description', content: computed(() => tField(fam.value?.intro) || '') },
+    { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero : `${SITE}/og.png`) },
   ],
   script: [
     {
@@ -202,6 +207,15 @@ useHead({
 })
 
 const goVariant = (slug) => router.replace({ name: 'family', params: { category: fam.value.category, slug } })
+
+/* 見積フォームへ渡す製品名（バリエーションが複数ある場合はラベルも付ける） */
+const quoteProduct = computed(() => {
+  if (!fam.value) return ''
+  const name = tField(fam.value.name)
+  return fam.value.variants.length > 1 && variant.value
+    ? `${name}（${tField(variant.value.label)}）`
+    : name
+})
 
 const gallery = computed(() =>
   (variant.value?.gallery || []).map(src => ({ src, alt: tField(fam.value?.name) || '' }))

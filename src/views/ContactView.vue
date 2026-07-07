@@ -100,10 +100,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { useI18n } from '../i18n/index.js'
 
 const { t } = useI18n()
+const route    = useRoute()
 const loading  = ref(false)
 const done     = ref(false)
 const errorMsg = ref('')
@@ -112,6 +114,18 @@ const hp       = ref('')
 const form = reactive({
   company: '', name: '', email: '', phone: '',
   type: '', product: '', qty: '', message: '',
+})
+
+/* クエリからの事前入力（例：製品ページの「お見積もり」→ /contact?type=bulk&product=…）。
+   ?type= は言語非依存のキーで受け、表示中の言語の選択肢へマッピングする。
+   SSG の静的 HTML はクエリなしで焼かれるため、onMounted で反映する（hydration 不一致回避） */
+const TYPE_INDEX = { oem: 0, bulk: 1, sample: 2, catalog: 3, other: 4 }
+onMounted(() => {
+  const q = route.query
+  if (typeof q.product === 'string' && q.product) form.product = q.product
+  if (typeof q.qty === 'string' && q.qty)         form.qty     = q.qty
+  const idx = TYPE_INDEX[q.type]
+  if (idx != null) form.type = t('contact.types')[idx] ?? ''
 })
 
 async function submit() {

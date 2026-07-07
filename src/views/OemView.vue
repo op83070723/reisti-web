@@ -6,7 +6,7 @@
         <p class="text-sm font-semibold uppercase tracking-widest text-pink-400">{{ t('oem.hero_label') }}</p>
         <h1 class="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl" style="white-space: pre-line">{{ t('oem.hero_title') }}</h1>
         <p class="mt-6 text-lg text-zinc-400">{{ t('oem.hero_sub') }}</p>
-        <RouterLink to="/contact" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.hero_btn') }}</RouterLink>
+        <RouterLink to="/contact?type=oem" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.hero_btn') }}</RouterLink>
       </div>
     </div>
   </section>
@@ -71,7 +71,7 @@
           <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 font-bold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
+          <RouterLink to="/contact?type=oem" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>
@@ -157,7 +157,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 text-center">
       <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{{ t('oem.cta_title') }}</h2>
       <p class="mt-3 text-zinc-400">{{ t('oem.cta_sub') }}</p>
-      <RouterLink to="/contact" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.cta_btn') }}</RouterLink>
+      <RouterLink to="/contact?type=oem" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.cta_btn') }}</RouterLink>
     </div>
   </section>
 </template>

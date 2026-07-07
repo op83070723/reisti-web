@@ -1,3 +1,9 @@
 {
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  "redirects": [
+    { "source": "/products/concrete-drill/:slug", "destination": "/products", "permanent": true },
+    { "source": "/products/step-drill/:slug", "destination": "/products", "permanent": true },
+    { "source": "/products/hole-saw/bi", "destination": "/products/hole-saw/hss", "permanent": true },
+    { "source": "/products/sds-plus", "destination": "/products", "permanent": true },
+    { "source": "/products/hex-shank", "destination": "/products", "permanent": true }
+  ]
 }
