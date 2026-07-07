@@ -217,8 +217,12 @@ const quoteProduct = computed(() => {
     : name
 })
 
+/* alt は「ブランド＋製品名＋写真番号」——Google 画像検索向けのキーワードを自然に含める */
 const gallery = computed(() =>
-  (variant.value?.gallery || []).map(src => ({ src, alt: tField(fam.value?.name) || '' }))
+  (variant.value?.gallery || []).map((src, i) => ({
+    src,
+    alt: `REISTI ${tField(fam.value?.name) || ''} 製品写真${i > 0 ? ` ${i + 1}` : ''}`.trim(),
+  }))
 )
 
 /* --- spec table --- */

@@ -30,7 +30,9 @@
             </div>
             <img
               :src="p.img"
-              :alt="p.title"
+              :alt="`REISTI ${p.title}`"
+              loading="lazy"
+              decoding="async"
               class="art"
               :style="{
                 '--aw': (p.artW  ?? 360) + 'px',

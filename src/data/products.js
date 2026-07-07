@@ -220,8 +220,8 @@ export const FAMILIES = [
       {
         slug: 'multi',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/hex-635.png',
-        gallery: ['/products/hex-635.png'],
+        hero: '/products/reisti-cordless-multi-drill-bit.png',
+        gallery: ['/products/reisti-cordless-multi-drill-bit.png'],
         detail: {
           ja: '6.35mm六角軸シャンク採用で、充電インパクトドライバーにワンタッチ装着。超硬チップ＋非対称刃先により食いつきが良く、薄鉄板・コンクリート・ブロックへの穴あけスピードが向上。耐摩耗性に優れた超硬チップで長寿命を実現した高耐久仕様です。',
           en: 'One-touch attachment to cordless impact drivers via 6.35mm hex shank. Carbide tip with asymmetric cutting edge bites fast into thin steel, concrete, and block. Wear-resistant carbide delivers long service life.',
@@ -256,8 +256,8 @@ export const FAMILIES = [
       {
         slug: 'cobalt',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/M35.png',
-        gallery: ['/products/M35.png'],
+        hero: '/products/reisti-hex-cobalt-drill.png',
+        gallery: ['/products/reisti-hex-cobalt-drill.png'],
         detail: {
           ja: 'ステンレス鋼や難削材の加工に最適なコバルトハイス（HSSCO）を採用。耐熱性・耐摩耗性に優れた高級ハイス鋼で長寿命を実現。精密研磨仕上げにより食いつきが良く、センターポンチ不要で正確な位置への穴あけが可能です。',
           en: 'Cobalt HSS (HSSCO) optimized for stainless steel and difficult materials. Premium high-speed steel with superior heat and wear resistance for long life. Precision-ground point bites cleanly — no center punch needed for accurate positioning.',
@@ -294,8 +294,8 @@ export const FAMILIES = [
       {
         slug: 'hss',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/holesaw-bi.png',
-        gallery: ['/products/holesaw-bi.png'],
+        hero: '/products/reisti-hss-bimetal-hole-saw.png',
+        gallery: ['/products/reisti-hss-bimetal-hole-saw.png'],
         detail: {
           ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせたバイメタル構造。ツバ無し設計でスペースが限られた作業環境でも使いやすく、薄鉄板・アルミ・塩ビ・木材など幅広い材料に対応します。電気工事・配管工事の定番サイズを全33サイズラインナップ。',
           en: 'Bimetal construction pairs an H.S.S. cutting edge with a flexible backbone. Flange-free design works in tight spaces, cutting thin steel, aluminium, PVC, and wood. Full 33-size lineup covering standard electrical and plumbing diameters.',
@@ -334,8 +334,8 @@ export const FAMILIES = [
       {
         slug: 'tct',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/holesaw-tct.png',
-        gallery: ['/products/holesaw-tct.png'],
+        hero: '/products/reisti-tct-carbide-hole-saw.png',
+        gallery: ['/products/reisti-tct-carbide-hole-saw.png'],
         detail: {
           ja: 'トリプル刃・超硬チップ採用で、ステンレス板・FRPなどの難削材にも対応。10mmストレート軸はボール盤・電動ドリルに対応し、ツバ無し設計は薄板・精密加工に適した構造。高精度な穴あけが必要な金属加工・設備工事に最適です。',
           en: 'Triple-blade carbide tips handle stainless sheet, FRP, and other difficult materials. 10mm straight shank fits drill presses and electric drills; flange-free design suits thin-sheet precision work. Ideal for metalworking and equipment installation requiring accurate holes.',
@@ -377,8 +377,8 @@ export const OEM_FAMILIES = [
       {
         slug: 'std',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/images/step/main.jpg',
-        gallery: ['/images/step/main.jpg'],
+        hero: null,
+        gallery: [],
         detail: {
           ja: `段付き刃でセンタードリル不要。薄板鉄・アルミ・樹脂の拡孔や面取りに。二枚刃切刃でスムーズに切削、バリを抑制。
 適合電動機：電気ドリル（低速推奨）`,
@@ -403,8 +403,8 @@ Compatible tools: Electric drills (low speed recommended)`,
       {
         slug: 'tialn',
         label: { ja: 'TiAlN', en: 'TiAlN' },
-        hero: '/images/step-tialn/main.jpg',
-        gallery: ['/images/step-tialn/main.jpg'],
+        hero: null,
+        gallery: [],
         detail: {
           ja: `TiAlN コーティングにより高温下でも耐摩耗性を発揮。ステンレスなど難削材でも安定した切削が可能。
 適合電動機：電気ドリル（低速推奨）`,
@@ -429,8 +429,8 @@ Compatible tools: Electric drills (low speed recommended)`,
       {
         slug: 'pipe',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/images/pipe-saw/main.jpg',
-        gallery: ['/images/pipe-saw/main.jpg'],
+        hero: null,
+        gallery: [],
         detail: {
           ja: `PVC管・銅管・アルミパイプの切断に特化した鋸刃。素早くバリの少ない切断面を実現。DIY・設備工事の現場で活躍。
 適合電動機：往復鋸（レシプロソー） / 手動`,

@@ -57,7 +57,9 @@
           </div>
           <img
             :src="catImg[cat.slug]"
-            :alt="tField(cat.name)"
+            :alt="`REISTI ${tField(cat.name)}`"
+            loading="lazy"
+            decoding="async"
             class="absolute right-4 bottom-4 h-24 w-24 object-contain opacity-70 transition group-hover:opacity-90"
             @error="e => e.target.style.display = 'none'" />
         </RouterLink>
@@ -97,8 +99,8 @@ const { t, lang } = useI18n()
 const categories = CATEGORIES
 
 const catImg = {
-  'drill-bit': '/products/hex-635.png',
-  'hole-saw':  '/products/holesaw-bi.png',
+  'drill-bit': '/products/reisti-cordless-multi-drill-bit.png',
+  'hole-saw':  '/products/reisti-hss-bimetal-hole-saw.png',
 }
 
 const FEATURED_DATA = [
@@ -106,7 +108,7 @@ const FEATURED_DATA = [
     badge: 'REISTI',
     title: { ja: '充電マルチドリルビット', en: 'Cordless Multi Drill Bit' },
     subtitle: { ja: '超硬チップで薄鉄板からタイルまで。', en: 'Carbide-tipped bit for steel, concrete & tile.' },
-    img: '/products/hex-635.png',
+    img: '/products/reisti-cordless-multi-drill-bit.png',
     to: '/products/drill-bit/multi',
     artW: 280, artX: -50, artY: 40, rotate: 0,
   },
@@ -114,7 +116,7 @@ const FEATURED_DATA = [
     badge: 'REISTI',
     title: { ja: '六角軸コバルトドリル', en: 'Hex Shank Cobalt Drill' },
     subtitle: { ja: 'ステンレスも切る、M35コバルト鋼。', en: 'M35 cobalt steel for stainless & hard metals.' },
-    img: '/products/M35.png',
+    img: '/products/reisti-hex-cobalt-drill.png',
     to: '/products/drill-bit/cobalt',
     artW: 245, artX: -60, artY: 60, rotate: 0,
   },
@@ -122,7 +124,7 @@ const FEATURED_DATA = [
     badge: 'REISTI',
     title: { ja: 'ハイスホールソー', en: 'HSS Hole Saw' },
     subtitle: { ja: '金属・木材・樹脂に幅広く対応。', en: 'Versatile HSS cutting across metal, wood & plastic.' },
-    img: '/products/holesaw-bi.png',
+    img: '/products/reisti-hss-bimetal-hole-saw.png',
     to: '/products/hole-saw/hss',
     artW: 260, artX: -50, artY: 40, rotate: -1,
   },
@@ -130,7 +132,7 @@ const FEATURED_DATA = [
     badge: 'REISTI',
     title: { ja: '超硬ホールソー', en: 'Carbide-Tipped Hole Saw' },
     subtitle: { ja: 'ステンレス板・FRPも切れるトリプル刃。', en: 'Triple-blade carbide for stainless, steel & FRP.' },
-    img: '/products/holesaw-tct.png',
+    img: '/products/reisti-tct-carbide-hole-saw.png',
     to: '/products/hole-saw/tct',
     artW: 255, artX: -50, artY: 50, rotate: 0,
   },

@@ -92,7 +92,7 @@
             <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
             <p class="text-zinc-400 text-xs"><span class="whitespace-nowrap">@503wuawu</span> <span class="whitespace-nowrap">・{{ t('contact.line_add') }}</span></p>
           </div>
-          <img src="/line-qr.png" :alt="t('contact.line_add')" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
+          <img src="/line-qr.png" :alt="t('contact.line_add')" loading="lazy" decoding="async" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
         </a>
       </div>
     </div>
