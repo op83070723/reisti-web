@@ -70,19 +70,27 @@
     </div>
 
     <!-- Suitability -->
-    <div class="mt-10">
+    <div class="mt-10" v-reveal>
       <h2 class="mb-3 text-lg font-bold text-zinc-900">{{ lang === 'ja' ? '適合素材' : 'Material Suitability' }}</h2>
       <SuitabilityMatrix :items="variant.suitability || []" />
       <p class="mt-2 text-xs text-zinc-400">{{ t('product.suitability_note') }}</p>
     </div>
 
     <!-- Spec table -->
-    <div class="mt-10">
+    <div class="mt-10" v-reveal>
       <div class="mb-3 flex flex-wrap items-center gap-3">
         <h2 class="text-lg font-bold text-zinc-900">{{ t('product.size_title') }}</h2>
         <span v-if="variant.sizeNote" class="rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600">
           {{ tField(variant.sizeNote) }}
         </span>
+        <div v-if="rows.length" class="flex items-center gap-2">
+          <input
+            v-model="sizeQuery"
+            type="text" inputmode="decimal"
+            :placeholder="lang === 'ja' ? 'サイズ検索（例: 33）' : 'Filter size'"
+            class="w-36 rounded-lg border border-zinc-300 px-3 py-1.5 text-xs text-zinc-700 placeholder-zinc-400 focus:border-pink-400 focus:outline-none focus:ring-1 focus:ring-pink-400" />
+          <span v-if="sizeQuery.trim()" class="text-xs text-zinc-400">{{ hitCount }}{{ lang === 'ja' ? '件' : ' found' }}</span>
+        </div>
         <RouterLink :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
       </div>
       <div class="overflow-x-auto rounded-xl border border-zinc-200">
@@ -94,9 +102,13 @@
           </thead>
           <tbody class="divide-y divide-zinc-100">
             <!-- v-show（CSS 隠し）を使う：収合中も全行が静的 HTML に含まれ、品番・JAN が検索エンジンに読まれる -->
-            <tr v-for="(row, i) in rows" :key="row.code || row.size" v-show="expanded || i < COLLAPSE_AT" class="hover:bg-zinc-50">
+            <tr v-for="(row, i) in rows" :key="row.code || row.size" v-show="rowVisible(row, i)" class="hover:bg-zinc-50">
               <td v-for="c in cols" :key="c" class="px-4 py-3 whitespace-nowrap"
-                  :class="c === 'code' || c === 'jan' ? 'font-mono text-xs text-zinc-500' : c === 'size' ? 'font-medium' : 'text-zinc-600'">
+                  :class="[
+                    c === 'code' || c === 'jan' ? 'font-mono text-xs text-zinc-500' : c === 'size' ? 'font-medium' : 'text-zinc-600',
+                    copyable(c, row) ? 'copy-cell cursor-pointer select-none transition-colors hover:text-pink-600' : '',
+                  ]"
+                  @click="copyable(c, row) && copyText(row[c])">
                 <template v-if="c === 'size'">
                   Ø{{ row.size }}mm
                   <span v-if="row.popular" class="ml-1.5 inline-flex items-center rounded-full bg-pink-50 px-2 py-0.5 text-[10px] font-semibold text-pink-600 ring-1 ring-inset ring-pink-200">
@@ -105,19 +117,28 @@
                 </template>
                 <template v-else-if="c === 'overall' || c === 'effective'">{{ row[c] != null ? row[c] + 'mm' : '—' }}</template>
                 <template v-else-if="c === 'shank'">{{ tField(row.shank) }}</template>
-                <template v-else-if="c === 'jan'">{{ row.jan ?? t('product.jan_pending') }}</template>
-                <template v-else>{{ row[c] ?? '—' }}</template>
+                <template v-else-if="c === 'jan'">
+                  {{ row.jan ?? t('product.jan_pending') }}<svg v-if="row.jan" class="copy-ic ml-1.5 inline h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                </template>
+                <template v-else>
+                  {{ row[c] ?? '—' }}<svg v-if="copyable(c, row)" class="copy-ic ml-1.5 inline h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                </template>
               </td>
             </tr>
             <tr v-if="!rows.length">
               <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-400">{{ t('product.pending') }}</td>
+            </tr>
+            <tr v-if="rows.length && sizeQuery.trim() && !hitCount">
+              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-400">
+                {{ lang === 'ja' ? '該当するサイズがありません' : 'No matching sizes' }}
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="mt-3 flex flex-wrap items-center gap-4">
         <button
-          v-if="rows.length > COLLAPSE_AT"
+          v-if="rows.length > COLLAPSE_AT && !sizeQuery.trim()"
           class="btn-outline text-xs"
           @click="expanded = !expanded">
           {{ expanded
@@ -127,6 +148,13 @@
         <p class="text-xs text-zinc-400">{{ t('product.price_note') }}</p>
       </div>
     </div>
+
+    <!-- コピー完了トースト -->
+    <Transition name="toast">
+      <div v-if="toast" class="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-zinc-900 px-4 py-2 text-sm text-white shadow-lg">
+        {{ toast }}
+      </div>
+    </Transition>
 
     <!-- Related docs -->
     <div v-if="fam.docs?.length" class="mt-10">
@@ -168,14 +196,32 @@ const router = useRouter()
 const fam    = ref(null)
 const variant = ref(null)
 const expanded = ref(false)
+const sizeQuery = ref('')
 
 function load() {
   const match  = findFamily(route.params.category, route.params.slug)
   fam.value    = match?.family  ?? null
   variant.value = match?.variant ?? null
   expanded.value = false
+  sizeQuery.value = ''
 }
 watch(() => route.fullPath, load, { immediate: true })
+
+/* --- サイズ検索・品番/JAN コピー --- */
+const matchesQuery = r => String(r.size).includes(sizeQuery.value.trim())
+const hitCount = computed(() => rows.value.filter(matchesQuery).length)
+const rowVisible = (row, i) =>
+  sizeQuery.value.trim() ? matchesQuery(row) : (expanded.value || i < COLLAPSE_AT)
+
+const copyable = (c, row) => (c === 'code' || c === 'jan') && !!row[c]
+const toast = ref('')
+let toastTimer = null
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text) } catch { /* 非 HTTPS 等では黙ってスキップ */ }
+  toast.value = lang.value === 'ja' ? `${text} をコピーしました` : `Copied ${text}`
+  clearTimeout(toastTimer)
+  toastTimer = setTimeout(() => { toast.value = '' }, 1600)
+}
 
 /* 製品ごとの title / description / Product 構造化データ。
    useHead は SSG 時に静的 HTML へ焼き込み、言語切替にもリアクティブに追従する */
@@ -240,3 +286,13 @@ const rows = computed(() => {
   return (variant.value?.specs || []).map(r => ({ ...r, popular: pop.has(String(r.size)) }))
 })
 </script>
+
+<style scoped>
+.toast-enter-active, .toast-leave-active { transition: opacity .2s ease, transform .2s ease; }
+.toast-enter-from, .toast-leave-to { opacity: 0; transform: translate(-50%, 8px); }
+.toast-enter-to, .toast-leave-from { transform: translate(-50%, 0); }
+
+/* 複製圖示：滑到該格立即浮現（取代反應慢的原生 title tooltip） */
+.copy-ic { opacity: 0; transition: opacity .15s ease; vertical-align: -2px; }
+.copy-cell:hover .copy-ic { opacity: .85; }
+</style>

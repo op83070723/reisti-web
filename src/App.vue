@@ -4,6 +4,7 @@
     <RouterView />
   </main>
   <Footer />
+  <FloatingContact />
 </template>
 
 <script setup>
@@ -12,6 +13,7 @@ import { useRoute } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import FloatingContact from './components/FloatingContact.vue'
 import { lang, initLang } from './i18n/index.js'
 import { SITE, DEFAULT_DESC } from './router/index.js'
 

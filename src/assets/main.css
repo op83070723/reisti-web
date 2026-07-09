@@ -16,6 +16,14 @@
   h1, h2, h3, h4, p { text-wrap: balance; }
 }
 
+/* v-reveal 滾動漸入（class 由 JS 掛載後才加，靜態 HTML 永遠可見；離開視窗會重置、再進入重播） */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1);
+}
+.reveal-init.reveal-in { opacity: 1; transform: none; }
+
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-xl bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-zinc-700 disabled:opacity-50;

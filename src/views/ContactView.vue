@@ -69,7 +69,7 @@
     </form>
 
     <!-- Alternative contact methods -->
-    <div class="mt-12 border-t border-zinc-100 pt-10">
+    <div v-reveal class="mt-12 border-t border-zinc-100 pt-10">
       <p class="text-sm font-semibold text-zinc-400 uppercase tracking-widest">{{ t('contact.also_label') }}</p>
       <div class="mt-4 grid gap-4 sm:grid-cols-3">
         <a href="tel:05088948687" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">

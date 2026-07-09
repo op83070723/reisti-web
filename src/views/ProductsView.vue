@@ -37,11 +37,11 @@
       <p class="text-xs text-zinc-400">{{ lang === 'ja' ? '自社工場製造 · OEM代工対応' : 'Own factory · OEM available' }}</p>
     </div>
 
-    <ProductScroller class="mb-12" :heading="t('products.drillbit')" :items="drillbit" />
-    <ProductScroller class="mb-14" :heading="t('products.holesaw')"  :items="holesaw" />
+    <ProductScroller v-reveal class="mb-12" :heading="t('products.drillbit')" :items="drillbit" />
+    <ProductScroller v-reveal class="mb-14" :heading="t('products.holesaw')"  :items="holesaw" />
 
     <!-- ===== OEM Partnership section ===== -->
-    <div class="mb-6 rounded-2xl border border-zinc-200 bg-zinc-50 px-6 py-5">
+    <div v-reveal class="mb-6 rounded-2xl border border-zinc-200 bg-zinc-50 px-6 py-5">
       <div class="flex flex-wrap items-start gap-4">
         <div class="flex-1 min-w-0">
           <h2 class="text-xl font-extrabold text-zinc-900">{{ t('products.oem_section_title') }}</h2>

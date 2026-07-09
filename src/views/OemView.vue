@@ -12,7 +12,7 @@
   </section>
 
   <!-- Why REISTI -->
-  <section class="py-16 sm:py-20">
+  <section class="py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10 text-center">
         <h2 class="text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.why_title') }}</h2>
@@ -32,7 +32,7 @@
   </section>
 
   <!-- OEM Products: own factory -->
-  <section class="bg-zinc-50 py-16 sm:py-20">
+  <section class="bg-zinc-50 py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-2 flex flex-wrap items-center gap-3">
         <h2 class="text-2xl font-extrabold text-zinc-900 sm:text-3xl">{{ t('oem.own_title') }}</h2>
@@ -58,7 +58,7 @@
   </section>
 
   <!-- OEM Products: partner factory -->
-  <section class="py-16 sm:py-20">
+  <section class="py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-2">
         <h2 class="text-2xl font-extrabold text-zinc-900 sm:text-3xl">{{ t('oem.partner_title') }}</h2>
@@ -80,7 +80,7 @@
   </section>
 
   <!-- Process -->
-  <section class="bg-zinc-50 py-16 sm:py-20">
+  <section class="bg-zinc-50 py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10 text-center">
         <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Process</p>
@@ -100,7 +100,7 @@
   </section>
 
   <!-- Capabilities -->
-  <section class="py-16 sm:py-20">
+  <section class="py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mx-auto max-w-2xl">
         <div class="mb-8 text-center">
@@ -130,7 +130,7 @@
   </section>
 
   <!-- FAQ -->
-  <section class="bg-zinc-50 py-16 sm:py-20">
+  <section class="bg-zinc-50 py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mx-auto max-w-3xl">
         <div class="mb-8 text-center">
@@ -153,7 +153,7 @@
   </section>
 
   <!-- CTA -->
-  <section class="bg-zinc-950 py-16 sm:py-20">
+  <section class="bg-zinc-950 py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 text-center">
       <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{{ t('oem.cta_title') }}</h2>
       <p class="mt-3 text-zinc-400">{{ t('oem.cta_sub') }}</p>

@@ -9,7 +9,7 @@
     </div>
 
     <!-- Brand story -->
-    <section class="mb-14">
+    <section class="mb-14" v-reveal>
       <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-500">{{ t('about.story_label') }}</p>
       <h2 class="mb-8 max-w-2xl text-2xl font-extrabold leading-snug text-zinc-900 sm:text-3xl">
         {{ t('about.story_title') }}
@@ -23,7 +23,7 @@
     </section>
 
     <!-- Company info table -->
-    <section class="mb-12">
+    <section class="mb-12" v-reveal>
       <h2 class="mb-4 text-xl font-bold text-zinc-900">{{ t('about.company_title') }}</h2>
       <div class="overflow-hidden rounded-2xl border border-zinc-200">
         <dl class="divide-y divide-zinc-100 text-sm">
@@ -36,7 +36,7 @@
     </section>
 
     <!-- Mission / Quality / Sustainability -->
-    <section class="mb-12 grid gap-5 sm:grid-cols-3">
+    <section class="mb-12 grid gap-5 sm:grid-cols-3" v-reveal>
       <div v-for="(card, i) in cards" :key="i" class="rounded-2xl border border-zinc-200 p-6">
         <h3 class="font-bold text-zinc-900">{{ t(card.title) }}</h3>
         <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ t(card.body) }}</p>
@@ -44,7 +44,7 @@
     </section>
 
     <!-- CTA -->
-    <section class="rounded-2xl bg-zinc-950 px-8 py-10 text-center">
+    <section class="rounded-2xl bg-zinc-950 px-8 py-10 text-center" v-reveal>
       <h2 class="text-2xl font-extrabold text-white">{{ t('about.cta_title') }}</h2>
       <p class="mt-2 text-zinc-400">{{ t('about.cta_sub') }}</p>
       <div class="mt-6 flex flex-wrap justify-center gap-3">

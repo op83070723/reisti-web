@@ -23,11 +23,11 @@
   </section>
 
   <!-- ===== TRUST SIGNALS ===== -->
-  <section class="border-b border-zinc-100 bg-zinc-50 py-10">
+  <section class="border-b border-zinc-100 bg-zinc-50 py-10" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <div v-for="(item, i) in t('home.trust')" :key="i" class="text-center">
-          <p class="text-3xl font-black text-zinc-900">{{ item.n }}</p>
+          <p class="text-3xl font-black text-zinc-900"><CountUp :value="item.n" /></p>
           <p class="mt-0.5 text-sm font-semibold text-zinc-700">{{ item.label }}</p>
           <p class="mt-0.5 text-xs text-zinc-400">{{ item.sub }}</p>
         </div>
@@ -36,7 +36,7 @@
   </section>
 
   <!-- ===== PRODUCTS ===== -->
-  <section class="py-16 sm:py-20">
+  <section class="py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10">
         <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">{{ t('home.products_label') }}</p>
@@ -73,7 +73,7 @@
   </section>
 
   <!-- ===== OEM CTA ===== -->
-  <section class="bg-zinc-950 py-16 sm:py-20">
+  <section class="bg-zinc-950 py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mx-auto max-w-2xl text-center">
         <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{{ t('home.cta_title') }}</h2>
@@ -94,6 +94,7 @@ import { computed } from 'vue'
 import { useI18n, tField } from '../i18n/index.js'
 import { CATEGORIES } from '../data/products.js'
 import ProductScroller from '../components/ProductScroller.vue'
+import CountUp from '../components/CountUp.vue'
 
 const { t, lang } = useI18n()
 const categories = CATEGORIES
