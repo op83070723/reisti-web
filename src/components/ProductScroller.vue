@@ -35,10 +35,8 @@
               decoding="async"
               class="art"
               :style="{
-                '--aw': (p.artW  ?? 360) + 'px',
-                '--ax': (p.artX  ?? 0)   + 'px',
-                '--ay': (p.artY  ?? 0)   + 'px',
-                '--ar': (p.rotate ?? 0)  + 'deg',
+                '--aw': (p.artW ?? 320) + 'px',
+                '--ay': (p.artY ?? 40)  + 'px',
               }"
               @error="e => e.target && (e.target.style.opacity = 0)" />
           </div>
@@ -120,13 +118,14 @@ watch(() => props.items, () => requestAnimationFrame(sync))
   box-shadow: 0 12px 28px rgba(0,0,0,.10), 0 2px 8px rgba(0,0,0,.05);
 }
 .copy { position: relative; z-index: 2; }
+/* 產品圖：水平幾何置中（圖檔本身已重製為「內容置中的正方形」），不旋轉 */
 .art {
   position: absolute;
-  right: 16px;
+  left: 50%;
   top: 50%;
-  width: var(--aw, 360px);
+  width: var(--aw, 320px);
   height: auto;
-  transform: translate(var(--ax, 0), calc(-50% + var(--ay, 0))) rotate(var(--ar, 0));
+  transform: translate(-50%, calc(-50% + var(--ay, 40px)));
   z-index: 1;
   pointer-events: none;
 }

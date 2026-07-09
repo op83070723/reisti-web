@@ -44,7 +44,7 @@ export default {
     brand_badge: 'REISTI ブランド製品',
     oem_badge: 'OEM 取扱品',
     size_title: '規格一覧',
-    popular: '人気',
+    popular: '定番',
     quote_btn: 'お見積もり',
     pending: '仕様準備中です。お問い合わせください。',
     col_code: '品番',

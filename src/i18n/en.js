@@ -44,7 +44,7 @@ export default {
     brand_badge: 'REISTI Brand',
     oem_badge: 'OEM Only',
     size_title: 'Specifications',
-    popular: 'Popular',
+    popular: 'Standard',
     quote_btn: 'Request Quote',
     pending: 'Specifications coming soon. Please contact us.',
     col_code: 'Item No.',
