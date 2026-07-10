@@ -229,10 +229,11 @@ useHead({
   title: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト'),
   meta: [
     { name: 'description', content: computed(() => tField(fam.value?.intro) || '') },
-    // OG は App.vue の全站定義を property キーで上書き（og:image は製品写真）
+    // OG は App.vue の全站定義を property キーで上書き（og:image は製品写真）。
+    // og:image は WebP 非対応の SNS クローラーがあるため PNG 版を指す（PNG は public/products/ に併存）
     { property: 'og:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
     { property: 'og:description', content: computed(() => tField(fam.value?.intro) || '') },
-    { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero : `${SITE}/og.png`) },
+    { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.png') : `${SITE}/og.jpg`) },
   ],
   script: [
     {

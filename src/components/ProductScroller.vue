@@ -28,9 +28,12 @@
               <p v-if="p.subtitle" class="mt-1 text-sm text-zinc-500">{{ p.subtitle }}</p>
               <p v-if="p.price" class="mt-2 text-xs font-medium text-zinc-400">{{ p.price }}</p>
             </div>
+            <!-- 產品圖統一為內容置中的正方形（見下方 .art 註解），寬高屬性只提供 1:1 比例 -->
             <img
               :src="p.img"
               :alt="`REISTI ${p.title}`"
+              width="1000"
+              height="1000"
               loading="lazy"
               decoding="async"
               class="art"

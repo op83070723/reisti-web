@@ -36,7 +36,7 @@ useHead({
     { property: 'og:title',       content: pageTitle },
     { property: 'og:description', content: pageDesc },
     { property: 'og:url',         content: pageUrl },
-    { property: 'og:image',       content: `${SITE}/og.png` },
+    { property: 'og:image',       content: `${SITE}/og.jpg` },
     { name: 'twitter:card',       content: 'summary_large_image' },
   ],
   link: [

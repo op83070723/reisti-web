@@ -19,6 +19,16 @@ export default async function handler(req, res) {
   if (!company || !name || !email || !message)
     return res.status(400).json({ ok: false, error: 'company, name, email, message are required' })
 
+  // 上限は ContactView.vue の maxlength と一致させること
+  const LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, message: 5000 }
+  for (const [field, max] of Object.entries(LIMITS)) {
+    const v = body[field]
+    if (v != null && (typeof v !== 'string' || v.length > max))
+      return res.status(400).json({ ok: false, error: `invalid ${field}` })
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    return res.status(400).json({ ok: false, error: 'invalid email' })
+
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
     const { error } = await resend.emails.send({

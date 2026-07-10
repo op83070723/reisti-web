@@ -8,7 +8,7 @@
         <!-- Brand -->
         <div class="lg:col-span-1">
           <div class="flex items-center gap-2">
-            <img src="/logo.png" class="h-8 w-auto brightness-0 invert" alt="REISTI" />
+            <img src="/logo.png" width="1050" height="600" class="h-8 w-auto brightness-0 invert" alt="REISTI" />
             <span class="text-sm font-semibold text-white">REISTI</span>
           </div>
           <p class="mt-3 text-sm font-bold tracking-wide text-pink-400">No Dull Moments.</p>

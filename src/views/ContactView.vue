@@ -9,33 +9,34 @@
     </div>
 
     <!-- Form -->
-    <form class="space-y-5" @submit.prevent="submit" novalidate>
+    <!-- maxlength は api/contact.js の LIMITS と一致させること -->
+    <form class="space-y-5" @submit.prevent="submit">
 
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
-          <label class="label">{{ t('contact.label_company') }} *</label>
-          <input v-model="form.company" class="input mt-1" type="text" :placeholder="t('contact.ph_company')" />
+          <label class="label" for="contact-company">{{ t('contact.label_company') }} *</label>
+          <input id="contact-company" v-model="form.company" class="input mt-1" type="text" autocomplete="organization" required maxlength="100" :placeholder="t('contact.ph_company')" />
         </div>
         <div>
-          <label class="label">{{ t('contact.label_name') }} *</label>
-          <input v-model="form.name" class="input mt-1" type="text" :placeholder="t('contact.ph_name')" />
+          <label class="label" for="contact-name">{{ t('contact.label_name') }} *</label>
+          <input id="contact-name" v-model="form.name" class="input mt-1" type="text" autocomplete="name" required maxlength="100" :placeholder="t('contact.ph_name')" />
         </div>
       </div>
 
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
-          <label class="label">{{ t('contact.label_email') }} *</label>
-          <input v-model="form.email" class="input mt-1" type="text" :placeholder="t('contact.ph_email')" />
+          <label class="label" for="contact-email">{{ t('contact.label_email') }} *</label>
+          <input id="contact-email" v-model="form.email" class="input mt-1" type="email" autocomplete="email" required maxlength="254" :placeholder="t('contact.ph_email')" />
         </div>
         <div>
-          <label class="label">{{ t('contact.label_phone') }}</label>
-          <input v-model="form.phone" class="input mt-1" type="text" :placeholder="t('contact.ph_phone')" />
+          <label class="label" for="contact-phone">{{ t('contact.label_phone') }}</label>
+          <input id="contact-phone" v-model="form.phone" class="input mt-1" type="tel" autocomplete="tel" maxlength="50" :placeholder="t('contact.ph_phone')" />
         </div>
       </div>
 
       <div>
-        <label class="label">{{ t('contact.label_type') }}</label>
-        <select v-model="form.type" class="input mt-1">
+        <label class="label" for="contact-type">{{ t('contact.label_type') }}</label>
+        <select id="contact-type" v-model="form.type" class="input mt-1">
           <option value="">{{ t('contact.select_type') }}</option>
           <option v-for="tp in t('contact.types')" :key="tp" :value="tp">{{ tp }}</option>
         </select>
@@ -43,25 +44,25 @@
 
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
-          <label class="label">{{ t('contact.label_product') }}</label>
-          <input v-model="form.product" class="input mt-1" type="text" :placeholder="t('contact.ph_product')" />
+          <label class="label" for="contact-product">{{ t('contact.label_product') }}</label>
+          <input id="contact-product" v-model="form.product" class="input mt-1" type="text" maxlength="100" :placeholder="t('contact.ph_product')" />
         </div>
         <div>
-          <label class="label">{{ t('contact.label_qty') }}</label>
-          <input v-model="form.qty" class="input mt-1" type="text" :placeholder="t('contact.ph_qty')" />
+          <label class="label" for="contact-qty">{{ t('contact.label_qty') }}</label>
+          <input id="contact-qty" v-model="form.qty" class="input mt-1" type="text" maxlength="50" :placeholder="t('contact.ph_qty')" />
         </div>
       </div>
 
       <div>
-        <label class="label">{{ t('contact.label_message') }} *</label>
-        <textarea v-model="form.message" class="input mt-1" rows="5" :placeholder="t('contact.ph_message')" />
+        <label class="label" for="contact-message">{{ t('contact.label_message') }} *</label>
+        <textarea id="contact-message" v-model="form.message" class="input mt-1" rows="5" required maxlength="5000" :placeholder="t('contact.ph_message')" />
       </div>
 
       <!-- Honeypot -->
-      <input v-model="hp" tabindex="-1" style="position:absolute;left:-9999px" autocomplete="off" />
+      <input v-model="hp" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px" autocomplete="off" />
 
-      <p v-if="errorMsg" class="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">{{ errorMsg }}</p>
-      <p v-if="done"     class="rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-700">{{ t('contact.success') }}</p>
+      <p v-if="errorMsg" role="alert"  class="rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">{{ errorMsg }}</p>
+      <p v-if="done"     role="status" class="rounded-xl bg-emerald-50 border border-emerald-200 px-4 py-3 text-sm text-emerald-700">{{ t('contact.success') }}</p>
 
       <button class="btn-primary w-full py-3 text-base" :disabled="loading">
         {{ loading ? t('contact.submitting') : t('contact.submit') }}
@@ -92,7 +93,7 @@
             <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
             <p class="text-zinc-400 text-xs"><span class="whitespace-nowrap">@503wuawu</span> <span class="whitespace-nowrap">・{{ t('contact.line_add') }}</span></p>
           </div>
-          <img src="/line-qr.png" :alt="t('contact.line_add')" loading="lazy" decoding="async" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
+          <img src="/line-qr.png" width="480" height="480" :alt="t('contact.line_add')" loading="lazy" decoding="async" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
         </a>
       </div>
     </div>

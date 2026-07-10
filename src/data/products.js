@@ -220,8 +220,8 @@ export const FAMILIES = [
       {
         slug: 'multi',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/reisti-cordless-multi-drill-bit.png',
-        gallery: ['/products/reisti-cordless-multi-drill-bit.png'],
+        hero: '/products/reisti-cordless-multi-drill-bit.webp',
+        gallery: ['/products/reisti-cordless-multi-drill-bit.webp'],
         detail: {
           ja: '6.35mm六角軸シャンク採用で、充電インパクトドライバーにワンタッチ装着。超硬チップ＋非対称刃先により食いつきが良く、薄鉄板・コンクリート・ブロックへの穴あけスピードが向上。耐摩耗性に優れた超硬チップで長寿命を実現した高耐久仕様です。',
           en: 'One-touch attachment to cordless impact drivers via 6.35mm hex shank. Carbide tip with asymmetric cutting edge bites fast into thin steel, concrete, and block. Wear-resistant carbide delivers long service life.',
@@ -256,8 +256,8 @@ export const FAMILIES = [
       {
         slug: 'cobalt',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/reisti-hex-cobalt-drill.png',
-        gallery: ['/products/reisti-hex-cobalt-drill.png'],
+        hero: '/products/reisti-hex-cobalt-drill.webp',
+        gallery: ['/products/reisti-hex-cobalt-drill.webp'],
         detail: {
           ja: 'ステンレス鋼や難削材の加工に最適なコバルトハイス（HSSCO）を採用。耐熱性・耐摩耗性に優れた高級ハイス鋼で長寿命を実現。精密研磨仕上げにより食いつきが良く、センターポンチ不要で正確な位置への穴あけが可能です。',
           en: 'Cobalt HSS (HSSCO) optimized for stainless steel and difficult materials. Premium high-speed steel with superior heat and wear resistance for long life. Precision-ground point bites cleanly — no center punch needed for accurate positioning.',
@@ -294,8 +294,8 @@ export const FAMILIES = [
       {
         slug: 'hss',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/reisti-hss-bimetal-hole-saw.png',
-        gallery: ['/products/reisti-hss-bimetal-hole-saw.png'],
+        hero: '/products/reisti-hss-bimetal-hole-saw.webp',
+        gallery: ['/products/reisti-hss-bimetal-hole-saw.webp'],
         detail: {
           ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせたバイメタル構造。ツバ無し設計でスペースが限られた作業環境でも使いやすく、薄鉄板・アルミ・塩ビ・木材など幅広い材料に対応します。電気工事・配管工事の定番サイズを全33サイズラインナップ。',
           en: 'Bimetal construction pairs an H.S.S. cutting edge with a flexible backbone. Flange-free design works in tight spaces, cutting thin steel, aluminium, PVC, and wood. Full 33-size lineup covering standard electrical and plumbing diameters.',
@@ -334,8 +334,8 @@ export const FAMILIES = [
       {
         slug: 'tct',
         label: { ja: '標準', en: 'Standard' },
-        hero: '/products/reisti-tct-carbide-hole-saw.png',
-        gallery: ['/products/reisti-tct-carbide-hole-saw.png'],
+        hero: '/products/reisti-tct-carbide-hole-saw.webp',
+        gallery: ['/products/reisti-tct-carbide-hole-saw.webp'],
         detail: {
           ja: 'トリプル刃・超硬チップ採用で、ステンレス板・FRPなどの難削材にも対応。10mmストレート軸はボール盤・電動ドリルに対応し、ツバ無し設計は薄板・精密加工に適した構造。高精度な穴あけが必要な金属加工・設備工事に最適です。',
           en: 'Triple-blade carbide tips handle stainless sheet, FRP, and other difficult materials. 10mm straight shank fits drill presses and electric drills; flange-free design suits thin-sheet precision work. Ideal for metalworking and equipment installation requiring accurate holes.',

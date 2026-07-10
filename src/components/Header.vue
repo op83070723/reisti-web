@@ -4,8 +4,8 @@
 
       <!-- Logo -->
       <RouterLink to="/" class="flex items-center gap-1 shrink-0">
-        <img src="/logo.png" class="h-[42px] w-auto" alt="" />
-        <img src="/logo-text.png" class="h-[60px] w-auto -ml-7 translate-y-[2.5px]" alt="REISTI" />
+        <img src="/logo.png" width="1050" height="600" class="h-[42px] w-auto" alt="" />
+        <img src="/logo-text.png" width="426" height="240" class="h-[60px] w-auto -ml-7 translate-y-[2.5px]" alt="REISTI" />
       </RouterLink>
 
       <!-- Desktop nav -->
