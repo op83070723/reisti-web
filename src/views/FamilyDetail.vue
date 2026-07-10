@@ -234,6 +234,9 @@ useHead({
     { property: 'og:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
     { property: 'og:description', content: computed(() => tField(fam.value?.intro) || '') },
     { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.png') : `${SITE}/og.jpg`) },
+    { name: 'twitter:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
+    { name: 'twitter:description', content: computed(() => tField(fam.value?.intro) || '') },
+    { name: 'twitter:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.png') : `${SITE}/og.jpg`) },
   ],
   script: [
     {
@@ -248,6 +251,18 @@ useHead({
         manufacturer: { '@type': 'Organization', name: '瑞士釘株式会社', '@id': 'https://www.reisti.com/#org' },
         image: `https://www.reisti.com${variant.value?.hero || ''}`,
         description: fam.value.intro.ja,
+      }) : ''),
+    },
+    {
+      id: 'breadcrumb-jsonld',
+      type: 'application/ld+json',
+      innerHTML: computed(() => fam.value ? JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: '製品一覧', item: `${SITE}/products` },
+          { '@type': 'ListItem', position: 2, name: fam.value.name.ja, item: SITE + route.path },
+        ],
       }) : ''),
     },
   ],

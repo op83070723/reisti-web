@@ -1,5 +1,6 @@
 export default {
   nav: {
+    skip: 'Skip to content',
     home: 'Home',
     products: 'Products',
     about: 'About',

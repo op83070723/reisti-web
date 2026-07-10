@@ -57,6 +57,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ ok: true })
   } catch (err) {
     console.error(err)
-    return res.status(500).json({ ok: false, error: err.message || 'send failed' })
+    // 内部エラーの詳細はログのみ。クライアントへは固定メッセージを返す
+    return res.status(500).json({ ok: false, error: 'send failed' })
   }
 }

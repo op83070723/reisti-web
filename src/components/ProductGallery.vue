@@ -13,6 +13,7 @@
         :alt="currentSlot.alt || ''"
         width="1000"
         height="1000"
+        fetchpriority="high"
         class="h-full w-full object-contain p-6" />
 
       <!-- Empty placeholder -->

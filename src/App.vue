@@ -1,6 +1,7 @@
 <template>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-pink-600 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg">{{ t('nav.skip') }}</a>
   <Header />
-  <main>
+  <main id="main">
     <RouterView />
   </main>
   <Footer />
@@ -14,10 +15,14 @@ import { useHead } from '@unhead/vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import FloatingContact from './components/FloatingContact.vue'
-import { lang, initLang } from './i18n/index.js'
+import { useI18n, lang, initLang } from './i18n/index.js'
 import { SITE, DEFAULT_DESC } from './router/index.js'
+// 字体は Vite がハッシュ付きで /assets/ へ出力するため、?url で解決した URL を preload する
+import fontUrl400 from './assets/fonts/subset/GenYoGothic2JP-400.woff2?url'
+import fontUrl700 from './assets/fonts/subset/GenYoGothic2JP-700.woff2?url'
 
 const route = useRoute()
+const { t } = useI18n()
 
 /* ルートの meta から title / description / canonical / OG を設定。
    SSG 時に静的 HTML へ焼き込まれる。製品ページは FamilyDetail の useHead が
@@ -37,10 +42,16 @@ useHead({
     { property: 'og:description', content: pageDesc },
     { property: 'og:url',         content: pageUrl },
     { property: 'og:image',       content: `${SITE}/og.jpg` },
-    { name: 'twitter:card',       content: 'summary_large_image' },
+    { name: 'twitter:card',        content: 'summary_large_image' },
+    { name: 'twitter:title',       content: pageTitle },
+    { name: 'twitter:description', content: pageDesc },
+    { name: 'twitter:image',       content: `${SITE}/og.jpg` },
   ],
   link: [
     { rel: 'canonical', href: pageUrl },
+    // preload は本文と見出しで必ず使う 400/700 のみ（500/900 は初期表示に不要）
+    { rel: 'preload', as: 'font', type: 'font/woff2', href: fontUrl400, crossorigin: 'anonymous' },
+    { rel: 'preload', as: 'font', type: 'font/woff2', href: fontUrl700, crossorigin: 'anonymous' },
   ],
   htmlAttrs: { lang },
 })

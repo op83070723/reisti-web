@@ -7,7 +7,9 @@
     <!-- title / description / canonical は unhead がページごとに管理（SSG で静的 HTML に焼き込み） -->
 
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
 
     <!-- OG / Twitter Card は unhead がページごとに管理（App.vue、製品ページは FamilyDetail が上書き） -->
     <script type="application/ld+json">
@@ -30,6 +32,16 @@
       },
       "foundingDate": "2025-08-01",
       "founder": { "@type": "Person", "name": "陳 兪岑" }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "REISTI",
+      "alternateName": "REISTI（レイスティ）公式サイト",
+      "url": "https://www.reisti.com/",
+      "publisher": { "@id": "https://www.reisti.com/#org" }
     }
     </script>
   </head>

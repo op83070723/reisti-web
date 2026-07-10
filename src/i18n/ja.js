@@ -1,5 +1,6 @@
 export default {
   nav: {
+    skip: '本文へスキップ',
     home: 'ホーム',
     products: '製品情報',
     about: '会社概要',
