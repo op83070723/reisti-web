@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { FAMILIES } from './src/data/products.js'
 
 export default defineConfig({
   plugins: [vue()],
   ssgOptions: {
     // /products → dist/products/index.html（Vercel などの静的ホスティングがそのまま解決できる形式）
     dirStyle: 'nested',
-    // 生成するページの明示リスト（動的ルートの製品 4 ページ含む。リダイレクト用ルートは除外）
+    // 生成するページの明示リスト。製品ページは products.js の FAMILIES から導出（追加漏れ防止、
+    // sitemap も scripts/generate-sitemap.mjs が同じデータから生成）。リダイレクト用ルートは除外。
     // /404 は catch-all ルートで描画され、ビルド後に dist/404.html へコピーされる（package.json の build）
     includedRoutes: () => [
       '/',
@@ -16,10 +18,7 @@ export default defineConfig({
       '/contact',
       '/privacy',
       '/404',
-      '/products/drill-bit/multi',
-      '/products/drill-bit/cobalt',
-      '/products/hole-saw/hss',
-      '/products/hole-saw/tct',
+      ...FAMILIES.flatMap(f => f.variants.map(v => `/products/${f.category}/${v.slug}`)),
     ],
   },
 })

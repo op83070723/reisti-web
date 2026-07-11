@@ -11,7 +11,7 @@ export default {
   home: {
     hero_lead: 'No Dull Moments.',
     hero_title: 'Pro-Grade Drill Bits · REISTI',
-    hero_sub: 'A professional tool brand rooted in 30 years of Taiwan\'s hardware industry. Cordless multi drill bits, cobalt drills, and HSS/carbide hole saws — manufactured in-house. OEM available.',
+    hero_sub: 'A professional tool brand built on our parent company\'s 30 years in Taiwan\'s hardware industry. Cordless multi drill bits, cobalt drills, and HSS/carbide hole saws — manufactured in-house. OEM available.',
     btn_products: 'View Products',
     btn_contact: 'Contact Us',
     trust_title: 'Why REISTI',
@@ -67,13 +67,14 @@ export default {
     sub: 'REISTI is a Taiwanese drill bit brand with 25+ years of manufacturing experience.',
     story_label: 'Our Story',
     story_title: 'Nearly 30 years of expertise, built into every bit.',
-    story_p1: 'Taiwan-based Zuishidin has spent nearly three decades at the forefront of Taiwan\'s hardware and industrial tools wholesale industry. That experience gave us an intimate understanding of what professionals truly demand from their tools: precision that doesn\'t drift, and durability that lasts.',
+    story_p1: 'REISTI\'s parent company, Taiwan-based Zuishidin, has spent nearly three decades at the forefront of Taiwan\'s hardware and industrial tools wholesale industry. That experience gave us an intimate understanding of what professionals truly demand from their tools: precision that doesn\'t drift, and durability that lasts.',
     story_p2: 'To safeguard quality at the source, we established a dedicated drill bit manufacturing facility in China — enabling end-to-end control from R&D through production. Drawing on decades as a distributor, we have also cultivated deep partnerships with carefully selected factories that share our standards for technical excellence.',
     story_p3: 'In 2025, we brought that accumulated expertise to Japan under the REISTI brand. Our mission is clear: to give Japan\'s construction and metalworking professionals tools that deliver genuine value — high performance without compromise on price. We are equally committed to building new manufacturing partnerships between Japanese brands and our trusted factory network.',
     company_title: 'Company Information',
     label_name: 'Company',
     label_address: 'Address',
     label_founded: 'Founded',
+    label_group: 'Parent company',
     label_ceo: 'CEO',
     label_capital: 'Capital',
     label_business: 'Business',
@@ -92,7 +93,7 @@ export default {
   oem: {
     hero_label: 'OEM & Contract Manufacturing',
     hero_title: 'Your Brand.\nREISTI Manufacturing.',
-    hero_sub: 'A professional tool brand with 30 years of expertise in Taiwan\'s hardware industry — supplying OEM and private-label drill bits to distributors and brands worldwide.',
+    hero_sub: 'Backed by our parent company\'s 30 years in Taiwan\'s hardware industry, we supply OEM and private-label drill bits to distributors and brands worldwide.',
     hero_btn: 'Get in Touch',
     why_title: 'Why Choose REISTI for OEM',
     reasons: [
