@@ -59,7 +59,10 @@
           <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 text-base font-extrabold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-1 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
+          <RouterLink
+            :to="{ path: '/contact', query: { type: 'oem', product: tField(p.name) } }"
+            class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors"
+            @click="track('cta_click', { cta: 'oem_card', product: p.name.ja })">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>
@@ -73,6 +76,7 @@
 import { computed } from 'vue'
 import { useI18n, tField } from '../i18n/index.js'
 import { OEM_FAMILIES, CATALOG_PDF } from '../data/products.js'
+import { track } from '../utils/track.js'
 import ProductScroller from '../components/ProductScroller.vue'
 
 const { t, lang } = useI18n()

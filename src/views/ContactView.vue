@@ -10,7 +10,7 @@
 
     <!-- Form -->
     <!-- maxlength は api/contact.js の LIMITS と一致させること -->
-    <form class="space-y-5" @submit.prevent="submit">
+    <form class="space-y-5" @submit.prevent="submit" @focusin="onFormStart">
 
       <div class="grid gap-5 sm:grid-cols-2">
         <div>
@@ -68,6 +68,10 @@
       <button class="btn-primary w-full py-3 text-base" :disabled="loading">
         {{ loading ? t('contact.submitting') : t('contact.submit') }}
       </button>
+
+      <p class="text-xs text-zinc-500">
+        {{ t('contact.privacy_pre') }}<RouterLink to="/privacy" class="underline hover:text-zinc-700">{{ t('contact.privacy_link') }}</RouterLink>{{ t('contact.privacy_post') }}
+      </p>
     </form>
 
     <!-- Alternative contact methods -->
@@ -105,6 +109,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from '../i18n/index.js'
+import { track } from '../utils/track.js'
 
 const { t } = useI18n()
 const route    = useRoute()
@@ -130,6 +135,14 @@ onMounted(() => {
   if (TYPE_CODES.includes(q.type)) form.type = q.type
 })
 
+/* 変換イベント（個人情報は送らない：form_start は無属性、form_success は種別コードのみ） */
+let formStarted = false
+function onFormStart() {
+  if (formStarted) return
+  formStarted = true
+  track('form_start')
+}
+
 async function submit() {
   done.value     = false
   errorMsg.value = ''
@@ -148,6 +161,7 @@ async function submit() {
     })
     const data = await res.json()
     if (!res.ok || !data.ok) throw new Error(data.error || t('contact.err_send'))
+    track('form_success', { type: form.type || 'none' })
     done.value = true
     Object.keys(form).forEach(k => form[k] = '')
   } catch (e) {

@@ -28,6 +28,22 @@
     </div>
     <p class="mt-2 text-zinc-500">{{ tField(fam.intro) }}</p>
 
+    <!-- ファーストビュー CTA：見積もり・サンプル（製品名を自動プリフィル） -->
+    <div class="mt-5 flex flex-wrap gap-2.5">
+      <RouterLink
+        :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }"
+        class="btn-red"
+        @click="track('cta_click', { cta: 'quote', product: quoteProduct })">
+        {{ t('product.quote_btn') }}
+      </RouterLink>
+      <RouterLink
+        :to="{ path: '/contact', query: { type: 'sample', product: quoteProduct } }"
+        class="btn-outline"
+        @click="track('cta_click', { cta: 'sample', product: quoteProduct })">
+        {{ t('product.sample_btn') }}
+      </RouterLink>
+    </div>
+
     <!-- Main: description + gallery -->
     <div class="mt-8 grid gap-8 md:grid-cols-12">
       <div class="md:col-span-5">
@@ -99,6 +115,7 @@
           <thead class="bg-zinc-50 text-xs font-semibold uppercase tracking-wide text-zinc-500">
             <tr>
               <th v-for="c in cols" :key="c" class="px-4 py-3 text-left whitespace-nowrap">{{ colLabels[c] }}</th>
+              <th class="px-4 py-3"><span class="sr-only">{{ t('product.quote_btn') }}</span></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-zinc-100">
@@ -125,12 +142,22 @@
                   {{ row[c] ?? '—' }}<svg v-if="copyable(c, row)" class="copy-ic ml-1.5 inline h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
                 </template>
               </td>
+              <!-- 行単位の見積もり CTA：製品名＋サイズをプリフィルして遷移 -->
+              <td class="px-4 py-3 whitespace-nowrap text-right">
+                <RouterLink
+                  :to="{ path: '/contact', query: { type: 'bulk', product: `${quoteProduct} Ø${row.size}mm` } }"
+                  class="text-xs font-medium text-pink-600 hover:text-pink-700"
+                  :aria-label="`Ø${row.size}mm ${t('product.quote_btn')}`"
+                  @click.stop="track('cta_click', { cta: 'quote_size', product: quoteProduct, size: `${row.size}mm` })">
+                  {{ t('product.quote_btn') }} →
+                </RouterLink>
+              </td>
             </tr>
             <tr v-if="!rows.length">
-              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-500">{{ t('product.pending') }}</td>
+              <td :colspan="cols.length + 1" class="px-4 py-6 text-center text-zinc-500">{{ t('product.pending') }}</td>
             </tr>
             <tr v-if="rows.length && sizeQuery.trim() && !hitCount">
-              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-500">
+              <td :colspan="cols.length + 1" class="px-4 py-6 text-center text-zinc-500">
                 {{ lang === 'ja' ? '該当するサイズがありません' : 'No matching sizes' }}
               </td>
             </tr>
@@ -184,7 +211,8 @@ import { ref, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { useI18n, tField } from '../i18n/index.js'
-import { findFamily } from '../data/products.js'
+import { findFamily, CATEGORIES } from '../data/products.js'
+import { track } from '../utils/track.js'
 import { SITE } from '../router/index.js'
 import ProductGallery    from '../components/ProductGallery.vue'
 import SuitabilityMatrix from '../components/SuitabilityMatrix.vue'
@@ -250,8 +278,16 @@ useHead({
         alternateName: fam.value.name.en,
         brand: { '@type': 'Brand', name: 'REISTI' },
         manufacturer: { '@type': 'Organization', name: '瑞士釘株式会社', '@id': 'https://www.reisti.com/#org' },
+        url: `https://www.reisti.com${route.path}`,
+        category: CATEGORIES.find(c => c.slug === fam.value.category)?.name.ja || fam.value.category,
         image: `https://www.reisti.com${variant.value?.hero || ''}`,
         description: fam.value.intro.ja,
+        // material は使わない：products.js の materials は「加工対象の材料」であり製品自体の素材ではない
+        additionalProperty: [
+          variant.value?.materials && { '@type': 'PropertyValue', name: '用途材料', value: variant.value.materials.ja },
+          variant.value?.shank     && { '@type': 'PropertyValue', name: 'シャンク', value: variant.value.shank.ja },
+          variant.value?.tools     && { '@type': 'PropertyValue', name: '適合電動機', value: variant.value.tools.ja },
+        ].filter(Boolean),
       }) : ''),
     },
     {
