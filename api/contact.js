@@ -17,20 +17,21 @@ const TYPE_LABELS = {
   catalog: 'カタログ・技術資料',
   other: 'その他',
 }
-const MAX_BODY_BYTES = 16 * 1024
+// 正当な最大ケース（message 5000 字の日本語 ≈ 15KB）に余裕を持たせつつ濫用を遮断する
+const MAX_BODY_BYTES = 32 * 1024
 // message 以外は 1 行フィールド：改行を含む制御文字を拒否（メール件名などへの混入防止）
 const CONTROL_RE = /[\u0000-\u001F\u007F]/
 // message は改行・タブのみ許可
 const MESSAGE_CONTROL_RE = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/
 
-function originAllowed(origin) {
+function originAllowed(origin, host) {
   if (!origin) return true // Origin ヘッダは補助チェック：無い場合（非ブラウザ等）は他の防御に任せる
   try {
     const { hostname, protocol } = new URL(origin)
     if (hostname === 'localhost' || hostname === '127.0.0.1') return true
     if (hostname === 'www.reisti.com' || hostname === 'reisti.com') return protocol === 'https:'
-    if (hostname.endsWith('.vercel.app')) return protocol === 'https:' // preview デプロイ
-    return false
+    // 自デプロイ（preview 含む）のみ許可：*.vercel.app 全体を許可すると第三者のデプロイも通ってしまう
+    return protocol === 'https:' && !!host && hostname === String(host).toLowerCase()
   } catch {
     return false
   }
@@ -45,22 +46,27 @@ export function createHandler({ send } = {}) {
     if (!contentType.includes('application/json'))
       return res.status(415).json({ ok: false, error: 'unsupported content type' })
 
-    if (!originAllowed(req.headers?.origin))
+    if (!originAllowed(req.headers?.origin, req.headers?.host))
       return res.status(403).json({ ok: false, error: 'forbidden origin' })
 
-    // Vercel は handler 到達前に body を解析済みのため、Content-Length と解析後サイズの両方を見る
+    // Content-Length は早期リジェクト用。ただし chunked／圧縮では偽装・省略できるため、
+    // 解析後の実バイト数（UTF-8）でも必ず検証する
     if (Number(req.headers?.['content-length'] || 0) > MAX_BODY_BYTES)
       return res.status(413).json({ ok: false, error: 'payload too large' })
 
     let body = {}
     try {
       if (typeof req.body === 'string') {
-        if (req.body.length > MAX_BODY_BYTES) return res.status(413).json({ ok: false, error: 'payload too large' })
+        if (Buffer.byteLength(req.body, 'utf8') > MAX_BODY_BYTES)
+          return res.status(413).json({ ok: false, error: 'payload too large' })
         body = JSON.parse(req.body)
       } else {
         body = req.body || {}
       }
     } catch { return res.status(400).json({ ok: false, error: 'Invalid JSON' }) }
+
+    if (Buffer.byteLength(JSON.stringify(body), 'utf8') > MAX_BODY_BYTES)
+      return res.status(413).json({ ok: false, error: 'payload too large' })
 
     if (body.hp) return res.status(200).json({ ok: true })
 

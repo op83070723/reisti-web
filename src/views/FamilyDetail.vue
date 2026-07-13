@@ -126,6 +126,9 @@
                     c === 'code' || c === 'jan' ? 'font-mono text-xs text-zinc-500' : c === 'size' ? 'font-medium' : 'text-zinc-600',
                     copyable(c, row) ? 'copy-cell cursor-pointer select-none transition-colors hover:text-pink-600' : '',
                   ]"
+                  :tabindex="copyable(c, row) ? 0 : undefined"
+                  @keydown.enter.prevent="copyable(c, row) && copyText(row[c])"
+                  @keydown.space.prevent="copyable(c, row) && copyText(row[c])"
                   @click="copyable(c, row) && copyText(row[c])">
                 <template v-if="c === 'size'">
                   Ø{{ row.size }}mm
@@ -246,8 +249,11 @@ const copyable = (c, row) => (c === 'code' || c === 'jan') && !!row[c]
 const toast = ref('')
 let toastTimer = null
 async function copyText(text) {
-  try { await navigator.clipboard.writeText(text) } catch { /* 非 HTTPS 等では黙ってスキップ */ }
-  toast.value = lang.value === 'ja' ? `${text} をコピーしました` : `Copied ${text}`
+  let ok = true
+  try { await navigator.clipboard.writeText(text) } catch { ok = false } // 非 HTTPS 等で失敗し得る
+  toast.value = ok
+    ? (lang.value === 'ja' ? `${text} をコピーしました` : `Copied ${text}`)
+    : (lang.value === 'ja' ? 'コピーできませんでした' : 'Copy failed')
   clearTimeout(toastTimer)
   toastTimer = setTimeout(() => { toast.value = '' }, 1600)
 }

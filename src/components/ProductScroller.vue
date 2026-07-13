@@ -49,8 +49,8 @@
       </div>
 
       <div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-between">
-        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30 pointer-events-none': !canL }" @click="scroll(-1)" aria-label="Previous">‹</button>
-        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30 pointer-events-none': !canR }" @click="scroll(1)"  aria-label="Next">›</button>
+        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30': !canL }" :disabled="!canL" @click="scroll(-1)" aria-label="前へ">‹</button>
+        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30': !canR }" :disabled="!canR" @click="scroll(1)"  aria-label="次へ">›</button>
       </div>
     </div>
   </section>

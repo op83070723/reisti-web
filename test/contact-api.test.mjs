@@ -52,11 +52,16 @@ test('本番 Origin は許可', async () => {
   assert.equal(res.statusCode, 200)
 })
 
-test('preview（*.vercel.app）と localhost の Origin は許可', async () => {
-  for (const origin of ['https://reisti-web-abc123.vercel.app', 'http://localhost:5173']) {
-    const { res } = await run(VALID, { headers: { origin } })
-    assert.equal(res.statusCode, 200, origin)
-  }
+test('自デプロイの preview Origin（Host 一致）と localhost は許可', async () => {
+  const self = await run(VALID, { headers: { origin: 'https://reisti-web-abc123.vercel.app', host: 'reisti-web-abc123.vercel.app' } })
+  assert.equal(self.res.statusCode, 200)
+  const local = await run(VALID, { headers: { origin: 'http://localhost:5173' } })
+  assert.equal(local.res.statusCode, 200)
+})
+
+test('第三者の *.vercel.app Origin（Host 不一致）は 403', async () => {
+  const { res } = await run(VALID, { headers: { origin: 'https://attacker-site.vercel.app', host: 'www.reisti.com' } })
+  assert.equal(res.statusCode, 403)
 })
 
 test('Content-Length 超過は 413', async () => {
@@ -65,8 +70,19 @@ test('Content-Length 超過は 413', async () => {
 })
 
 test('文字列 body が過大なら 413', async () => {
-  const { res } = await run('x'.repeat(17 * 1024))
+  const { res } = await run('x'.repeat(33 * 1024))
   assert.equal(res.statusCode, 413)
+})
+
+test('解析済みオブジェクトが過大でも 413（Content-Length なし＝chunked/圧縮の想定）', async () => {
+  const { res, sent } = await run({ ...VALID, junk: 'x'.repeat(33 * 1024) })
+  assert.equal(res.statusCode, 413)
+  assert.equal(sent.length, 0)
+})
+
+test('多バイト：日本語 5000 字の message（約15KB）は正当として通る', async () => {
+  const { res } = await run({ ...VALID, message: 'あ'.repeat(5000) })
+  assert.equal(res.statusCode, 200)
 })
 
 test('壊れた JSON 文字列は 400', async () => {
@@ -126,7 +142,8 @@ test('honeypot は 200 を返しつつ送信しない', async () => {
   assert.equal(sent.length, 0)
 })
 
-test('送信プロバイダ失敗時は 500・内部詳細を漏らさない', async () => {
+test('送信プロバイダ失敗時は 500・内部詳細を漏らさない', async (t) => {
+  t.mock.method(console, 'error', () => {}) // ハンドラ内の console.error を黙らせて CI 出力を汚さない
   const handler = createHandler({ send: async () => { throw new Error('Missing API key. Secret detail.') } })
   const res = makeRes()
   await handler(makeReq(VALID), res)
