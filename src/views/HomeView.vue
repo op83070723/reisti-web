@@ -29,7 +29,7 @@
         <div v-for="(item, i) in t('home.trust')" :key="i" class="text-center">
           <p class="text-3xl font-black text-zinc-900"><CountUp :value="item.n" /></p>
           <p class="mt-0.5 text-sm font-semibold text-zinc-700">{{ item.label }}</p>
-          <p class="mt-0.5 text-xs text-zinc-400">{{ item.sub }}</p>
+          <p class="mt-0.5 text-xs text-zinc-500">{{ item.sub }}</p>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
   <section class="py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10">
-        <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">{{ t('home.products_label') }}</p>
+        <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">{{ t('home.products_label') }}</p>
         <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('home.products_title') }}</h2>
       </div>
 
@@ -49,7 +49,7 @@
           v-for="cat in categories" :key="cat.slug"
           :to="`/products`"
           class="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:shadow-md hover:-translate-y-0.5">
-          <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ tField(cat.lead) }}</p>
+          <p class="text-xs font-semibold uppercase tracking-widest text-pink-600">{{ tField(cat.lead) }}</p>
           <h3 class="mt-2 text-xl font-extrabold text-zinc-900">{{ tField(cat.name) }}</h3>
           <div class="mt-4 flex items-center gap-1 text-sm font-medium text-zinc-500 group-hover:text-zinc-900 transition-colors">
             <span>{{ t('home.btn_products') }}</span>

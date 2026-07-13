@@ -3,7 +3,7 @@
 
     <!-- Header -->
     <div class="mb-10">
-      <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Contact</p>
+      <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">Contact</p>
       <h1 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('contact.title') }}</h1>
       <p class="mt-3 text-zinc-500">{{ t('contact.sub') }}</p>
     </div>
@@ -38,7 +38,8 @@
         <label class="label" for="contact-type">{{ t('contact.label_type') }}</label>
         <select id="contact-type" v-model="form.type" class="input mt-1">
           <option value="">{{ t('contact.select_type') }}</option>
-          <option v-for="tp in t('contact.types')" :key="tp" :value="tp">{{ tp }}</option>
+          <!-- value は言語非依存のコード（API の allowlist・URL プリフィルと共通）。表示だけ翻訳する -->
+          <option v-for="(code, i) in TYPE_CODES" :key="code" :value="code">{{ t('contact.types')[i] }}</option>
         </select>
       </div>
 
@@ -71,27 +72,27 @@
 
     <!-- Alternative contact methods -->
     <div v-reveal class="mt-12 border-t border-zinc-100 pt-10">
-      <p class="text-sm font-semibold text-zinc-400 uppercase tracking-widest">{{ t('contact.also_label') }}</p>
+      <p class="text-sm font-semibold text-zinc-500 uppercase tracking-widest">{{ t('contact.also_label') }}</p>
       <div class="mt-4 grid gap-4 sm:grid-cols-3">
         <a href="tel:05088948687" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-lg">☎</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ t('contact.phone_label') }}</p>
-            <p class="text-zinc-400 text-xs">050-8894-8687</p>
+            <p class="text-zinc-500 text-xs">050-8894-8687</p>
           </div>
         </a>
         <a href="mailto:chenytbiz@reisti.org" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-lg">✉</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ t('contact.email_label') }}</p>
-            <p class="text-zinc-400 text-xs">chenytbiz@reisti.org</p>
+            <p class="text-zinc-500 text-xs">chenytbiz@reisti.org</p>
           </div>
         </a>
         <a href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#06C755] text-lg text-white font-bold">L</span>
           <div class="min-w-0 flex-1">
             <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
-            <p class="text-zinc-400 text-xs"><span class="whitespace-nowrap">@503wuawu</span> <span class="whitespace-nowrap">・{{ t('contact.line_add') }}</span></p>
+            <p class="text-zinc-500 text-xs"><span class="whitespace-nowrap">@503wuawu</span> <span class="whitespace-nowrap">・{{ t('contact.line_add') }}</span></p>
           </div>
           <img src="/line-qr.png" width="480" height="480" :alt="t('contact.line_add')" loading="lazy" decoding="async" class="hidden h-16 w-16 shrink-0 rounded sm:block" />
         </a>
@@ -118,15 +119,15 @@ const form = reactive({
 })
 
 /* クエリからの事前入力（例：製品ページの「お見積もり」→ /contact?type=bulk&product=…）。
-   ?type= は言語非依存のキーで受け、表示中の言語の選択肢へマッピングする。
+   type は言語非依存のコードのまま保持・送信し、i18n の contact.types と index で対応する
+   （翻訳文字列を value にすると言語切替で選択が失われるため）。
    SSG の静的 HTML はクエリなしで焼かれるため、onMounted で反映する（hydration 不一致回避） */
-const TYPE_INDEX = { oem: 0, bulk: 1, sample: 2, catalog: 3, other: 4 }
+const TYPE_CODES = ['oem', 'bulk', 'sample', 'catalog', 'other']
 onMounted(() => {
   const q = route.query
   if (typeof q.product === 'string' && q.product) form.product = q.product
   if (typeof q.qty === 'string' && q.qty)         form.qty     = q.qty
-  const idx = TYPE_INDEX[q.type]
-  if (idx != null) form.type = t('contact.types')[idx] ?? ''
+  if (TYPE_CODES.includes(q.type)) form.type = q.type
 })
 
 async function submit() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="grid gap-3 md:grid-cols-[1fr_80px]">
+  <div class="grid gap-3" :class="slots.length > 1 ? 'md:grid-cols-[1fr_80px]' : ''">
     <!-- Main image -->
     <div
       class="relative rounded-xl border border-zinc-200 bg-white overflow-hidden select-none"
@@ -24,23 +24,28 @@
         <span class="text-xs text-zinc-300">Coming soon</span>
       </div>
 
-      <button v-if="slots.length > 1" class="nav-btn left-2"  @click="prev" aria-label="Previous">‹</button>
-      <button v-if="slots.length > 1" class="nav-btn right-2" @click="next" aria-label="Next">›</button>
-      <div v-if="slots.length > 1" class="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+      <button v-if="slots.length > 1" class="nav-btn left-2"  @click="prev" aria-label="前の画像">‹</button>
+      <button v-if="slots.length > 1" class="nav-btn right-2" @click="next" aria-label="次の画像">›</button>
+      <div v-if="slots.length > 1" class="absolute bottom-0 left-1/2 -translate-x-1/2 flex">
+        <!-- ドットの視覚サイズは小さいまま、padding でタップ領域を 24px 以上確保する -->
         <button
           v-for="(_, i) in slots" :key="i"
-          class="h-1.5 w-5 rounded-full transition-colors"
-          :class="i === idx ? 'bg-zinc-800' : 'bg-zinc-300 hover:bg-zinc-500'"
-          @click="go(i)" />
+          class="px-1.5 py-2.5"
+          :aria-label="`${i + 1}枚目の画像`"
+          :aria-current="i === idx ? 'true' : undefined"
+          @click="go(i)">
+          <span class="block h-1.5 w-5 rounded-full transition-colors" :class="i === idx ? 'bg-zinc-800' : 'bg-zinc-300 hover:bg-zinc-500'" />
+        </button>
       </div>
     </div>
 
-    <!-- Thumbnails -->
-    <div class="flex md:flex-col gap-2 overflow-auto">
+    <!-- Thumbnails（実画像が 1 枚のときは列ごと非表示） -->
+    <div v-if="slots.length > 1" class="flex md:flex-col gap-2 overflow-auto">
       <button
         v-for="(slot, i) in slots" :key="i"
         class="relative shrink-0 rounded-lg overflow-hidden ring-1 transition bg-white"
         :class="i === idx ? 'ring-pink-500 ring-2' : 'ring-zinc-200 hover:ring-zinc-400'"
+        :aria-label="`${i + 1}枚目の画像を表示`"
         @click="go(i)">
         <img v-if="slot" :src="slot.src" :alt="slot.alt || ''" width="1000" height="1000" loading="lazy" decoding="async" class="h-16 w-20 md:h-20 md:w-20 object-contain p-1" />
         <div v-else class="h-16 w-20 md:h-20 md:w-20 flex items-center justify-center text-zinc-200">
@@ -68,6 +73,9 @@ let timer = null
 
 const slots = computed(() => {
   const real = (props.images || []).filter(Boolean)
+  // 実画像が 1 枚以下なら「Coming soon」の空スロットは作らない（未完成に見えるため）。
+  // 2 枚以上そろったときだけ minSlots まで埋めて増補予定を示す
+  if (real.length <= 1) return real.length ? real : [null]
   const count = Math.max(real.length, props.minSlots)
   return Array.from({ length: count }, (_, i) => real[i] ?? null)
 })
@@ -93,5 +101,5 @@ watch(() => props.images, () => { idx.value = 0; start() }, { deep: true })
 </script>
 
 <style scoped>
-.nav-btn { @apply absolute top-1/2 -translate-y-1/2 grid place-items-center h-8 w-8 rounded-full bg-white/90 border border-zinc-200 text-lg text-zinc-700 hover:bg-white; }
+.nav-btn { @apply absolute top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-white/90 border border-zinc-200 text-lg text-zinc-700 hover:bg-white; }
 </style>

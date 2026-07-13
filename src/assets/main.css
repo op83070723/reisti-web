@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 /* Subset woff2 (only glyphs used on the site) — regenerate via scripts/subset-fonts.sh after editing copy */
+/* 500 は配信しない（初回ロード軽量化）：font-medium は最寄りの 400 で描画される */
 @font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
 @font-face { font-family: 'GenYoGothic2JP'; src: url('./fonts/subset/GenYoGothic2JP-900.woff2') format('woff2'); font-weight: 900; font-display: swap; }
 
@@ -32,9 +32,10 @@
     @apply inline-flex items-center justify-center rounded-xl border border-zinc-300 px-5 py-2.5 text-sm font-semibold text-zinc-700 transition-colors hover:bg-zinc-50 disabled:opacity-50;
   }
   .btn-red {
-    @apply inline-flex items-center justify-center rounded-xl bg-pink-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-pink-600 disabled:opacity-50;
+    @apply inline-flex items-center justify-center rounded-xl bg-pink-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-pink-700 disabled:opacity-50;
   }
   .input {
-    @apply w-full rounded-xl border border-zinc-300 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-400 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500;
+    /* 枠線 zinc-500＝非テキストコントラスト 3:1 以上（WCAG 1.4.11）。focus はブランド色で示す */
+    @apply w-full rounded-xl border border-zinc-500 px-4 py-3 text-sm text-zinc-900 placeholder-zinc-500 focus:border-pink-600 focus:outline-none focus:ring-1 focus:ring-pink-600;
   }
 }

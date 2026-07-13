@@ -48,12 +48,12 @@
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
           <RouterLink
             :to="`/products/${p.category}/${p.variants[0].slug}`"
-            class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
+            class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? '製品詳細' : 'Details' }} →
           </RouterLink>
         </div>
       </div>
-      <p class="mt-6 text-xs text-zinc-400">※ {{ t('oem.own_note') }}</p>
+      <p class="mt-6 text-xs text-zinc-500">※ {{ t('oem.own_note') }}</p>
     </div>
   </section>
 
@@ -71,7 +71,7 @@
           <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 font-bold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact?type=oem" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
+          <RouterLink to="/contact?type=oem" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>
@@ -83,7 +83,7 @@
   <section class="bg-zinc-50 py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10 text-center">
-        <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Process</p>
+        <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">Process</p>
         <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.process_title') }}</h2>
       </div>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -104,7 +104,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mx-auto max-w-2xl">
         <div class="mb-8 text-center">
-          <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Capabilities</p>
+          <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">Capabilities</p>
           <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.specs_title') }}</h2>
         </div>
         <div class="divide-y divide-zinc-100 rounded-2xl border border-zinc-200 overflow-hidden">
@@ -134,7 +134,7 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mx-auto max-w-3xl">
         <div class="mb-8 text-center">
-          <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">FAQ</p>
+          <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">FAQ</p>
           <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.faq_title') }}</h2>
         </div>
         <div class="space-y-3">

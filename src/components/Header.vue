@@ -23,7 +23,7 @@
               <div class="rounded-2xl border border-zinc-200 bg-white shadow-xl ring-1 ring-black/5 p-5">
                 <div class="grid grid-cols-3 gap-4">
                   <div v-for="cat in categories" :key="cat.slug">
-                    <p class="mb-2 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
+                    <p class="mb-2 text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
                       {{ tField(cat.name) }}
                     </p>
                     <ul class="space-y-1">
@@ -60,13 +60,13 @@
           <button
             @click="setLang('ja')"
             class="rounded-md px-2.5 py-1 transition-colors"
-            :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-400 hover:text-zinc-700'">
+            :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:text-zinc-700'">
             JA
           </button>
           <button
             @click="setLang('en')"
             class="rounded-md px-2.5 py-1 transition-colors"
-            :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-400 hover:text-zinc-700'">
+            :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:text-zinc-700'">
             EN
           </button>
         </div>
@@ -99,11 +99,11 @@
               class="m-link w-full !flex items-center justify-between text-left"
               @click="mProd = !mProd">
               <span>{{ t('nav.products') }}</span>
-              <span class="text-zinc-400">{{ mProd ? '−' : '+' }}</span>
+              <span class="text-zinc-500">{{ mProd ? '−' : '+' }}</span>
             </button>
             <div v-show="mProd" class="ml-4 mt-1 space-y-3 pb-2">
               <div v-for="cat in categories" :key="cat.slug">
-                <p class="px-2 py-1 text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
+                <p class="px-2 py-1 text-[11px] font-semibold uppercase tracking-widest text-zinc-500">
                   {{ tField(cat.name) }}
                 </p>
                 <RouterLink
@@ -124,8 +124,8 @@
           <!-- Mobile lang + CTA -->
           <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
             <div class="flex items-center rounded-lg border border-zinc-200 p-0.5 text-xs font-semibold">
-              <button @click="setLang('ja')" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-400'">JA</button>
-              <button @click="setLang('en')" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-400'">EN</button>
+              <button @click="setLang('ja')" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-500'">JA</button>
+              <button @click="setLang('en')" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-500'">EN</button>
             </div>
             <RouterLink to="/contact" class="btn-primary text-xs" @click="mobileOpen = false">{{ t('nav.quote') }}</RouterLink>
           </div>

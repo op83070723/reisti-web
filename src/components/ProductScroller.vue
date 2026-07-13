@@ -11,6 +11,8 @@
       <div
         ref="track"
         class="track hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
+        role="region"
+        :aria-label="heading || '製品スライダー'"
         @wheel.passive="onWheel"
         @scroll.passive="sync"
         tabindex="0"
@@ -23,10 +25,10 @@
           class="card snap-center sm:snap-start shrink-0">
           <div class="card-inner relative h-full overflow-hidden">
             <div class="copy px-4 pt-4">
-              <p v-if="p.badge" class="text-[11px] font-semibold uppercase tracking-wide text-zinc-400">{{ p.badge }}</p>
+              <p v-if="p.badge" class="text-[11px] font-semibold uppercase tracking-wide text-zinc-500">{{ p.badge }}</p>
               <h3 class="mt-1 text-xl font-extrabold leading-tight text-zinc-900">{{ p.title }}</h3>
               <p v-if="p.subtitle" class="mt-1 text-sm text-zinc-500">{{ p.subtitle }}</p>
-              <p v-if="p.price" class="mt-2 text-xs font-medium text-zinc-400">{{ p.price }}</p>
+              <p v-if="p.price" class="mt-2 text-xs font-medium text-zinc-500">{{ p.price }}</p>
             </div>
             <!-- 產品圖統一為內容置中的正方形（見下方 .art 註解），寬高屬性只提供 1:1 比例 -->
             <img

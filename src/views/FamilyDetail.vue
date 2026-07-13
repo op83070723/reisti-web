@@ -2,7 +2,7 @@
   <div v-if="fam && variant" class="mx-auto max-w-7xl px-4 sm:px-6 py-10 sm:py-14">
 
     <!-- Breadcrumb -->
-    <nav class="text-sm text-zinc-400">
+    <nav class="text-sm text-zinc-500">
       <RouterLink to="/products" class="hover:text-zinc-700 transition-colors">{{ t('product.breadcrumb') }}</RouterLink>
       <span class="mx-2">/</span>
       <span class="text-zinc-600">{{ tField(fam.name) }}</span>
@@ -19,7 +19,7 @@
           v-for="v in fam.variants" :key="v.slug"
           class="rounded-full border px-3 py-1 text-sm font-medium transition-colors"
           :class="v.slug === variant.slug
-            ? 'border-pink-500 bg-pink-500 text-white'
+            ? 'border-pink-600 bg-pink-600 text-white'
             : 'border-zinc-300 text-zinc-600 hover:border-zinc-500 hover:text-zinc-900'"
           @click="goVariant(v.slug)">
           {{ tField(v.label) }}
@@ -56,15 +56,15 @@
     <!-- Quick specs: materials / shank / tools -->
     <div v-if="variant.materials || variant.shank || variant.tools" class="mt-8 grid gap-3 sm:grid-cols-3">
       <div v-if="variant.materials" class="rounded-xl border border-zinc-200 p-5">
-        <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ t('product.materials_label') }}</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-pink-600">{{ t('product.materials_label') }}</p>
         <p class="mt-2 text-sm leading-relaxed text-zinc-700">{{ tField(variant.materials) }}</p>
       </div>
       <div v-if="variant.shank" class="rounded-xl border border-zinc-200 p-5">
-        <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ t('product.shank_label') }}</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-pink-600">{{ t('product.shank_label') }}</p>
         <p class="mt-2 text-sm leading-relaxed text-zinc-700">{{ tField(variant.shank) }}</p>
       </div>
       <div v-if="variant.tools" class="rounded-xl border border-zinc-200 p-5">
-        <p class="text-xs font-semibold uppercase tracking-widest text-pink-500">{{ t('product.tools_label') }}</p>
+        <p class="text-xs font-semibold uppercase tracking-widest text-pink-600">{{ t('product.tools_label') }}</p>
         <p class="mt-2 text-sm leading-relaxed text-zinc-700">{{ tField(variant.tools) }}</p>
       </div>
     </div>
@@ -73,7 +73,7 @@
     <div class="mt-10" v-reveal>
       <h2 class="mb-3 text-lg font-bold text-zinc-900">{{ lang === 'ja' ? '適合素材' : 'Material Suitability' }}</h2>
       <SuitabilityMatrix :items="variant.suitability || []" />
-      <p class="mt-2 text-xs text-zinc-400">{{ t('product.suitability_note') }}</p>
+      <p class="mt-2 text-xs text-zinc-500">{{ t('product.suitability_note') }}</p>
     </div>
 
     <!-- Spec table -->
@@ -87,9 +87,10 @@
           <input
             v-model="sizeQuery"
             type="text" inputmode="decimal"
+            :aria-label="lang === 'ja' ? 'サイズ検索' : 'Filter size'"
             :placeholder="lang === 'ja' ? 'サイズ検索（例: 33）' : 'Filter size'"
-            class="w-36 rounded-lg border border-zinc-300 px-3 py-1.5 text-xs text-zinc-700 placeholder-zinc-400 focus:border-pink-400 focus:outline-none focus:ring-1 focus:ring-pink-400" />
-          <span v-if="sizeQuery.trim()" class="text-xs text-zinc-400">{{ hitCount }}{{ lang === 'ja' ? '件' : ' found' }}</span>
+            class="w-36 rounded-lg border border-zinc-500 px-3 py-1.5 text-xs text-zinc-700 placeholder-zinc-500 focus:border-pink-600 focus:outline-none focus:ring-1 focus:ring-pink-600" />
+          <span v-if="sizeQuery.trim()" class="text-xs text-zinc-500">{{ hitCount }}{{ lang === 'ja' ? '件' : ' found' }}</span>
         </div>
         <RouterLink :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
       </div>
@@ -126,10 +127,10 @@
               </td>
             </tr>
             <tr v-if="!rows.length">
-              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-400">{{ t('product.pending') }}</td>
+              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-500">{{ t('product.pending') }}</td>
             </tr>
             <tr v-if="rows.length && sizeQuery.trim() && !hitCount">
-              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-400">
+              <td :colspan="cols.length" class="px-4 py-6 text-center text-zinc-500">
                 {{ lang === 'ja' ? '該当するサイズがありません' : 'No matching sizes' }}
               </td>
             </tr>
@@ -145,7 +146,7 @@
             ? (lang === 'ja' ? '折りたたむ' : 'Collapse')
             : (lang === 'ja' ? `全${rows.length}サイズを表示` : `Show all ${rows.length} sizes`) }}
         </button>
-        <p class="text-xs text-zinc-400">{{ t('product.price_note') }}</p>
+        <p class="text-xs text-zinc-500">{{ t('product.price_note') }}</p>
       </div>
     </div>
 
@@ -169,7 +170,7 @@
           <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-lg">📄</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ tField(doc.label) }}</p>
-            <p class="text-xs text-zinc-400">PDF</p>
+            <p class="text-xs text-zinc-500">PDF</p>
           </div>
         </a>
       </div>

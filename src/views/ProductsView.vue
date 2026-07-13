@@ -3,7 +3,7 @@
 
     <!-- Page header -->
     <header class="mb-10">
-      <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">{{ t('home.products_label') }}</p>
+      <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">{{ t('home.products_label') }}</p>
       <h1 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('products.title') }}</h1>
       <p class="mt-2 text-zinc-500">{{ t('products.sub') }}</p>
     </header>
@@ -34,7 +34,7 @@
       <span class="inline-flex items-center rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-600 ring-1 ring-inset ring-pink-200">
         REISTI Brand
       </span>
-      <p class="text-xs text-zinc-400">{{ lang === 'ja' ? '自社工場製造 · OEM代工対応' : 'Own factory · OEM available' }}</p>
+      <p class="text-xs text-zinc-500">{{ lang === 'ja' ? '自社工場製造 · OEM代工対応' : 'Own factory · OEM available' }}</p>
     </div>
 
     <ProductScroller v-reveal class="mb-12" :heading="t('products.drillbit')" :items="drillbit" />
@@ -59,7 +59,7 @@
           <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 text-base font-extrabold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-1 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-500 hover:text-pink-700 transition-colors">
+          <RouterLink to="/contact" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>

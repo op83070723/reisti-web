@@ -3,7 +3,7 @@
 
     <!-- Header -->
     <div class="mb-10">
-      <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">Privacy Policy</p>
+      <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">Privacy Policy</p>
       <h1 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('privacy.title') }}</h1>
       <p class="mt-4 text-sm leading-7 text-zinc-600 whitespace-pre-line">{{ t('privacy.intro') }}</p>
     </div>
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Established date -->
-    <p class="mt-12 border-t border-zinc-100 pt-6 text-xs text-zinc-400">{{ t('privacy.established') }}</p>
+    <p class="mt-12 border-t border-zinc-100 pt-6 text-xs text-zinc-500">{{ t('privacy.established') }}</p>
   </div>
 </template>
 

@@ -3,14 +3,14 @@
 
     <!-- Header -->
     <div class="mb-10">
-      <p class="text-sm font-semibold uppercase tracking-widest text-pink-500">About</p>
+      <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">About</p>
       <h1 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('about.title') }}</h1>
       <p class="mt-2 max-w-2xl text-zinc-500">{{ t('about.sub') }}</p>
     </div>
 
     <!-- Brand story -->
     <section class="mb-14" v-reveal>
-      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-500">{{ t('about.story_label') }}</p>
+      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-600">{{ t('about.story_label') }}</p>
       <h2 class="mb-8 max-w-2xl text-2xl font-extrabold leading-snug text-zinc-900 sm:text-3xl">
         {{ t('about.story_title') }}
       </h2>
@@ -28,7 +28,7 @@
       <div class="overflow-hidden rounded-2xl border border-zinc-200">
         <dl class="divide-y divide-zinc-100 text-sm">
           <div v-for="(item, i) in companyRows" :key="i" class="grid grid-cols-12 gap-4 px-6 py-4">
-            <dt class="col-span-12 font-medium text-zinc-400 sm:col-span-3">{{ t(item.label) }}</dt>
+            <dt class="col-span-12 font-medium text-zinc-500 sm:col-span-3">{{ t(item.label) }}</dt>
             <dd class="col-span-12 text-zinc-700 sm:col-span-9">{{ item.value }}</dd>
           </div>
         </dl>

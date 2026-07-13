@@ -64,7 +64,7 @@ export default {
   },
   about: {
     title: 'About',
-    sub: 'REISTI is a Taiwanese drill bit brand with 25+ years of manufacturing experience.',
+    sub: 'REISTI is a tool brand from Taiwan, built on its parent company\'s nearly 30 years in the hardware industry.',
     story_label: 'Our Story',
     story_title: 'Nearly 30 years of expertise, built into every bit.',
     story_p1: 'REISTI\'s parent company, Taiwan-based Zuishidin, has spent nearly three decades at the forefront of Taiwan\'s hardware and industrial tools wholesale industry. That experience gave us an intimate understanding of what professionals truly demand from their tools: precision that doesn\'t drift, and durability that lasts.',

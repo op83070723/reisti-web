@@ -6,13 +6,14 @@ import { writeFileSync } from 'node:fs'
 import { FAMILIES } from '../src/data/products.js'
 
 const SITE = 'https://www.reisti.com'
-const today = new Date().toISOString().slice(0, 10)
+// lastmod は出力しない：全ページにビルド日を書くのは Google の要件（検証可能な重大更新の日付）に
+// 反するため。products.js に明示的な updatedAt を持たせた時点で再導入する
 const esc = s => String(s).replace(/[&<>"']/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c])
 )
 
 const entry = ({ loc, changefreq, priority, image, imageTitle }) => `  <url>
-    <loc>${SITE}${loc}</loc><lastmod>${today}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority>${image ? `
+    <loc>${SITE}${loc}</loc><changefreq>${changefreq}</changefreq><priority>${priority}</priority>${image ? `
     <image:image>
       <image:loc>${SITE}${esc(image)}</image:loc>
       <image:title>${esc(imageTitle)}</image:title>

@@ -8,7 +8,7 @@
       </a>
       <RouterLink
         to="/contact"
-        class="inline-flex items-center justify-center rounded-full bg-pink-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-pink-600">
+        class="inline-flex items-center justify-center rounded-full bg-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-pink-700">
         {{ lang === 'ja' ? 'お見積もり' : 'Get a Quote' }}
       </RouterLink>
     </div>

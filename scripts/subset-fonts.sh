@@ -24,7 +24,8 @@ PY
 
 # 2) 對每個字重子集成 woff2（ASCII + 平/片假名 + 標點 + 全形 一律保留以策安全）
 UNI="U+0020-007E,U+3000-303F,U+3040-30FF,U+FF00-FFEF,U+2010-2027,U+2190-2199,U+2605-2606,U+2039-203A"
-for pair in "R:400" "M:500" "B:700" "H:900"; do
+# 500(M) は配信対象外（main.css 参照）。復活させる場合は "M:500" を戻し、OTF を再取得する
+for pair in "R:400" "B:700" "H:900"; do
   w="${pair%%:*}"; num="${pair##*:}"
   python3 -m fontTools.subset "$SRC/GenYoGothic2JP-$w.otf" \
     --output-file="$OUT/GenYoGothic2JP-$num.woff2" --flavor=woff2 \
