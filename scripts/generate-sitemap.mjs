@@ -24,8 +24,8 @@ const productEntries = FAMILIES.flatMap(f => f.variants.map(v => ({
   loc: `/products/${f.category}/${v.slug}`,
   changefreq: 'monthly',
   priority: '0.8',
-  // 画像サイトマップは og:image と同じく PNG 版を指す（public/products/ に WebP と併存）
-  image: v.hero?.replace(/\.webp$/, '.png'),
+  // 画像サイトマップは og:image と同じく JPG 版（各製品の -1.jpg）を指す。WebP は SNS クローラー非対応
+  image: v.hero?.replace(/\.webp$/, '.jpg'),
   imageTitle: `${f.name.ja}（REISTI）`,
 })))
 

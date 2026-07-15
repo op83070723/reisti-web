@@ -93,7 +93,7 @@
           </div>
         </a>
         <a href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
-          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#06C755] text-lg text-white font-bold">L</span>
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#06C755] text-[9px] font-bold tracking-wide text-white">LINE</span>
           <div class="min-w-0 flex-1">
             <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
             <p class="text-zinc-500 text-xs"><span class="whitespace-nowrap">@503wuawu</span> <span class="whitespace-nowrap">・{{ t('contact.line_add') }}</span></p>

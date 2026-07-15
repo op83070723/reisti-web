@@ -88,14 +88,14 @@ const DRILL_DATA = [
   {
     title: { ja: '充電マルチドリルビット', en: 'Cordless Multi Drill Bit' },
     subtitle: { ja: '超硬チップで薄鉄板からタイルまで。', en: 'Carbide-tipped bit for steel, concrete & tile.' },
-    img: '/products/reisti-cordless-multi-drill-bit.webp',
+    img: '/products/scroller/multi.webp',
     to: '/products/drill-bit/multi',
     artW: 330, artY: 40,
   },
   {
     title: { ja: '六角軸コバルトドリル', en: 'Hex Shank Cobalt Drill' },
     subtitle: { ja: 'ステンレスも切る、M35コバルト鋼。', en: 'M35 cobalt steel for stainless & hard metals.' },
-    img: '/products/reisti-hex-cobalt-drill.webp',
+    img: '/products/scroller/cobalt.webp',
     to: '/products/drill-bit/cobalt',
     artW: 330, artY: 40,
   },
@@ -105,14 +105,14 @@ const HOLESAW_DATA = [
   {
     title: { ja: 'ハイスホールソー', en: 'HSS Hole Saw' },
     subtitle: { ja: '金属・木材・樹脂に幅広く対応。', en: 'Versatile HSS cutting across metal, wood & plastic.' },
-    img: '/products/reisti-hss-bimetal-hole-saw.webp',
+    img: '/products/scroller/hss.webp',
     to: '/products/hole-saw/hss',
     artW: 330, artY: 40,
   },
   {
     title: { ja: '超硬ホールソー', en: 'Carbide-Tipped Hole Saw' },
     subtitle: { ja: 'ステンレス板・FRPも切れるトリプル刃。', en: 'Triple-blade carbide for stainless, steel & FRP.' },
-    img: '/products/reisti-tct-carbide-hole-saw.webp',
+    img: '/products/scroller/tct.webp',
     to: '/products/hole-saw/tct',
     artW: 330, artY: 40,
   },

@@ -5,3 +5,5 @@ dist
 .vercel
 .DS_Store
 **/.DS_Store
+# 原始素材の一時置き場（変換後の WebP のみをデプロイする）
+incoming/

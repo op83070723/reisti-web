@@ -65,7 +65,8 @@
         </div>
       </div>
       <div class="md:col-span-7">
-        <ProductGallery :key="variant.slug" :images="gallery" ratio="4/3" :interval="4200" />
+        <!-- 実写ギャラリーは 16:9（-2 以降の写真と一致。4:3 の -1 は白背景のため左右の余白が見えない） -->
+        <ProductGallery :key="variant.slug" :images="gallery" ratio="16/9" :interval="4200" />
       </div>
     </div>
 
@@ -265,13 +266,13 @@ useHead({
   meta: [
     { name: 'description', content: computed(() => tField(fam.value?.intro) || '') },
     // OG は App.vue の全站定義を property キーで上書き（og:image は製品写真）。
-    // og:image は WebP 非対応の SNS クローラーがあるため PNG 版を指す（PNG は public/products/ に併存）
+    // og:image は WebP 非対応の SNS クローラーがあるため JPG 版を指す（各 hero の -1.jpg が public/products/ に併存）
     { property: 'og:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
     { property: 'og:description', content: computed(() => tField(fam.value?.intro) || '') },
-    { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.png') : `${SITE}/og.jpg`) },
+    { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.jpg') : `${SITE}/og.jpg`) },
     { name: 'twitter:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
     { name: 'twitter:description', content: computed(() => tField(fam.value?.intro) || '') },
-    { name: 'twitter:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.png') : `${SITE}/og.jpg`) },
+    { name: 'twitter:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.jpg') : `${SITE}/og.jpg`) },
   ],
   script: [
     {

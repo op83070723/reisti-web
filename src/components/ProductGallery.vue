@@ -1,5 +1,7 @@
 <template>
-  <div class="grid gap-3" :class="slots.length > 1 ? 'md:grid-cols-[1fr_80px]' : ''">
+  <!-- items-start：サムネイル列が主画像より高いとき、主画像が引き伸ばされて 16:9 が崩れるのを防ぐ。
+       focusin/focusout：キーボード操作中は自動再生を止める（マウスの hover 停止と対で WCAG 2.2.2 対応） -->
+  <div class="grid gap-3" :class="slots.length > 1 ? 'md:grid-cols-[1fr_80px] md:items-start' : ''" @focusin="stop" @focusout="start">
     <!-- Main image -->
     <div
       class="relative rounded-xl border border-zinc-200 bg-white overflow-hidden select-none"
@@ -11,10 +13,10 @@
         v-if="currentSlot"
         :src="currentSlot.src"
         :alt="currentSlot.alt || ''"
-        width="1000"
-        height="1000"
+        width="1600"
+        height="900"
         fetchpriority="high"
-        class="h-full w-full object-contain p-6" />
+        class="h-full w-full object-contain" />
 
       <!-- Empty placeholder -->
       <div v-else class="flex h-full w-full flex-col items-center justify-center gap-2">
@@ -47,8 +49,9 @@
         :class="i === idx ? 'ring-pink-500 ring-2' : 'ring-zinc-200 hover:ring-zinc-400'"
         :aria-label="`${i + 1}枚目の画像を表示`"
         @click="go(i)">
-        <img v-if="slot" :src="slot.src" :alt="slot.alt || ''" width="1000" height="1000" loading="lazy" decoding="async" class="h-16 w-20 md:h-20 md:w-20 object-contain p-1" />
-        <div v-else class="h-16 w-20 md:h-20 md:w-20 flex items-center justify-center text-zinc-200">
+        <!-- サムネイル高さは 64px 固定：5 枚のとき列高 352px（5×64+4×8）に収め、主画像（16:9）より高くならないようにする -->
+        <img v-if="slot" :src="slot.src" :alt="slot.alt || ''" width="1000" height="1000" loading="lazy" decoding="async" class="h-16 w-20 object-contain p-1" />
+        <div v-else class="h-16 w-20 flex items-center justify-center text-zinc-200">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
@@ -65,19 +68,16 @@ const props = defineProps({
   images:   { type: Array,  default: () => [] },
   ratio:    { type: String, default: '4/3'    },
   interval: { type: Number, default: 4000     },
-  minSlots: { type: Number, default: 4        },
 })
 
 const idx = ref(0)
 let timer = null
 
 const slots = computed(() => {
+  // 「Coming soon」の空スロットは作らない：ナビ・自動再生が空白ページに入る事故の温床だった。
+  // 画像が無い変種のみ、プレースホルダーを 1 枚表示する
   const real = (props.images || []).filter(Boolean)
-  // 実画像が 1 枚以下なら「Coming soon」の空スロットは作らない（未完成に見えるため）。
-  // 2 枚以上そろったときだけ minSlots まで埋めて増補予定を示す
-  if (real.length <= 1) return real.length ? real : [null]
-  const count = Math.max(real.length, props.minSlots)
-  return Array.from({ length: count }, (_, i) => real[i] ?? null)
+  return real.length ? real : [null]
 })
 
 const currentSlot = computed(() => slots.value[idx.value] ?? null)
@@ -87,7 +87,12 @@ const go   = (n) => { idx.value = (n + slots.value.length) % slots.value.length 
 const next = () => go(idx.value + 1)
 const prev = () => go(idx.value - 1)
 
-const start = () => { stop(); if (realCount.value > 1 && props.interval) timer = setInterval(next, props.interval) }
+/* OS の「視差効果を減らす」設定中は自動再生しない（手動ナビは可）。
+   window 参照はあるが、start はマウント後・ユーザー操作でしか呼ばれないため SSG でも安全 */
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const start = () => { stop(); if (realCount.value > 1 && props.interval && !prefersReducedMotion()) timer = setInterval(next, props.interval) }
 const stop  = () => { clearInterval(timer); timer = null }
 
 let sx = 0, dx = 0

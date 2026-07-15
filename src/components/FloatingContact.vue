@@ -3,8 +3,8 @@
     <div v-if="show" class="fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
       <a
         href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" aria-label="LINE"
-        class="flex h-11 w-11 items-center justify-center rounded-full bg-[#06C755] font-bold text-white shadow-lg transition-transform hover:scale-105">
-        L
+        class="flex h-11 w-11 items-center justify-center rounded-full bg-[#06C755] text-[10px] font-bold tracking-wide text-white shadow-lg transition-transform hover:scale-105">
+        LINE
       </a>
       <RouterLink
         to="/contact"
