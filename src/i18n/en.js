@@ -62,6 +62,12 @@ export default {
     shank_label: 'Shank',
     tools_label: 'Compatible Tools',
     suitability_note: '* Suitability ratings are indicative. Results may vary by substrate and tool.',
+    gallery_region: 'Product image gallery',
+    gallery_previous: 'Previous image',
+    gallery_next: 'Next image',
+    gallery_show: 'Show image {current}',
+    gallery_status: 'Image {current} of {total}',
+    gallery_empty: 'Image coming soon',
   },
   about: {
     title: 'About',

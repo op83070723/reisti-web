@@ -221,7 +221,28 @@ export const FAMILIES = [
         slug: 'multi',
         label: { ja: '標準', en: 'Standard' },
         hero: '/products/multi-1.webp',
-        gallery: ['/products/multi-1.webp', '/products/multi-2.webp', '/products/multi-3.webp', '/products/multi-4.webp', '/products/multi-5.webp'],
+        gallery: [
+          {
+            src: '/products/multi-1.webp', width: 1600, height: 1200,
+            alt: { ja: 'REISTI 充電マルチドリルビット4サイズの製品全景', en: 'Four sizes of REISTI cordless multi drill bits' },
+          },
+          {
+            src: '/products/multi-2.webp', width: 1600, height: 900,
+            alt: { ja: '充電マルチドリルビットの超硬チップと非対称刃先', en: 'Carbide tips and asymmetric cutting edges on REISTI cordless multi drill bits' },
+          },
+          {
+            src: '/products/multi-3.webp', width: 1600, height: 900,
+            alt: { ja: 'REISTIのサイズ刻印と6.35mm六角軸シャンク', en: 'REISTI size markings and 6.35 mm hex shanks' },
+          },
+          {
+            src: '/products/multi-4.webp', width: 1600, height: 900, locales: ['ja'],
+            alt: { ja: '充電マルチドリルビットをインパクトドライバーへワンタッチ装着', en: 'One-touch installation of a cordless multi drill bit in an impact driver' },
+          },
+          {
+            src: '/products/multi-5.webp', width: 1600, height: 900,
+            alt: { ja: '充電マルチドリルビットの超硬チップ先端', en: 'Close-up of the carbide tip on a REISTI cordless multi drill bit' },
+          },
+        ],
         detail: {
           ja: '6.35mm六角軸シャンク採用で、充電インパクトドライバーにワンタッチ装着。超硬チップ＋非対称刃先により食いつきが良く、薄鉄板・コンクリート・ブロックへの穴あけスピードが向上。耐摩耗性に優れた超硬チップで長寿命を実現した高耐久仕様です。',
           en: 'One-touch attachment to cordless impact drivers via 6.35mm hex shank. Carbide tip with asymmetric cutting edge bites fast into thin steel, concrete, and block. Wear-resistant carbide delivers long service life.',
@@ -257,7 +278,28 @@ export const FAMILIES = [
         slug: 'cobalt',
         label: { ja: '標準', en: 'Standard' },
         hero: '/products/cobalt-1.webp',
-        gallery: ['/products/cobalt-1.webp', '/products/cobalt-2.webp', '/products/cobalt-3.webp', '/products/cobalt-4.webp', '/products/cobalt-5.webp'],
+        gallery: [
+          {
+            src: '/products/cobalt-1.webp', width: 1600, height: 1200,
+            alt: { ja: 'REISTI 六角軸コバルトドリル4サイズの製品全景', en: 'Four sizes of REISTI hex shank cobalt drill bits' },
+          },
+          {
+            src: '/products/cobalt-2.webp', width: 1600, height: 900,
+            alt: { ja: '六角軸コバルトドリルの精密研磨刃先', en: 'Precision-ground cutting edges on REISTI cobalt drill bits' },
+          },
+          {
+            src: '/products/cobalt-3.webp', width: 1600, height: 900,
+            alt: { ja: 'REISTIのサイズ刻印と6.35mm六角軸シャンク', en: 'REISTI size markings and 6.35 mm hex shanks on cobalt drill bits' },
+          },
+          {
+            src: '/products/cobalt-4.webp', width: 1600, height: 900, locales: ['ja'],
+            alt: { ja: '六角軸コバルトドリルをインパクトドライバーへワンタッチ装着', en: 'One-touch installation of a cobalt drill bit in an impact driver' },
+          },
+          {
+            src: '/products/cobalt-5.webp', width: 1600, height: 900,
+            alt: { ja: 'インパクトドライバーに装着したコバルトドリルの刃先', en: 'Close-up of a cobalt drill cutting edge mounted in an impact driver' },
+          },
+        ],
         detail: {
           ja: 'ステンレス鋼や難削材の加工に最適なコバルトハイス（HSSCO）を採用。耐熱性・耐摩耗性に優れた高級ハイス鋼で長寿命を実現。精密研磨仕上げにより食いつきが良く、センターポンチ不要で正確な位置への穴あけが可能です。',
           en: 'Cobalt HSS (HSSCO) optimized for stainless steel and difficult materials. Premium high-speed steel with superior heat and wear resistance for long life. Precision-ground point bites cleanly — no center punch needed for accurate positioning.',
@@ -295,7 +337,20 @@ export const FAMILIES = [
         slug: 'hss',
         label: { ja: '標準', en: 'Standard' },
         hero: '/products/hss-1.webp',
-        gallery: ['/products/hss-1.webp', '/products/hss-2.webp', '/products/hss-3.webp'],
+        gallery: [
+          {
+            src: '/products/hss-1.webp', width: 1600, height: 1200,
+            alt: { ja: 'REISTI ハイスホールソー3サイズの製品全景', en: 'Three sizes of REISTI HSS bimetal hole saws' },
+          },
+          {
+            src: '/products/hss-2.webp', width: 1600, height: 900,
+            alt: { ja: 'ハイスホールソーのバイメタル刃とセンタードリル', en: 'Bimetal teeth and centre drills on REISTI HSS hole saws' },
+          },
+          {
+            src: '/products/hss-3.webp', width: 1600, height: 900, locales: ['ja'],
+            alt: { ja: '45mm以下のハイスホールソーをインパクトドライバーへワンタッチ装着', en: 'One-touch installation of an HSS hole saw up to 45 mm in an impact driver' },
+          },
+        ],
         detail: {
           ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせたバイメタル構造。ツバ無し設計でスペースが限られた作業環境でも使いやすく、薄鉄板・アルミ・塩ビ・木材など幅広い材料に対応します。電気工事・配管工事の定番サイズを全33サイズラインナップ。',
           en: 'Bimetal construction pairs an H.S.S. cutting edge with a flexible backbone. Flange-free design works in tight spaces, cutting thin steel, aluminium, PVC, and wood. Full 33-size lineup covering standard electrical and plumbing diameters.',
@@ -335,7 +390,20 @@ export const FAMILIES = [
         slug: 'tct',
         label: { ja: '標準', en: 'Standard' },
         hero: '/products/tct-1.webp',
-        gallery: ['/products/tct-1.webp', '/products/tct-2.webp', '/products/tct-3.webp'],
+        gallery: [
+          {
+            src: '/products/tct-1.webp', width: 1600, height: 1200,
+            alt: { ja: 'REISTI 超硬ホールソー3サイズの製品全景', en: 'Three sizes of REISTI carbide-tipped hole saws' },
+          },
+          {
+            src: '/products/tct-2.webp', width: 1600, height: 900,
+            alt: { ja: '超硬ホールソーのトリプル刃とセンタードリル', en: 'Triple carbide teeth and centre drills on REISTI hole saws' },
+          },
+          {
+            src: '/products/tct-3.webp', width: 1600, height: 900,
+            alt: { ja: '電気ドリルに装着したREISTI超硬ホールソー', en: 'REISTI carbide-tipped hole saw mounted in an electric drill' },
+          },
+        ],
         detail: {
           ja: 'トリプル刃・超硬チップ採用で、ステンレス板・FRPなどの難削材にも対応。10mmストレート軸はボール盤・電動ドリルに対応し、ツバ無し設計は薄板・精密加工に適した構造。高精度な穴あけが必要な金属加工・設備工事に最適です。',
           en: 'Triple-blade carbide tips handle stainless sheet, FRP, and other difficult materials. 10mm straight shank fits drill presses and electric drills; flange-free design suits thin-sheet precision work. Ideal for metalworking and equipment installation requiring accurate holes.',

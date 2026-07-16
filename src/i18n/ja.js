@@ -62,6 +62,12 @@ export default {
     shank_label: 'シャンク',
     tools_label: '適合電動機',
     suitability_note: '※ 適合度は目安です。下地や工具により結果が異なります。',
+    gallery_region: '製品画像ギャラリー',
+    gallery_previous: '前の画像',
+    gallery_next: '次の画像',
+    gallery_show: '{current}枚目の画像を表示',
+    gallery_status: '{current}枚目 / 全{total}枚',
+    gallery_empty: '画像準備中',
   },
   about: {
     title: '会社概要',

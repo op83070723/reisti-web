@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 23 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 26 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -64,7 +64,8 @@
 ## 5. 圖片規範
 
 - 產品照：`public/products/{family}-{n}.webp`（family = multi／cobalt／hss／tct），
-  長邊 1600px。`{family}-1` 是 hero；gallery 陣列定義在 `src/data/products.js`。
+  長邊 1600px。`{family}-1` 是 hero；gallery 陣列定義在 `src/data/products.js`，每項包含
+  `src`／`width`／`height`／日英 `alt`，有日文烙字的圖片另以 `locales: ['ja']` 限制顯示。
 - **og:image／twitter:image／sitemap 的圖必須是 JPG 或 PNG**——多數社群爬蟲不支援 WebP。
   所以每個 hero 另備瘦身版 `{family}-1.jpg`，`FamilyDetail.vue` 與 `generate-sitemap.mjs`
   都用 `.replace(/\.webp$/, '.jpg')` 指過去。JSON-LD 的 `image` 可以用 WebP。
@@ -129,11 +130,12 @@
 - 品牌色：桃紅。**互動元素用 `pink-600`（hover `pink-700`）**——`pink-500` 配白字對比
   不到 AA；純裝飾（底色、小標）可用 `pink-500`。
 - 白底上的文字最淺 `zinc-500`（`zinc-400` 對比 2.56:1，不及格）。
-- 觸控目標 ≥24px：視覺可以小，但用 padding 撐大可點範圍（範例：`ProductGallery` 的圓點）。
-- 自動輪播三要件（`ProductGallery.vue` 是範本）：尊重 `prefers-reduced-motion`、
-  hover 暫停、鍵盤 focus 暫停（focusin/focusout）。
+- 觸控目標 ≥24px：視覺可以小，但用 padding 撐大可點範圍（`ProductGallery` 的箭頭為 40×40px）。
+- `ProductGallery.vue` **刻意不自動輪播**：產品比較應由使用者以箭頭、縮圖或滑動手動切換。
+  其他元件若使用自動輪播，最低仍須尊重 `prefers-reduced-motion`、hover 暫停、鍵盤 focus 暫停，
+  並提供可持續生效的停止控制。
 - 風格：Apple 式極簡——大量留白、zinc 灰階、rounded-xl、細邊框。不要引入重陰影、漸層。
-- aria-label 目前日文 only；英文版策略（§14）定案前維持現狀。
+- 既有頁面的 aria-label 多數仍是日文 only；`ProductGallery` 已走 i18n。英文版路由策略見 §14。
 
 ## 11. SEO／結構化資料
 

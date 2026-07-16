@@ -66,7 +66,7 @@
       </div>
       <div class="md:col-span-7">
         <!-- 実写ギャラリーは 16:9（-2 以降の写真と一致。4:3 の -1 は白背景のため左右の余白が見えない） -->
-        <ProductGallery :key="variant.slug" :images="gallery" ratio="16/9" :interval="4200" />
+        <ProductGallery :key="variant.slug" :images="gallery" :labels="galleryLabels" ratio="16/9" />
       </div>
     </div>
 
@@ -323,12 +323,28 @@ const quoteProduct = computed(() => {
     : name
 })
 
-/* alt は「ブランド＋製品名＋写真番号」——Google 画像検索向けのキーワードを自然に含める */
+const galleryLabels = computed(() => ({
+  region: t('product.gallery_region'),
+  previous: t('product.gallery_previous'),
+  next: t('product.gallery_next'),
+  show: t('product.gallery_show'),
+  status: t('product.gallery_status'),
+  empty: t('product.gallery_empty'),
+}))
+
+/* 写真ごとの内容を alt に反映する。日本語を焼き込んだ販促カットは英語表示から除外し、
+   英語ページに読めない文言を混在させない */
+const galleryLocale = computed(() => ['ja', 'en'].includes(lang.value) ? lang.value : 'ja')
 const gallery = computed(() =>
-  (variant.value?.gallery || []).map((src, i) => ({
-    src,
-    alt: `REISTI ${tField(fam.value?.name) || ''} 製品写真${i > 0 ? ` ${i + 1}` : ''}`.trim(),
-  }))
+  (variant.value?.gallery || [])
+    .map(image => typeof image === 'string' ? { src: image } : image)
+    .filter(image => !image.locales || image.locales.includes(galleryLocale.value))
+    .map(image => ({
+      src: image.src,
+      width: image.width,
+      height: image.height,
+      alt: tField(image.alt) || `REISTI ${tField(fam.value?.name) || ''}`.trim(),
+    }))
 )
 
 /* --- spec table --- */
