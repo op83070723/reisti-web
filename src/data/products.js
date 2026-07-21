@@ -262,6 +262,7 @@ export const FAMILIES = [
         specs: SPEC_MULTI,
       },
     ],
+    manual: '/pdf/reisti-rp-hex-multi-drill-bit-manual.pdf',
     docs: [DOC_CATALOG],
   },
   {
@@ -319,6 +320,7 @@ export const FAMILIES = [
         specs: SPEC_COBALT,
       },
     ],
+    manual: '/pdf/reisti-rc-hex-cobalt-drill-manual.pdf',
     docs: [DOC_CATALOG],
   },
 
@@ -371,10 +373,8 @@ export const FAMILIES = [
         specs: SPEC_HSS,
       },
     ],
-    docs: [
-      DOC_CATALOG,
-      { label: { ja: '取扱説明書', en: 'Instruction Manual' }, file: '/pdf/REISTI_ハイスホールソー_取扱説明書.pdf' },
-    ],
+    manual: '/pdf/reisti-rh-hss-bimetal-hole-saw-manual.pdf',
+    docs: [DOC_CATALOG],
   },
   {
     category: 'hole-saw',
@@ -424,10 +424,8 @@ export const FAMILIES = [
         specs: SPEC_TCT,
       },
     ],
-    docs: [
-      DOC_CATALOG,
-      { label: { ja: '取扱説明書', en: 'Instruction Manual' }, file: '/pdf/REISTI_超硬ホールソー_取扱説明書.pdf' },
-    ],
+    manual: '/pdf/reisti-rhc-tct-carbide-hole-saw-manual.pdf',
+    docs: [DOC_CATALOG],
   },
 ]
 

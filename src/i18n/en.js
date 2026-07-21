@@ -68,6 +68,9 @@ export default {
     gallery_show: 'Show image {current}',
     gallery_status: 'Image {current} of {total}',
     gallery_empty: 'Image coming soon',
+    manual_title: 'Instruction Manual',
+    manual_description: 'Please read the instruction manual carefully before use.',
+    manual_btn: 'View Instruction Manual (PDF)',
   },
   about: {
     title: 'About',

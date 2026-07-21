@@ -68,6 +68,9 @@ export default {
     gallery_show: '{current}枚目の画像を表示',
     gallery_status: '{current}枚目 / 全{total}枚',
     gallery_empty: '画像準備中',
+    manual_title: '取扱説明書',
+    manual_description: 'ご使用前に取扱説明書を必ずお読みください。',
+    manual_btn: '取扱説明書を見る（PDF）',
   },
   about: {
     title: '会社概要',

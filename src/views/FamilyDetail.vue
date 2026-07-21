@@ -188,6 +188,31 @@
       </div>
     </Transition>
 
+    <!-- 取扱説明書：製品パッケージの QR から #manual へ直接参照される恒久リンク -->
+    <section
+      v-if="fam.manual"
+      id="manual"
+      class="mt-10 scroll-mt-20 sm:scroll-mt-24"
+      aria-labelledby="manual-title">
+      <div class="rounded-xl border border-zinc-200 bg-zinc-50 p-5 sm:flex sm:items-center sm:justify-between sm:gap-6 sm:p-6">
+        <div>
+          <h2 id="manual-title" class="text-lg font-bold text-zinc-900">{{ t('product.manual_title') }}</h2>
+          <p class="mt-2 text-sm leading-relaxed text-zinc-600">{{ t('product.manual_description') }}</p>
+        </div>
+        <a
+          :href="fam.manual"
+          target="_blank"
+          rel="noopener"
+          class="btn-red mt-5 min-h-11 w-full shrink-0 sm:mt-0 sm:w-auto">
+          <svg class="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <path d="M14 2v6h6M8 13h8M8 17h5" />
+          </svg>
+          {{ t('product.manual_btn') }}
+        </a>
+      </div>
+    </section>
+
     <!-- Related docs -->
     <div v-if="fam.docs?.length" class="mt-10">
       <h2 class="mb-3 text-lg font-bold text-zinc-900">{{ lang === 'ja' ? '関連資料' : 'Documents' }}</h2>
