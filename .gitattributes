@@ -1,0 +1,2 @@
+print-assets/qr/*.svg text eol=lf
+print-assets/qr/*.png binary

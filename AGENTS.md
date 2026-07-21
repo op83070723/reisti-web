@@ -2,7 +2,7 @@
 
 寫給所有在此 repo 工作的 AI agent 與開發者。本檔記載「不寫下來就會踩雷」的專案約定，
 是實際踩過坑之後的紀錄，不是官樣文章。**動手前先讀完，改動涉及哪節就重讀哪節。**
-最後更新：2026-07-16。
+最後更新：2026-07-22。
 
 ## 0. 專案概觀
 
@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 26 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 30 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -35,6 +35,7 @@
 - `api/contact.js` — 表單 API（見 §6）；測試在 `test/contact-api.test.mjs`
 - `scripts/` — `generate-sitemap.mjs`（build 自動跑）、`subset-fonts.sh`（手動跑，見 §4）
 - `public/products/` — 產品圖（見 §5）；`public/pdf/` — 型錄與說明書
+- `print-assets/qr/` — 包裝印刷用 QR（不會部署到網站）；維護流程見該目錄的 `README.md`
 - `incoming/` — **gitignored** 原始素材備份，程式碼不可引用
 
 ## 3. SSG 架構（本 repo 最大的坑）
@@ -78,6 +79,26 @@
 - 用 sharp 批次處理圖片的陷阱：**pipeline 中 resize 永遠先於 extend 執行（與呼叫順序無關）**。
   要分段 `.toBuffer()` 串接，並在每段後 assert 實際輸出尺寸——這裡吃過一次「整批圖被裁壞
   還部署上線」的虧。
+
+## 5.1 取扱説明書 PDF／印刷 QR（永久 URL）
+
+- 包裝上的 QR **只連產品頁的 `#manual`，不直連 PDF**。已送印的兩個永久網址：
+  - RH：`https://www.reisti.com/products/hole-saw/hss#manual`
+  - RHC：`https://www.reisti.com/products/hole-saw/tct#manual`
+- 上述網域、產品路徑與 `FamilyDetail.vue` 的 `id="manual"` 視為**印刷契約**。未經使用者明確同意
+  不得改名、redirect 到別處或移除；要改就代表必須重生 QR、實機解碼並重新印刷包裝。
+- 四份 PDF 的公開檔名永久固定。更新說明書時直接以新版 PDF **覆蓋同名檔案**，不要加
+  `v2`、日期或 hash，也不要改 `products.js` 的 `manual`：
+  - `public/pdf/reisti-rp-hex-multi-drill-bit-manual.pdf`
+  - `public/pdf/reisti-rc-hex-cobalt-drill-manual.pdf`
+  - `public/pdf/reisti-rh-hss-bimetal-hole-saw-manual.pdf`
+  - `public/pdf/reisti-rhc-tct-carbide-hole-saw-manual.pdf`
+- `vercel.json` 對 `/pdf/*.pdf` 明訂 `public, max-age=0, must-revalidate`，避免瀏覽器長期沿用舊版。
+  不得把 PDF 納入 `immutable` 或長效 `max-age`；部署後要 `curl -I` 實測線上 header。
+- `test/manual-assets.test.mjs` 鎖定路由、PDF 檔名、`#manual` 契約、快取 header 與印刷 QR 的
+  SHA-256。**PDF 內容 hash 刻意不鎖**，所以正常覆蓋新版 PDF 不需修改測試。
+- `print-assets/qr/` 內的 SVG／PNG 是已驗證的印刷母檔，不要為了壓縮或改名而重生。
+  舊日文檔名的 RH／RHC PDF 也先保留，避免既有外部連結失效。
 
 ## 6. Contact API（`api/contact.js`）＋表單
 
@@ -150,8 +171,8 @@
 
 ## 12. vercel.json
 
-- 內容：全站 security headers ＋ 兩條快取規則（`/assets/` immutable；圖片 86400＋
-  stale-while-revalidate）。**規則順序有意義**，新增規則想清楚插哪裡。
+- 內容：全站 security headers ＋ 三條資源規則（PDF 每次 revalidate；`/assets/` immutable；
+  圖片 86400＋stale-while-revalidate）。**規則順序有意義**，新增規則想清楚插哪裡。
 - 改 headers 後，部署完要 `curl -I` 實測線上回應，不能只看檔案。
 
 ## 13. 完成的定義（宣稱完成前必讀）
