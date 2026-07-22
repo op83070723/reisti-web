@@ -111,8 +111,28 @@
         </div>
         <RouterLink :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
       </div>
-      <div class="overflow-x-auto rounded-xl border border-zinc-200">
-        <table class="min-w-full text-sm">
+      <div class="relative">
+        <Transition name="scroll-hint">
+          <div
+            v-if="showScrollHint"
+            data-scroll-hint
+            class="pointer-events-none absolute left-1/2 top-3 z-10 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap rounded-full bg-zinc-900/90 px-3 py-2 text-xs font-semibold text-white shadow-sm backdrop-blur-sm sm:hidden"
+            aria-hidden="true">
+            <svg class="scroll-hint-icon h-4 w-7" viewBox="0 0 28 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 2 3 8l6 6M19 2l6 6-6 6M3 8h22" />
+            </svg>
+            <span>{{ t('product.scroll_hint') }}</span>
+          </div>
+        </Transition>
+        <div
+          ref="tableScroller"
+          class="overflow-x-auto rounded-xl border border-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-600 focus-visible:ring-offset-2"
+          role="region"
+          tabindex="0"
+          :aria-label="`${t('product.size_title')} — ${t('product.scroll_hint')}`"
+          @pointerdown="dismissScrollHint"
+          @scroll.passive="dismissScrollHint">
+          <table class="min-w-full text-sm">
           <thead class="bg-zinc-50 text-xs font-semibold uppercase tracking-wide text-zinc-500">
             <tr>
               <th v-for="c in cols" :key="c" class="px-4 py-3 text-left whitespace-nowrap">{{ colLabels[c] }}</th>
@@ -166,7 +186,8 @@
               </td>
             </tr>
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
       <div class="mt-3 flex flex-wrap items-center gap-4">
         <button
@@ -236,7 +257,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
 import { useI18n, tField } from '../i18n/index.js'
@@ -255,6 +276,63 @@ const fam    = ref(null)
 const variant = ref(null)
 const expanded = ref(false)
 const sizeQuery = ref('')
+const tableScroller = ref(null)
+const showScrollHint = ref(false)
+let scrollHintObserver = null
+let scrollHintTimer = null
+let scrollHintDismissed = false
+let browserMounted = false
+let scrollHintViewportWidth = 0
+
+function clearScrollHintRuntime() {
+  scrollHintObserver?.disconnect()
+  scrollHintObserver = null
+  clearTimeout(scrollHintTimer)
+  scrollHintTimer = null
+  showScrollHint.value = false
+}
+
+function dismissScrollHint() {
+  scrollHintDismissed = true
+  clearScrollHintRuntime()
+}
+
+function revealScrollHint() {
+  const scroller = tableScroller.value
+  if (
+    scrollHintDismissed ||
+    !scroller ||
+    !window.matchMedia('(max-width: 639px)').matches ||
+    scroller.scrollWidth <= scroller.clientWidth + 1
+  ) return false
+
+  showScrollHint.value = true
+  scrollHintTimer = setTimeout(dismissScrollHint, 5000)
+  return true
+}
+
+function setupScrollHint() {
+  clearScrollHintRuntime()
+  if (!browserMounted || scrollHintDismissed || !tableScroller.value) return
+
+  // 古いブラウザでは案内を省略するだけで、表自体の横スクロールは影響を受けない。
+  if (!('IntersectionObserver' in window)) return
+
+  // 表が十分に画面内へ入ってから案内を始め、見えない位置で表示時間を消費しない。
+  scrollHintObserver = new IntersectionObserver(entries => {
+    if (entries.some(entry => entry.isIntersecting) && revealScrollHint()) {
+      scrollHintObserver?.disconnect()
+      scrollHintObserver = null
+    }
+  }, { rootMargin: '0px 0px -20% 0px', threshold: 0.01 })
+  scrollHintObserver.observe(tableScroller.value)
+}
+
+function handleScrollHintResize() {
+  if (window.innerWidth === scrollHintViewportWidth) return
+  scrollHintViewportWidth = window.innerWidth
+  setupScrollHint()
+}
 
 function load() {
   const match  = findFamily(route.params.category, route.params.slug)
@@ -262,8 +340,24 @@ function load() {
   variant.value = match?.variant ?? null
   expanded.value = false
   sizeQuery.value = ''
+  scrollHintDismissed = false
+  clearScrollHintRuntime()
+  if (browserMounted) nextTick(setupScrollHint)
 }
 watch(() => route.fullPath, load, { immediate: true })
+
+onMounted(() => {
+  browserMounted = true
+  scrollHintViewportWidth = window.innerWidth
+  setupScrollHint()
+  window.addEventListener('resize', handleScrollHintResize)
+})
+
+onBeforeUnmount(() => {
+  browserMounted = false
+  clearScrollHintRuntime()
+  window.removeEventListener('resize', handleScrollHintResize)
+})
 
 /* --- サイズ検索・品番/JAN コピー --- */
 const matchesQuery = r => String(r.size).includes(sizeQuery.value.trim())
@@ -392,6 +486,20 @@ const rows = computed(() => {
 .toast-enter-active, .toast-leave-active { transition: opacity .2s ease, transform .2s ease; }
 .toast-enter-from, .toast-leave-to { opacity: 0; transform: translate(-50%, 8px); }
 .toast-enter-to, .toast-leave-from { transform: translate(-50%, 0); }
+
+.scroll-hint-enter-active, .scroll-hint-leave-active { transition: opacity .2s ease; }
+.scroll-hint-enter-from, .scroll-hint-leave-to { opacity: 0; }
+.scroll-hint-icon { animation: scroll-hint-swipe .8s ease-in-out 3; }
+
+@keyframes scroll-hint-swipe {
+  0%, 100% { transform: translateX(-2px); }
+  50% { transform: translateX(2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-hint-enter-active, .scroll-hint-leave-active { transition: none; }
+  .scroll-hint-icon { animation: none; }
+}
 
 /* 複製圖示：滑到該格立即浮現（取代反應慢的原生 title tooltip） */
 .copy-ic { opacity: 0; transition: opacity .15s ease; vertical-align: -2px; }

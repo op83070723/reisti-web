@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 31 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 32 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -158,6 +158,8 @@
 - `FamilyDetail.vue` 規格表最後一個 `<th>` 的 `relative` 是 iOS Safari 防橫向溢出修正：
   讓其中絕對定位的 `sr-only` 留在表格捲動容器內。移除會讓四個產品頁的 document 寬於 viewport，
   Safari 可縮小到右側大片空白；`test/product-page-layout.test.mjs` 會防止回歸。
+- 規格表的橫向捲動提示只在手機、且表格確實溢出時，等規格區進入畫面才顯示；動畫 3 次、
+  5 秒或首次操作後消失，並尊重 `prefers-reduced-motion`。不要改成自動捲動表格或無限動畫。
 - 風格：Apple 式極簡——大量留白、zinc 灰階、rounded-xl、細邊框。不要引入重陰影、漸層。
 - 既有頁面的 aria-label 多數仍是日文 only；`ProductGallery` 已走 i18n。英文版路由策略見 §14。
 

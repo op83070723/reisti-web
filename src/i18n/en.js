@@ -45,6 +45,7 @@ export default {
     brand_badge: 'REISTI Brand',
     oem_badge: 'OEM Only',
     size_title: 'Specifications',
+    scroll_hint: 'Swipe horizontally',
     popular: 'Standard',
     quote_btn: 'Request Quote',
     sample_btn: 'Request Sample',
