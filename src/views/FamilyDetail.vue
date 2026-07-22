@@ -116,7 +116,7 @@
           <thead class="bg-zinc-50 text-xs font-semibold uppercase tracking-wide text-zinc-500">
             <tr>
               <th v-for="c in cols" :key="c" class="px-4 py-3 text-left whitespace-nowrap">{{ colLabels[c] }}</th>
-              <th class="px-4 py-3"><span class="sr-only">{{ t('product.quote_btn') }}</span></th>
+              <th class="relative px-4 py-3"><span class="sr-only">{{ t('product.quote_btn') }}</span></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-zinc-100">

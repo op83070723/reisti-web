@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 30 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 31 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -155,6 +155,9 @@
 - `ProductGallery.vue` **刻意不自動輪播**：產品比較應由使用者以箭頭、縮圖或滑動手動切換。
   其他元件若使用自動輪播，最低仍須尊重 `prefers-reduced-motion`、hover 暫停、鍵盤 focus 暫停，
   並提供可持續生效的停止控制。
+- `FamilyDetail.vue` 規格表最後一個 `<th>` 的 `relative` 是 iOS Safari 防橫向溢出修正：
+  讓其中絕對定位的 `sr-only` 留在表格捲動容器內。移除會讓四個產品頁的 document 寬於 viewport，
+  Safari 可縮小到右側大片空白；`test/product-page-layout.test.mjs` 會防止回歸。
 - 風格：Apple 式極簡——大量留白、zinc 灰階、rounded-xl、細邊框。不要引入重陰影、漸層。
 - 既有頁面的 aria-label 多數仍是日文 only；`ProductGallery` 已走 i18n。英文版路由策略見 §14。
 
