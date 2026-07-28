@@ -7,9 +7,16 @@
 
         <!-- Brand -->
         <div class="lg:col-span-1">
-          <div class="flex items-center gap-2">
-            <img src="/logo.png" width="1050" height="600" class="h-8 w-auto brightness-0 invert" alt="REISTI" />
-            <span class="text-sm font-semibold text-white">REISTI</span>
+          <div class="flex items-center">
+            <img src="/logo.png" width="1050" height="600" class="h-8 w-auto brightness-0 invert" alt="" />
+            <img
+              src="/logo-text.png"
+              width="426"
+              height="240"
+              loading="lazy"
+              decoding="async"
+              class="-ml-[22px] h-[46px] w-auto translate-y-[2px] brightness-0 invert"
+              alt="REISTI" />
           </div>
           <p class="mt-3 text-sm font-bold tracking-wide text-pink-400">No Dull Moments.</p>
           <p class="mt-1.5 text-xs leading-relaxed text-zinc-400">{{ t('footer.tagline') }}</p>

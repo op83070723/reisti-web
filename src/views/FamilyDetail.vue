@@ -14,7 +14,8 @@
       <span class="inline-flex items-center rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-600 ring-1 ring-inset ring-pink-200">
         {{ t('product.brand_badge') }}
       </span>
-      <div class="flex flex-wrap gap-1.5">
+      <DriveBadges v-if="variant.driveBadges?.length" :modes="variant.driveBadges" />
+      <div v-if="fam.variants.length > 1" class="flex flex-wrap gap-1.5">
         <button
           v-for="v in fam.variants" :key="v.slug"
           class="rounded-full border px-3 py-1 text-sm font-medium transition-colors"
@@ -88,9 +89,11 @@
 
     <!-- Suitability -->
     <div class="mt-10" v-reveal>
-      <h2 class="mb-3 text-lg font-bold text-zinc-900">{{ lang === 'ja' ? '適合素材' : 'Material Suitability' }}</h2>
+      <h2 class="mb-3 text-lg font-bold text-zinc-900">{{ t('product.material_conditions_title') }}</h2>
       <SuitabilityMatrix :items="variant.suitability || []" />
-      <p class="mt-2 text-xs text-zinc-500">{{ t('product.suitability_note') }}</p>
+      <p v-if="variant.suitability?.some(item => item.level != null)" class="mt-2 text-xs text-zinc-500">
+        {{ t('product.suitability_note') }}
+      </p>
     </div>
 
     <!-- Spec table -->
@@ -248,6 +251,7 @@
           <div>
             <p class="font-semibold text-zinc-700">{{ tField(doc.label) }}</p>
             <p class="text-xs text-zinc-500">PDF</p>
+            <p v-if="doc.note" class="mt-1 text-xs leading-relaxed text-zinc-500">{{ tField(doc.note) }}</p>
           </div>
         </a>
       </div>
@@ -266,6 +270,7 @@ import { track } from '../utils/track.js'
 import { SITE } from '../router/index.js'
 import ProductGallery    from '../components/ProductGallery.vue'
 import SuitabilityMatrix from '../components/SuitabilityMatrix.vue'
+import DriveBadges       from '../components/DriveBadges.vue'
 
 const COLLAPSE_AT = 12
 

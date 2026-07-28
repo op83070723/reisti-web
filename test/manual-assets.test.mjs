@@ -64,6 +64,18 @@ test('4 製品の永久ルートと固定 PDF ファイル名を維持する', (
     assert.equal(pdf.subarray(0, 5).toString('ascii'), '%PDF-', `${expected.key}: PDF シグネチャ`)
     assert.ok(pdf.length > 10_000, `${expected.key}: 空または不完全な PDF ではない`)
   }
+
+  const legacyManuals = [
+    ['reisti-rh-hss-bimetal-hole-saw-manual.pdf', 'REISTI_ハイスホールソー_取扱説明書.pdf'],
+    ['reisti-rhc-tct-carbide-hole-saw-manual.pdf', 'REISTI_超硬ホールソー_取扱説明書.pdf'],
+  ]
+  for (const [current, legacy] of legacyManuals) {
+    assert.deepEqual(
+      readFileSync(join(ROOT, 'public/pdf', legacy)),
+      readFileSync(join(ROOT, 'public/pdf', current)),
+      `${legacy}: 旧公開 URL も現行説明書と同じ内容を返す`
+    )
+  }
 })
 
 test('#manual とブラウザ表示リンクの契約を維持する', () => {

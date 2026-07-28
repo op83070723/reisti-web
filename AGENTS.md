@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 32 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 33 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -98,7 +98,8 @@
 - `test/manual-assets.test.mjs` 鎖定路由、PDF 檔名、`#manual` 契約、快取 header 與印刷 QR 的
   SHA-256。**PDF 內容 hash 刻意不鎖**，所以正常覆蓋新版 PDF 不需修改測試。
 - `print-assets/qr/` 內的 SVG／PNG 是已驗證的印刷母檔，不要為了壓縮或改名而重生。
-  舊日文檔名的 RH／RHC PDF 也先保留，避免既有外部連結失效。
+  舊日文檔名的 RH／RHC PDF 也要保留，避免既有外部連結失效；其**內容必須與對應的現行固定檔完全相同**，
+  `test/manual-assets.test.mjs` 會防止舊網址再次提供過時規格。
 
 ## 6. Contact API（`api/contact.js`）＋表單
 
@@ -144,6 +145,16 @@
   バイメタルホールソー、超硬ホールソー）。**step drill 與 pipe saw 是 OEM 專用品**，
   不得掛 REISTI 品牌敘述、不得出現在品牌產品列表。
 - `products.js` 的 `materials` 是「**可加工**材料」（對象物），不是產品本身的材質。
+- 四款品牌產品的事實來源優先順序：**使用者／工廠確認規格 > 現行取扱説明書 > 2026 型錄**。特長、
+  用途材料、厚度／硬度、適合電動機與使用模式原則上以說明書為準；只有逐尺寸品番、全長／有效長、
+  shank、JAN 等說明書未逐列記載的資料才取自型錄。`HomeView`／`ProductsView` 的產品卡必須從
+  `FAMILIES` 導出，不得再複製文案。
+- 說明書與型錄沒有「適合度 1〜3」或「定番尺寸」資料；未取得可追溯的實測／銷售依據前，不得替四款
+  品牌產品加回這類聲明。資料契約由 `test/product-manual-alignment.test.mjs` 防止回歸。
+- `driveBadges` 只摘要允許開啟的**運轉模式**，不可拿來表示電動工具相容性。使用者已確認 RP／RC 可用
+  回転與インパクト；RH 口徑 45mm 以下也可用兩者，且限制必須直接顯示在インパクト標籤；RHC 只顯示
+  回転。RP／RC 現行 PDF 的「回転モード専用／振動・打撃禁止」是已知待更正文字，不得拿它把網站改回
+  回転のみ。部署前必須由使用者提供修正版 RP／RC PDF 並覆蓋固定公開檔名。
 - 文案語氣：日文 B2B 商用敬體。程式碼註解慣例：日文、寫「為什麼」不寫「做了什麼」。
 
 ## 10. 設計系統與 a11y

@@ -75,7 +75,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n, tField } from '../i18n/index.js'
-import { OEM_FAMILIES, CATALOG_PDF } from '../data/products.js'
+import { FAMILIES, OEM_FAMILIES, CATALOG_PDF } from '../data/products.js'
 import { track } from '../utils/track.js'
 import ProductScroller from '../components/ProductScroller.vue'
 
@@ -83,50 +83,17 @@ const { t, lang } = useI18n()
 
 const oemProducts = OEM_FAMILIES
 
-/* Product scroller item sets — bilingual via computed */
-const DRILL_DATA = [
-  {
-    title: { ja: '充電マルチドリルビット', en: 'Cordless Multi Drill Bit' },
-    subtitle: { ja: '超硬チップで薄鉄板からタイルまで。', en: 'Carbide-tipped bit for steel, concrete & tile.' },
-    img: '/products/scroller/multi.webp',
-    to: '/products/drill-bit/multi',
-    artW: 330, artY: 40,
-  },
-  {
-    title: { ja: '六角軸コバルトドリル', en: 'Hex Shank Cobalt Drill' },
-    subtitle: { ja: 'ステンレスも切る、M35コバルト鋼。', en: 'M35 cobalt steel for stainless & hard metals.' },
-    img: '/products/scroller/cobalt.webp',
-    to: '/products/drill-bit/cobalt',
-    artW: 330, artY: 40,
-  },
-]
+// 製品名・要約・ルートを FAMILIES から導出し、詳細ページとの二重管理を避ける。
+const resolve = family => ({
+  title: tField(family.name),
+  subtitle: tField(family.card),
+  img: family.cardImage,
+  to: `/products/${family.category}/${family.variants[0].slug}`,
+  artW: 330,
+  artY: 40,
+})
 
-const HOLESAW_DATA = [
-  {
-    title: { ja: 'ハイスホールソー', en: 'HSS Hole Saw' },
-    subtitle: { ja: '金属・木材・樹脂に幅広く対応。', en: 'Versatile HSS cutting across metal, wood & plastic.' },
-    img: '/products/scroller/hss.webp',
-    to: '/products/hole-saw/hss',
-    artW: 330, artY: 40,
-  },
-  {
-    title: { ja: '超硬ホールソー', en: 'Carbide-Tipped Hole Saw' },
-    subtitle: { ja: 'ステンレス板・FRPも切れるトリプル刃。', en: 'Triple-blade carbide for stainless, steel & FRP.' },
-    img: '/products/scroller/tct.webp',
-    to: '/products/hole-saw/tct',
-    artW: 330, artY: 40,
-  },
-]
-
-const FEATURED_DATA = [...DRILL_DATA, ...HOLESAW_DATA]
-
-const resolve = list => list.map(p => ({
-  ...p,
-  title:    p.title[lang.value]    || p.title.ja,
-  subtitle: p.subtitle[lang.value] || p.subtitle.ja,
-}))
-
-const featured  = computed(() => resolve(FEATURED_DATA))
-const drillbit  = computed(() => resolve(DRILL_DATA))
-const holesaw   = computed(() => resolve(HOLESAW_DATA))
+const featured = computed(() => FAMILIES.map(resolve))
+const drillbit = computed(() => FAMILIES.filter(family => family.category === 'drill-bit').map(resolve))
+const holesaw = computed(() => FAMILIES.filter(family => family.category === 'hole-saw').map(resolve))
 </script>

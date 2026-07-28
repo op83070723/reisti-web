@@ -13,40 +13,41 @@ export const CATEGORIES = [
 
 /* ---- カタログ PDF（全製品共通） ---- */
 export const CATALOG_PDF = '/pdf/REISTI_製品カタログ_2026.pdf'
-const DOC_CATALOG = { label: { ja: '製品カタログ 2026', en: 'Product Catalogue 2026' }, file: CATALOG_PDF }
+const DOC_CATALOG = {
+  label: { ja: '製品カタログ 2026', en: 'Product Catalogue 2026' },
+  note: {
+    ja: '最新の仕様・使用条件は各製品の取扱説明書をご確認ください。',
+    en: 'Refer to each product manual for the latest specifications and operating limits.',
+  },
+  file: CATALOG_PDF,
+}
 
-/* ---- Suitability presets (level: 3=best / 2=good / 1=possible) ---- */
+/* ---- 取扱説明書に記載された用途材料・条件（説明書にない相対評価は付けない） ---- */
+const NO_LIMIT = { ja: '—', en: '—' }
 const S_MULTI = [
-  { name: { ja: 'コンクリート',   en: 'Concrete'        }, level: 3 },
-  { name: { ja: 'ブロック・レンガ', en: 'Block / Brick'  }, level: 3 },
-  { name: { ja: 'モルタル',       en: 'Mortar'          }, level: 3 },
-  { name: { ja: '石膏ボード',     en: 'Gypsum Board'    }, level: 3 },
-  { name: { ja: '陶器タイル',     en: 'Ceramic Tile'    }, level: 2 },
-  { name: { ja: '薄鉄板',         en: 'Thin Sheet Steel' }, level: 2 },
+  { name: { ja: '薄鉄板', en: 'Thin Sheet Steel' }, condition: { ja: 't3.0mm以下', en: 't ≤ 3.0mm' } },
+  { name: { ja: 'アルミ', en: 'Aluminium' }, condition: NO_LIMIT },
+  { name: { ja: 'コンクリート・モルタル・ブロック・レンガ・ALC', en: 'Concrete, Mortar, Block, Brick, ALC' }, condition: NO_LIMIT },
+  { name: { ja: '陶器タイル・石膏ボード・木材・プラスチック', en: 'Ceramic Tile, Gypsum Board, Wood, Plastic' }, condition: NO_LIMIT },
 ]
 
 const S_COBALT = [
-  { name: { ja: 'ステンレス', en: 'Stainless Steel'  }, level: 3 },
-  { name: { ja: '鉄・鋼材',   en: 'Steel / Iron'     }, level: 3 },
-  { name: { ja: 'アルミ',     en: 'Aluminium'        }, level: 3 },
-  { name: { ja: '銅・真鍮',   en: 'Copper / Brass'   }, level: 3 },
-  { name: { ja: '木材',       en: 'Wood'             }, level: 2 },
+  { name: { ja: 'ステンレス・鉄・アルミ・その他難削材', en: 'Stainless Steel, Iron, Aluminium, Other Hard-to-Cut Materials' }, condition: NO_LIMIT },
+  { name: { ja: 'プラスチック・木材', en: 'Plastic, Wood' }, condition: NO_LIMIT },
 ]
 
 const S_HOLE_HSS = [
-  { name: { ja: '薄鉄板',   en: 'Thin Sheet Steel' }, level: 3 },
-  { name: { ja: 'アルミ板', en: 'Aluminium Sheet'  }, level: 3 },
-  { name: { ja: '塩ビ板',   en: 'PVC Sheet'        }, level: 3 },
-  { name: { ja: '木材',     en: 'Wood'             }, level: 3 },
-  { name: { ja: '合板',     en: 'Plywood'          }, level: 3 },
+  { name: { ja: 'ステンレス板', en: 'Stainless Steel Sheet' }, condition: { ja: 't1.0mm以下', en: 't ≤ 1.0mm' } },
+  { name: { ja: '鉄板', en: 'Steel Sheet' }, condition: { ja: 't3.0mm以下', en: 't ≤ 3.0mm' } },
+  { name: { ja: 'アルミ板', en: 'Aluminium Sheet' }, condition: { ja: 't3.0mm以下', en: 't ≤ 3.0mm' } },
+  { name: { ja: '木材・合板・石膏ボード・塩ビ板・アクリル板', en: 'Wood, Plywood, Gypsum Board, PVC Sheet, Acrylic Sheet' }, condition: NO_LIMIT },
 ]
 
 const S_HOLE_TCT = [
-  { name: { ja: 'ステンレス板', en: 'Stainless Sheet' }, level: 3 },
-  { name: { ja: '鉄板',         en: 'Steel Plate'     }, level: 3 },
-  { name: { ja: '銅板',         en: 'Copper Sheet'    }, level: 3 },
-  { name: { ja: 'アルミ板',     en: 'Aluminium Sheet' }, level: 3 },
-  { name: { ja: 'FRP',          en: 'FRP'             }, level: 3 },
+  { name: { ja: 'ステンレス板', en: 'Stainless Steel Sheet' }, condition: { ja: 't10.0mm以下', en: 't ≤ 10.0mm' } },
+  { name: { ja: '鋼板', en: 'Steel Plate' }, condition: { ja: 'HB200以下', en: 'HB ≤ 200' } },
+  { name: { ja: 'アルミ板', en: 'Aluminium Sheet' }, condition: { ja: 't5.0mm以下', en: 't ≤ 5.0mm' } },
+  { name: { ja: '金属パイプ材・FRP', en: 'Metal Pipe, FRP' }, condition: NO_LIMIT },
 ]
 
 const S_STEP_STD = [
@@ -211,10 +212,15 @@ export const FAMILIES = [
     category: 'drill-bit',
     family: 'multi-drill',
     brand: 'reisti',
-    name: { ja: '充電マルチドリルビット', en: 'Cordless Multi Drill Bit' },
+    name: { ja: '充電マルチドリルビット', en: 'Hex Multi Drill Bit' },
+    card: {
+      ja: '異素材もビット交換不要。コンクリートも回転モードで。',
+      en: 'No bit changes across mixed materials; drills concrete in rotation mode.',
+    },
+    cardImage: '/products/scroller/multi.webp',
     intro: {
-      ja: '超硬チップ＋6.35mm六角軸。薄鉄板からコンクリート・タイルまでこれ一本で。',
-      en: 'Carbide tip with 6.35mm hex shank. From thin steel to concrete and tile — one bit does it all.',
+      ja: '異なる材料が重なる場所でもビット交換不要。回転・インパクトの両モードで使用できる多用途ドリルビット。',
+      en: 'A multi-purpose bit for overlapping materials without bit changes, supporting both rotation and impact operation.',
     },
     variants: [
       {
@@ -224,11 +230,11 @@ export const FAMILIES = [
         gallery: [
           {
             src: '/products/multi-1.webp', width: 1600, height: 1200,
-            alt: { ja: 'REISTI 充電マルチドリルビット4サイズの製品全景', en: 'Four sizes of REISTI cordless multi drill bits' },
+            alt: { ja: 'REISTI 充電マルチドリルビット4サイズの製品全景', en: 'Four sizes of REISTI hex multi drill bits' },
           },
           {
             src: '/products/multi-2.webp', width: 1600, height: 900,
-            alt: { ja: '充電マルチドリルビットの超硬チップと非対称刃先', en: 'Carbide tips and asymmetric cutting edges on REISTI cordless multi drill bits' },
+            alt: { ja: '充電マルチドリルビットの超硬チップと非対称刃先', en: 'Carbide tips and asymmetric cutting edges on REISTI hex multi drill bits' },
           },
           {
             src: '/products/multi-3.webp', width: 1600, height: 900,
@@ -236,29 +242,29 @@ export const FAMILIES = [
           },
           {
             src: '/products/multi-4.webp', width: 1600, height: 900, locales: ['ja'],
-            alt: { ja: '充電マルチドリルビットをインパクトドライバーへワンタッチ装着', en: 'One-touch installation of a cordless multi drill bit in an impact driver' },
+            alt: { ja: '充電マルチドリルビットをインパクトドライバーへワンタッチ装着', en: 'One-touch installation of a hex multi drill bit in an impact driver' },
           },
           {
             src: '/products/multi-5.webp', width: 1600, height: 900,
-            alt: { ja: '充電マルチドリルビットの超硬チップ先端', en: 'Close-up of the carbide tip on a REISTI cordless multi drill bit' },
+            alt: { ja: '充電マルチドリルビットの超硬チップ先端', en: 'Close-up of the carbide tip on a REISTI hex multi drill bit' },
           },
         ],
         detail: {
-          ja: '6.35mm六角軸シャンク採用で、充電インパクトドライバーにワンタッチ装着。超硬チップ＋非対称刃先により食いつきが良く、薄鉄板・コンクリート・ブロックへの穴あけスピードが向上。耐摩耗性に優れた超硬チップで長寿命を実現した高耐久仕様です。',
-          en: 'One-touch attachment to cordless impact drivers via 6.35mm hex shank. Carbide tip with asymmetric cutting edge bites fast into thin steel, concrete, and block. Wear-resistant carbide delivers long service life.',
+          ja: '異なる材料が重なる場所でも、ビットを交換せずに1本で穴あけを進められる多用途タイプです。超硬チップ＋非対称刃先で食いつきが良く、6.35mm六角軸によりインパクトドライバーへワンタッチ装着できます。回転・インパクトのどちらでも使用できます。振動ドリルの振動モード、ハンマードリルおよび逆回転では使用しないでください。',
+          en: 'A multi-purpose bit that drills through overlapping materials without bit changes. Its carbide tip and asymmetric cutting edge bite cleanly, while the 6.35mm hex shank attaches to impact drivers in one touch. Both rotation and impact operation are supported. Do not use a vibration drill in vibration mode, a hammer drill, or reverse rotation.',
         },
         features: [
           { ja: 'インパクトドライバー対応：6.35mm六角軸シャンク採用で、充電インパクトドライバーにワンタッチで装着可能。', en: 'Impact driver ready: 6.35mm hex shank attaches one-touch to cordless impact drivers.' },
           { ja: '超硬チップ＋非対称刃先：食いつきが良く、薄鉄板・コンクリート・ブロックへの穴あけスピードが向上。', en: 'Carbide tip + asymmetric edge: positive bite and faster drilling in thin steel, concrete, and block.' },
           { ja: '高耐久仕様：耐摩耗性に優れた超硬チップを採用し、長寿命を実現。', en: 'High durability: wear-resistant carbide tip for extended tool life.' },
         ],
-        materials: { ja: '薄鉄板・コンクリート・モルタル・ブロック・レンガ・石膏ボード・陶器タイル', en: 'Thin sheet steel, concrete, mortar, block, brick, gypsum board, ceramic tile' },
+        materials: { ja: '薄鉄板（t3.0mm以下）・アルミ・コンクリート・モルタル・ブロック・レンガ・ALC・陶器タイル・石膏ボード・木材・プラスチック', en: 'Thin sheet steel (t ≤ 3.0mm), aluminium, concrete, mortar, block, brick, ALC, ceramic tile, gypsum board, wood, plastic' },
         shank:     { ja: '6.35mm 六角シャンク', en: '6.35mm hex shank' },
-        tools:     { ja: 'インパクトドライバー・充電ドリル（9.6V以上）・電気ドリル（400W以下）', en: 'Impact drivers, cordless drills (9.6V+), electric drills (up to 400W)' },
+        tools:     { ja: 'インパクトドライバー・充電ドリル（9.6V以上）・電気ドリル（400W以下）・振動ドリル（回転モード）', en: 'Impact drivers, cordless drills (9.6V+), electric drills (up to 400W), vibration drills (rotation mode)' },
+        driveBadges: [{ type: 'rotation' }, { type: 'impact' }],
         sizeNote:  { ja: '刃先径 3.0〜12.7mm・全20サイズ', en: 'Ø3.0–12.7mm · 20 sizes' },
         specCols: ['code', 'size', 'overall', 'effective', 'jan'],
         suitability: S_MULTI,
-        popularSizes: ['6.0', '8.0'],
         specs: SPEC_MULTI,
       },
     ],
@@ -269,10 +275,15 @@ export const FAMILIES = [
     category: 'drill-bit',
     family: 'cobalt-drill',
     brand: 'reisti',
-    name: { ja: '六角軸コバルトドリル', en: 'Hex Shank Cobalt Drill' },
+    name: { ja: '六角軸コバルトドリル', en: 'Hex Cobalt Drill Bit' },
+    card: {
+      ja: 'M35コバルトハイス鋼で、ステンレス・難削材に。',
+      en: 'M35 cobalt HSS for stainless steel and hard-to-cut materials.',
+    },
+    cardImage: '/products/scroller/cobalt.webp',
     intro: {
-      ja: 'コバルトハイス（HSS-Co）採用。ステンレス鋼・難削材の穴あけに。',
-      en: 'Cobalt HSS (HSS-Co) for drilling stainless steel and hard-to-cut materials.',
+      ja: 'コバルトハイス鋼 M35（HSS-Co5／JIS SKH55 相当）を採用。ステンレス鋼・難削材の穴あけに対応。',
+      en: 'M35 cobalt HSS (HSS-Co5 / JIS SKH55 equivalent) for drilling stainless steel and hard-to-cut materials.',
     },
     variants: [
       {
@@ -282,15 +293,15 @@ export const FAMILIES = [
         gallery: [
           {
             src: '/products/cobalt-1.webp', width: 1600, height: 1200,
-            alt: { ja: 'REISTI 六角軸コバルトドリル4サイズの製品全景', en: 'Four sizes of REISTI hex shank cobalt drill bits' },
+            alt: { ja: 'REISTI 六角軸コバルトドリル4サイズの製品全景', en: 'Four sizes of REISTI hex cobalt drill bits' },
           },
           {
             src: '/products/cobalt-2.webp', width: 1600, height: 900,
-            alt: { ja: '六角軸コバルトドリルの精密研磨刃先', en: 'Precision-ground cutting edges on REISTI cobalt drill bits' },
+            alt: { ja: '六角軸コバルトドリルの先端角135°・X型シンニング刃先', en: '135-degree split point with X-type thinning on REISTI hex cobalt drill bits' },
           },
           {
             src: '/products/cobalt-3.webp', width: 1600, height: 900,
-            alt: { ja: 'REISTIのサイズ刻印と6.35mm六角軸シャンク', en: 'REISTI size markings and 6.35 mm hex shanks on cobalt drill bits' },
+            alt: { ja: 'REISTIのサイズ刻印と6.35mm六角軸シャンク', en: 'REISTI size markings and 6.35 mm hex shanks on hex cobalt drill bits' },
           },
           {
             src: '/products/cobalt-4.webp', width: 1600, height: 900, locales: ['ja'],
@@ -302,21 +313,22 @@ export const FAMILIES = [
           },
         ],
         detail: {
-          ja: 'ステンレス鋼や難削材の加工に最適なコバルトハイス（HSSCO）を採用。耐熱性・耐摩耗性に優れた高級ハイス鋼で長寿命を実現。精密研磨仕上げにより食いつきが良く、センターポンチ不要で正確な位置への穴あけが可能です。',
-          en: 'Cobalt HSS (HSSCO) optimized for stainless steel and difficult materials. Premium high-speed steel with superior heat and wear resistance for long life. Precision-ground point bites cleanly — no center punch needed for accurate positioning.',
+          ja: 'コバルトハイス鋼 M35（HSS-Co5／JIS SKH55 相当）を採用し、ステンレス鋼や難削材の穴あけに対応します。刃部と六角軸を一体成形した削り出し構造でブレ・折れに強く、先端角135°・X型シンニング加工によりセンターポンチなしでも正確な穴あけが可能です。回転・インパクトのどちらでも使用できます。振動ドリルの振動モードおよびハンマードリルでは使用しないでください。',
+          en: 'Made from M35 cobalt HSS (HSS-Co5 / JIS SKH55 equivalent) for drilling stainless steel and hard-to-cut materials. The cutting section and hex shank are machined as one piece for resistance to runout and breakage, while the 135-degree split point with X-type thinning starts accurately without a centre punch. Both rotation and impact operation are supported. Do not use a vibration drill in vibration mode or a hammer drill.',
         },
         features: [
-          { ja: 'コバルトハイス（HSSCO）採用：ステンレス鋼や難削材の加工に最適。耐熱性・耐摩耗性に優れた高級ハイス鋼で長寿命を実現。', en: 'Cobalt HSS (HSSCO): ideal for stainless and difficult materials. Superior heat/wear resistance for long tool life.' },
-          { ja: '精密研磨仕上げ：食いつきが良く、センターポンチ不要で正確な位置への穴あけが可能。', en: 'Precision-ground finish: clean bite, accurate positioning without a center punch.' },
+          { ja: 'コバルトハイス鋼 M35：HSS-Co5／JIS SKH55 相当。耐熱性・耐摩耗性に優れ、ステンレス鋼や難削材に対応。', en: 'M35 cobalt HSS: HSS-Co5 / JIS SKH55 equivalent, with heat and wear resistance for stainless steel and hard-to-cut materials.' },
+          { ja: '削り出し一体構造：刃部と六角軸を一体成形し、接合部がなくブレ・折れに強い。', en: 'One-piece machined construction: the cutting section and hex shank are formed together for resistance to runout and breakage.' },
+          { ja: '先端角135°・X型シンニング加工：食いつきが良く、センターポンチ不要で正確な穴あけが可能。', en: '135-degree split point with X-type thinning: clean starting and accurate drilling without a centre punch.' },
           { ja: 'インパクトドライバー対応：6.35mm六角軸シャンク採用で、充電インパクトドライバーにワンタッチで装着可能。', en: 'Impact driver ready: 6.35mm hex shank, one-touch attachment.' },
         ],
-        materials: { ja: 'ステンレス・鋼・鉄・アルミ・木材・その他難削材', en: 'Stainless steel, steel, iron, aluminium, wood, other hard-to-cut materials' },
+        materials: { ja: 'ステンレス・鉄・アルミ・その他難削材・プラスチック・木材', en: 'Stainless steel, iron, aluminium, other hard-to-cut materials, plastic, wood' },
         shank:     { ja: '6.35mm 六角軸', en: '6.35mm hex shank' },
-        tools:     { ja: 'インパクトドライバー・充電ドリル（9.6V以上）・電気ドリル（400W以下）', en: 'Impact drivers, cordless drills (9.6V+), electric drills (up to 400W)' },
+        tools:     { ja: 'インパクトドライバー・充電ドリル（9.6V以上）・電気ドリル・振動ドリル（回転モード）', en: 'Impact drivers, cordless drills (9.6V+), electric drills, vibration drills (rotation mode)' },
+        driveBadges: [{ type: 'rotation' }, { type: 'impact' }],
         sizeNote:  { ja: '刃先径 1.5〜13.0mm・全27サイズ', en: 'Ø1.5–13.0mm · 27 sizes' },
         specCols: ['code', 'size', 'overall', 'effective', 'jan'],
         suitability: S_COBALT,
-        popularSizes: ['3.2', '4.2', '5.0', '6.5'],
         specs: SPEC_COBALT,
       },
     ],
@@ -329,10 +341,15 @@ export const FAMILIES = [
     category: 'hole-saw',
     family: 'hss',
     brand: 'reisti',
-    name: { ja: 'ハイスホールソー', en: 'HSS Hole Saw' },
+    name: { ja: 'ハイスホールソー', en: 'HSS Bimetal Hole Saw' },
+    card: {
+      ja: 'バイメタル刃＋ツバ無し設計。狭所・壁際にも。',
+      en: 'Bimetal teeth and flange-free design for tight spaces and wall edges.',
+    },
+    cardImage: '/products/scroller/hss.webp',
     intro: {
-      ja: 'バイメタル構造（H.S.S.）のツバ無しホールソー。電気工事・配管工事の定番サイズを全ラインナップ。',
-      en: 'Flange-free bimetal (H.S.S.) hole saw. Full lineup of standard sizes for electrical and plumbing work.',
+      ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせた、ツバ無し設計のバイメタルホールソー。',
+      en: 'A flange-free bimetal hole saw combining high-speed steel (H.S.S.) teeth with a flexible backbone.',
     },
     variants: [
       {
@@ -346,7 +363,7 @@ export const FAMILIES = [
           },
           {
             src: '/products/hss-2.webp', width: 1600, height: 900,
-            alt: { ja: 'ハイスホールソーのバイメタル刃とセンタードリル', en: 'Bimetal teeth and centre drills on REISTI HSS hole saws' },
+            alt: { ja: 'ハイスホールソーのバイメタル刃と段付きチタンコーティングセンタードリル', en: 'Bimetal teeth and stepped titanium-coated centre drills on REISTI HSS bimetal hole saws' },
           },
           {
             src: '/products/hss-3.webp', width: 1600, height: 900, locales: ['ja'],
@@ -354,22 +371,25 @@ export const FAMILIES = [
           },
         ],
         detail: {
-          ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせたバイメタル構造。ツバ無し設計でスペースが限られた作業環境でも使いやすく、薄鉄板・アルミ・塩ビ・木材など幅広い材料に対応します。電気工事・配管工事の定番サイズを全33サイズラインナップ。',
-          en: 'Bimetal construction pairs an H.S.S. cutting edge with a flexible backbone. Flange-free design works in tight spaces, cutting thin steel, aluminium, PVC, and wood. Full 33-size lineup covering standard electrical and plumbing diameters.',
+          ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせたバイメタル構造です。ツバ無し設計で壁際や狭所でも扱いやすく、段付き・チタンコーティングセンタードリルが貫通時の衝撃を緩和します。全サイズにカステルスプリングを標準装備。口径45mm以下は回転・インパクトのどちらでも使用でき、インパクトドライバーで金属板に穿孔する場合は18V以下・3,000rpm以下を推奨します。',
+          en: 'Bimetal construction combines high-speed steel teeth with a flexible backbone. The flange-free body works near walls and in tight spaces, while the stepped titanium-coated centre drill reduces breakthrough impact. A Castel spring is standard on every size. Sizes up to 45mm support both rotation and impact operation; when drilling metal sheet with an impact driver, 18V or less and 3,000rpm or less are recommended.',
         },
         features: [
-          { ja: 'バイメタル構造（H.S.S.）：高速度鋼の刃先と柔軟なバックボーンの組み合わせ。', en: 'Bimetal (H.S.S.): high-speed steel edge with a flexible backbone.' },
-          { ja: 'ツバ無し設計：スペースが限られた作業環境でも使いやすい。', en: 'Flange-free design: easy to use even in confined workspaces.' },
-          { ja: '電気工事・配管工事の定番サイズを全ラインナップ。', en: 'Complete lineup of standard sizes for electrical and plumbing work.' },
-          { ja: '薄鉄板・アルミ・PVC・木材など幅広い材料に対応。', en: 'Cuts a wide range of materials: thin steel, aluminium, PVC, wood.' },
+          { ja: 'バイメタル構造：高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせた構造。', en: 'Bimetal construction: high-speed steel (H.S.S.) teeth combined with a flexible backbone.' },
+          { ja: 'ツバ無し設計：壁際や狭所でも作業しやすく、貫通作業が可能な構造。', en: 'Flange-free design: easy to use near walls and in confined spaces, with through-cut capability.' },
+          { ja: '段付き・チタンコーティングセンタードリル：貫通時の衝撃を緩和し、刃先の破損を防止。耐摩耗性も向上。', en: 'Stepped titanium-coated centre drill: reduces breakthrough impact, helps prevent tooth damage, and improves wear resistance.' },
+          { ja: 'カステルスプリング標準装備：全サイズに装備し、抜けカスの取り出しを容易にします。', en: 'Castel spring supplied as standard: fitted to every size for easier slug removal.' },
         ],
-        materials: { ja: '薄鉄板・アルミ板・塩ビ板・木材・合板', en: 'Thin sheet steel, aluminium sheet, PVC sheet, wood, plywood' },
+        materials: { ja: 'ステンレス板（t1.0mm以下）・鉄板／アルミ板（t3.0mm以下）・木材・合板・石膏ボード・塩ビ板・アクリル板', en: 'Stainless steel sheet (t ≤ 1.0mm), steel and aluminium sheet (t ≤ 3.0mm), wood, plywood, gypsum board, PVC sheet, acrylic sheet' },
         shank:     { ja: '6.35mm六角シャンク（口径15〜45mm）／10mmストレートシャンク（46mm以上）', en: '6.35mm hex shank (Ø15–45mm) / 10mm straight shank (Ø46mm+)' },
-        tools:     { ja: 'インパクトドライバー・充電ドリル・電気ドリル（回転専用）', en: 'Impact drivers, cordless drills, electric drills (rotation only)' },
+        tools:     { ja: 'インパクトドライバー（口径45mm以下）・充電ドリル・電気ドリル（回転専用・回転モード）・振動ドリル（回転モード）', en: 'Impact drivers (Ø45mm and below), cordless drills, electric drills (rotation only), vibration drills (rotation mode)' },
+        driveBadges: [
+          { type: 'rotation' },
+          { type: 'impact', condition: { ja: '口径45mm以下', en: 'Ø45mm and below' } },
+        ],
         sizeNote:  { ja: '口径 15〜65mm・全33サイズ／有効長 23mm', en: 'Ø15–65mm · 33 sizes / effective length 23mm' },
         specCols: ['code', 'size', 'shank', 'jan'],
         suitability: S_HOLE_HSS,
-        popularSizes: ['21', '27', '33'],
         specs: SPEC_HSS,
       },
     ],
@@ -380,7 +400,12 @@ export const FAMILIES = [
     category: 'hole-saw',
     family: 'tct',
     brand: 'reisti',
-    name: { ja: '超硬ホールソー', en: 'Carbide-Tipped Hole Saw' },
+    name: { ja: '超硬ホールソー', en: 'TCT Carbide Hole Saw' },
+    card: {
+      ja: 'トリプル超硬刃でステンレス板・FRPに。',
+      en: 'Triple carbide teeth for stainless steel sheet and FRP.',
+    },
+    cardImage: '/products/scroller/tct.webp',
     intro: {
       ja: 'トリプル刃・超硬チップ採用。ステンレス板・FRPなど難削材の精密穴あけに。',
       en: 'Triple-blade carbide tips for precision holes in stainless sheet, FRP, and other hard materials.',
@@ -397,7 +422,7 @@ export const FAMILIES = [
           },
           {
             src: '/products/tct-2.webp', width: 1600, height: 900,
-            alt: { ja: '超硬ホールソーのトリプル刃とセンタードリル', en: 'Triple carbide teeth and centre drills on REISTI hole saws' },
+            alt: { ja: '超硬ホールソーのトリプル刃と段付きチタンコーティングセンタードリル', en: 'Triple carbide teeth and stepped titanium-coated centre drills on REISTI TCT carbide hole saws' },
           },
           {
             src: '/products/tct-3.webp', width: 1600, height: 900,
@@ -405,22 +430,22 @@ export const FAMILIES = [
           },
         ],
         detail: {
-          ja: 'トリプル刃・超硬チップ採用で、ステンレス板・FRPなどの難削材にも対応。10mmストレート軸はボール盤・電動ドリルに対応し、ツバ無し設計は薄板・精密加工に適した構造。高精度な穴あけが必要な金属加工・設備工事に最適です。',
-          en: 'Triple-blade carbide tips handle stainless sheet, FRP, and other difficult materials. 10mm straight shank fits drill presses and electric drills; flange-free design suits thin-sheet precision work. Ideal for metalworking and equipment installation requiring accurate holes.',
+          ja: '外刃・中刃・内刃の3種類からなるトリプル刃と超硬チップにより、ステンレス板・FRPなどの難削材に対応します。ツバ無し設計は薄板・精密加工に適し、段付き・チタンコーティングセンタードリルが貫通時の衝撃を緩和。全サイズにカステルスプリングを標準装備しています。必ず回転モードで使用し、インパクトドライバー・振動モード・ハンマードリルは使用しないでください。',
+          en: 'Three carbide tooth profiles—outer, centre, and inner—handle difficult materials such as stainless steel sheet and FRP. The flange-free body suits thin-sheet precision work, while the stepped titanium-coated centre drill reduces breakthrough impact. A Castel spring is standard on every size. Use in rotation mode only; impact drivers, vibration mode, and hammer drills are not permitted.',
         },
         features: [
-          { ja: 'トリプル刃・超硬チップ採用：ステンレス板・FRPなどの難削材も対応。', en: 'Triple-blade carbide tips: cuts stainless sheet, FRP, and other hard materials.' },
-          { ja: '10mmストレート軸：ボール盤・電動ドリルに対応。', en: '10mm straight shank: fits drill presses and electric drills.' },
+          { ja: 'トリプル刃・超硬チップ：外刃・中刃・内刃の3種類の刃形で高速穿孔と高耐久を実現。', en: 'Triple carbide teeth: outer, centre, and inner tooth profiles for fast drilling and durability.' },
+          { ja: '段付き・チタンコーティングセンタードリル：貫通時の衝撃を緩和し、刃先の破損を防止。耐摩耗性も向上。', en: 'Stepped titanium-coated centre drill: reduces breakthrough impact, helps prevent tooth damage, and improves wear resistance.' },
+          { ja: 'カステルスプリング標準装備：全サイズに装備し、抜けカスの取り出しを容易にします。', en: 'Castel spring supplied as standard: fitted to every size for easier slug removal.' },
           { ja: 'ツバ無し設計：薄板・精密加工に適した構造。', en: 'Flange-free design: suited to thin-sheet precision work.' },
-          { ja: '高精度な穴あけが必要な金属加工・設備工事に最適。', en: 'Ideal for metalworking and equipment installation requiring precision holes.' },
         ],
-        materials: { ja: 'ステンレス板・鉄板・銅板・アルミ板・FRP', en: 'Stainless sheet, steel plate, copper sheet, aluminium sheet, FRP' },
+        materials: { ja: 'ステンレス板（t10.0mm以下）・鋼板（HB200以下）・アルミ板（t5.0mm以下）・金属パイプ材・FRP', en: 'Stainless steel sheet (t ≤ 10.0mm), steel plate (HB ≤ 200), aluminium sheet (t ≤ 5.0mm), metal pipe, FRP' },
         shank:     { ja: '10mm ストレートシャンク', en: '10mm straight shank' },
-        tools:     { ja: '充電ドリル・電気ドリル（回転専用）・ボール盤', en: 'Cordless drills, electric drills (rotation only), drill presses' },
+        tools:     { ja: '電気ドリル（回転専用・回転モード）・充電ドリル（回転モード）・ボール盤', en: 'Electric drills (rotation only), cordless drills (rotation mode), drill presses' },
+        driveBadges: [{ type: 'rotation', only: true }],
         sizeNote:  { ja: '口径 14〜65mm・全28サイズ／有効長 20mm', en: 'Ø14–65mm · 28 sizes / effective length 20mm' },
         specCols: ['code', 'size', 'shank', 'jan'],
         suitability: S_HOLE_TCT,
-        popularSizes: ['21', '27', '33'],
         specs: SPEC_TCT,
       },
     ],
