@@ -1,5 +1,13 @@
 # REISTI 說明書與印刷 QR 維護
 
+## 製品目錄 QR
+
+- 目標：`https://www.reisti.com/products`
+- 印刷用 SVG：`reisti-products-catalog-qr.svg`（25 mm、向量）
+- 一般用 PNG：`reisti-products-catalog-qr.png`（1221 × 1221 px）
+
+QR 連製品一覧頁，不直接連年度 PDF。日後替換型錄 PDF 時，不需要重新製作 QR。
+
 ## 永久不變的 QR 目標
 
 - RH：`https://www.reisti.com/products/hole-saw/hss#manual`
