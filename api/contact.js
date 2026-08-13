@@ -96,7 +96,7 @@ export function createHandler({ send } = {}) {
     try {
       await send({
         from:    process.env.MAIL_FROM || 'noreply@reisti.org',
-        to:      process.env.MAIL_TO   || 'chenytbiz@reisti.org',
+        to:      process.env.MAIL_TO   || 'chenytbiz@reisti.com',
         replyTo: email,
         subject: `【${typeLabel}】${name}（${company}）`,
         html: `

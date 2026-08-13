@@ -151,11 +151,12 @@ test('送信プロバイダ失敗時は 500・内部詳細を漏らさない', a
   assert.equal(res.body.error, 'send failed')
 })
 
-test('正常系：200、send は 1 回、件名は日本語ラベル、replyTo は送信者', async () => {
+test('正常系：200、send は 1 回、宛先・件名・replyTo が正しい', async () => {
   const { res, sent } = await run({ ...VALID, type: 'oem', product: 'ハイスホールソー', qty: '1000' })
   assert.equal(res.statusCode, 200)
   assert.equal(sent.length, 1)
   const mail = sent[0]
+  assert.equal(mail.to, 'chenytbiz@reisti.com')
   assert.ok(mail.subject.includes('【OEM / プライベートブランド】'), mail.subject)
   assert.equal(mail.replyTo, VALID.email)
   assert.ok(mail.html.includes('ハイスホールソー'))

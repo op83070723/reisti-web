@@ -24,8 +24,8 @@
           <a href="tel:05088948687" class="mt-2 block text-xs text-zinc-400 hover:text-white transition-colors">
             TEL: 050-8894-8687
           </a>
-          <a href="mailto:chenytbiz@reisti.org" class="mt-1 block text-xs text-zinc-400 hover:text-white transition-colors">
-            chenytbiz@reisti.org
+          <a href="mailto:chenytbiz@reisti.com" class="mt-1 block text-xs text-zinc-400 hover:text-white transition-colors">
+            chenytbiz@reisti.com
           </a>
         </div>
 

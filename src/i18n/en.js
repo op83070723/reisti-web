@@ -202,7 +202,7 @@ export default {
     sections: [
       {
         h: 'Business Operator',
-        body: 'Company: REISTI Co., Ltd. (瑞士釘株式会社)\nAddress: 2-4-15 Kamishinjō, Nakahara-ku, Kawasaki, Kanagawa, Japan\nContact: chenytbiz@reisti.org / TEL +81-50-8894-8687',
+        body: 'Company: REISTI Co., Ltd. (瑞士釘株式会社)\nAddress: 2-4-15 Kamishinjō, Nakahara-ku, Kawasaki, Kanagawa, Japan\nContact: chenytbiz@reisti.com / TEL +81-50-8894-8687',
       },
       {
         h: 'Information We Collect',
@@ -234,7 +234,7 @@ export default {
       },
       {
         h: 'Contact',
-        body: 'REISTI Co., Ltd.\nEmail: chenytbiz@reisti.org\nTEL: +81-50-8894-8687',
+        body: 'REISTI Co., Ltd.\nEmail: chenytbiz@reisti.com\nTEL: +81-50-8894-8687',
       },
     ],
     established: 'Established: July 7, 2026',

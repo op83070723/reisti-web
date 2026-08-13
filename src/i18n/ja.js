@@ -202,7 +202,7 @@ export default {
     sections: [
       {
         h: '事業者情報',
-        body: '社名：瑞士釘株式会社（REISTI）\n所在地：神奈川県川崎市中原区上新城 2-4-15\n連絡先：chenytbiz@reisti.org／TEL 050-8894-8687',
+        body: '社名：瑞士釘株式会社（REISTI）\n所在地：神奈川県川崎市中原区上新城 2-4-15\n連絡先：chenytbiz@reisti.com／TEL 050-8894-8687',
       },
       {
         h: '取得する個人情報',
@@ -234,7 +234,7 @@ export default {
       },
       {
         h: 'お問い合わせ窓口',
-        body: '瑞士釘株式会社\nメール：chenytbiz@reisti.org\nTEL：050-8894-8687',
+        body: '瑞士釘株式会社\nメール：chenytbiz@reisti.com\nTEL：050-8894-8687',
       },
     ],
     established: '制定日：2026年7月7日',

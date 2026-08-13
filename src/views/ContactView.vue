@@ -85,11 +85,11 @@
             <p class="text-zinc-500 text-xs">050-8894-8687</p>
           </div>
         </a>
-        <a href="mailto:chenytbiz@reisti.org" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
+        <a href="mailto:chenytbiz@reisti.com" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-lg">✉</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ t('contact.email_label') }}</p>
-            <p class="text-zinc-500 text-xs">chenytbiz@reisti.org</p>
+            <p class="text-zinc-500 text-xs">chenytbiz@reisti.com</p>
           </div>
         </a>
         <a href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
