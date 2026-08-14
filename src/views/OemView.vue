@@ -64,14 +64,16 @@
         <h2 class="text-2xl font-extrabold text-zinc-900 sm:text-3xl">{{ t('oem.partner_title') }}</h2>
       </div>
       <p class="mb-8 text-zinc-500">{{ t('oem.partner_sub') }}</p>
-      <div class="grid gap-4 sm:grid-cols-3">
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <div
           v-for="p in partnerProducts" :key="p.family"
           class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
           <p class="text-[11px] font-semibold uppercase tracking-wide text-pink-400">OEM Only</p>
           <h3 class="mt-1 font-bold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
-          <RouterLink to="/contact?type=oem" class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
+          <RouterLink
+            :to="{ path: '/contact', query: { type: 'oem', product: tField(p.name) } }"
+            class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
         </div>

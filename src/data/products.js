@@ -58,22 +58,6 @@ const S_STEP_STD = [
   { name: { ja: '銅・真鍮',   en: 'Copper/Brass' }, level: 3 },
 ]
 
-const S_STEP_TIALN = [
-  { name: { ja: '薄板鉄',     en: 'Sheet Steel'  }, level: 3 },
-  { name: { ja: 'アルミ',     en: 'Aluminium'    }, level: 3 },
-  { name: { ja: '樹脂',       en: 'Plastic'      }, level: 3 },
-  { name: { ja: 'ステンレス', en: 'Stainless'    }, level: 3 },
-  { name: { ja: '銅・真鍮',   en: 'Copper/Brass' }, level: 3 },
-]
-
-const S_PIPE = [
-  { name: { ja: 'PVCパイプ',    en: 'PVC Pipe'       }, level: 3 },
-  { name: { ja: '銅管',         en: 'Copper Pipe'    }, level: 3 },
-  { name: { ja: 'アルミパイプ', en: 'Aluminium Pipe' }, level: 3 },
-  { name: { ja: '木材',         en: 'Wood'           }, level: 2 },
-  { name: { ja: '薄板鉄',       en: 'Thin Steel'     }, level: 1 },
-]
-
 /* =====================================================================
    規格表データ（製品カタログ 2026 準拠）
    JAN = 4580842 + 6桁。size は表示用文字列（末尾ゼロ保持のため）。
@@ -457,6 +441,42 @@ export const FAMILIES = [
 /* ===== OEM 取扱製品（提携工場製造・REISTIブランドなし） ===== */
 export const OEM_FAMILIES = [
   {
+    family: 'saw-garden-outdoor',
+    brand: 'oem',
+    name: { ja: '園芸・アウトドア', en: 'Garden & Outdoor' },
+    intro: {
+      ja: '剪定鋸を中心に、園芸・アウトドア向けの各種ハンドソーをOEM供給。',
+      en: 'Pruning saws and other hand saws for garden and outdoor use, available for OEM supply.',
+    },
+  },
+  {
+    family: 'saw-construction-woodworking',
+    brand: 'oem',
+    name: { ja: '建築・木工', en: 'Construction & Woodworking' },
+    intro: {
+      ja: '引き回し鋸や一般木工鋸など、建築・木工向けの各種鋸をOEM供給。',
+      en: 'Keyhole saws and general-purpose hand saws for construction and woodworking OEM supply.',
+    },
+  },
+  {
+    family: 'saw-fine-woodworking',
+    brand: 'oem',
+    name: { ja: '精密木工', en: 'Fine Woodworking' },
+    intro: {
+      ja: '両刃鋸や精密切断用鋸など、用途に合わせた各種木工鋸をOEM供給。',
+      en: 'Double-edged and other saws for fine woodworking, available to suit different applications.',
+    },
+  },
+  {
+    family: 'reciprocating-saw-blades',
+    brand: 'oem',
+    name: { ja: 'レシプロソー替刃', en: 'Reciprocating Saw Blades' },
+    intro: {
+      ja: '木工・PVC・枝切り・竹切り用のレシプロソー替刃をOEM供給。',
+      en: 'Reciprocating saw blades for wood, PVC, pruning, and bamboo cutting.',
+    },
+  },
+  {
     family: 'step-drill',
     brand: 'oem',
     name: { ja: 'ステップドリル', en: 'Step Drill' },
@@ -478,58 +498,6 @@ Compatible tools: Electric drills (low speed recommended)`,
         },
         suitability: S_STEP_STD,
         popularSizes: ['4-12', '4-20'],
-        specs: [],
-      },
-    ],
-  },
-  {
-    family: 'step-tialn',
-    brand: 'oem',
-    name: { ja: 'ステップドリル TiAlN', en: 'Step Drill (TiAlN Coated)' },
-    intro: {
-      ja: '耐熱性・耐摩耗性に優れた TiAlN コーティング。',
-      en: 'TiAlN coating for superior heat and wear resistance.',
-    },
-    variants: [
-      {
-        slug: 'tialn',
-        label: { ja: 'TiAlN', en: 'TiAlN' },
-        hero: null,
-        gallery: [],
-        detail: {
-          ja: `TiAlN コーティングにより高温下でも耐摩耗性を発揮。ステンレスなど難削材でも安定した切削が可能。
-適合電動機：電気ドリル（低速推奨）`,
-          en: `TiAlN coating maintains hardness at high temperatures. Stable cutting even in difficult materials like stainless steel.
-Compatible tools: Electric drills (low speed recommended)`,
-        },
-        suitability: S_STEP_TIALN,
-        popularSizes: ['4-22', '6-30'],
-        specs: [],
-      },
-    ],
-  },
-  {
-    family: 'pipe-saw',
-    brand: 'oem',
-    name: { ja: 'パイプソー', en: 'Pipe Saw' },
-    intro: {
-      ja: 'PVC・銅管・アルミパイプの切断に。',
-      en: 'For cutting PVC, copper, and aluminium pipes.',
-    },
-    variants: [
-      {
-        slug: 'pipe',
-        label: { ja: '標準', en: 'Standard' },
-        hero: null,
-        gallery: [],
-        detail: {
-          ja: `PVC管・銅管・アルミパイプの切断に特化した鋸刃。素早くバリの少ない切断面を実現。DIY・設備工事の現場で活躍。
-適合電動機：往復鋸（レシプロソー） / 手動`,
-          en: `Blade optimized for cutting PVC, copper, and aluminium pipes. Fast, clean cuts with minimal burr for DIY and installation work.
-Compatible tools: Reciprocating saws / Manual use`,
-        },
-        suitability: S_PIPE,
-        popularSizes: [],
         specs: [],
       },
     ],
