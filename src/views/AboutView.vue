@@ -17,7 +17,7 @@
       <div class="grid gap-8 sm:grid-cols-3">
         <div v-for="(para, i) in storyParagraphs" :key="i" class="flex gap-4">
           <div class="mt-1.5 h-12 w-0.5 shrink-0 rounded-full bg-pink-300" />
-          <p class="text-[15px] leading-relaxed text-zinc-600">{{ t(para) }}</p>
+          <p class="whitespace-pre-line text-[15px] leading-relaxed text-zinc-600">{{ t(para) }}</p>
         </div>
       </div>
     </section>
