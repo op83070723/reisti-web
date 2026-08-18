@@ -34,7 +34,7 @@
       <span class="inline-flex items-center rounded-full bg-pink-50 px-3 py-1 text-xs font-semibold text-pink-600 ring-1 ring-inset ring-pink-200">
         REISTI Brand
       </span>
-      <p class="text-xs text-zinc-500">{{ lang === 'ja' ? '自社工場製造 · OEM代工対応' : 'Own factory · OEM available' }}</p>
+      <p class="text-xs text-zinc-500">{{ lang === 'ja' ? '自社工場製造 · OEM対応' : 'Own factory · OEM available' }}</p>
     </div>
 
     <ProductScroller v-reveal class="mb-12" :heading="t('products.drillbit')" :items="drillbit" />

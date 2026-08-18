@@ -35,7 +35,7 @@
       </div>
     </section>
 
-    <!-- Mission / Quality / Sustainability -->
+    <!-- Mission / Quality / Manufacturing network -->
     <section class="mb-12 grid gap-5 sm:grid-cols-3" v-reveal>
       <div v-for="(card, i) in cards" :key="i" class="rounded-2xl border border-zinc-200 p-6">
         <h3 class="font-bold text-zinc-900">{{ t(card.title) }}</h3>

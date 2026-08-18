@@ -8,7 +8,7 @@ import PrivacyView  from '../views/PrivacyView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 
 export const SITE = 'https://www.reisti.com'
-export const DEFAULT_DESC = 'REISTI 公式サイト。台湾で約30年の実績を持つ母体企業から生まれた工具ブランド。充電マルチドリルビット・コバルトドリル・ハイス／超硬ホールソーを自社製造。OEMも対応。'
+export const DEFAULT_DESC = 'REISTI 公式サイト。台湾の母体企業が約30年にわたり培った知見を基盤とする工具ブランド。充電マルチドリルビット・コバルトドリル・ハイス／超硬ホールソーを自社製造し、OEM供給にも対応しています。'
 
 /* 各ページの title / description は App.vue の useHead が meta から読み取り、
    SSG 時に静的 HTML へ焼き込まれる（製品ページは FamilyDetail 内の useHead が上書き） */
@@ -19,9 +19,9 @@ export const routes = [
     meta: { title: '製品一覧｜REISTI', desc: 'REISTI の製品一覧。ドリルビット・ホールソーなどプロ仕様の切削工具をご紹介します。' } },
   { path: '/products/:category/:slug', name: 'family',   component: FamilyDetail },
   { path: '/about',                    name: 'about',    component: AboutView,
-    meta: { title: '会社概要｜REISTI', desc: '瑞士釘株式会社（REISTI）の会社概要。台湾で約30年の業歴を持つ母体企業から生まれ、2025年に日本市場へ本格参入した工具ブランドです。' } },
+    meta: { title: '会社概要｜REISTI', desc: '瑞士釘株式会社（REISTI）の会社概要。台湾の母体企業が長年培ってきたREISTIブランドで、2025年に日本市場への本格展開を開始しました。' } },
   { path: '/oem',                      name: 'oem',      component: OemView,
-    meta: { title: 'OEM・PB供給｜REISTI', desc: 'REISTI の OEM・プライベートブランド供給。台湾の製造ネットワークで高品質な工具をお届けします。' } },
+    meta: { title: 'OEM・PB供給｜REISTI', desc: 'REISTI の OEM・プライベートブランド供給。自社工場と台湾・中国の協力工場ネットワークを活かし、製品に応じた製造体制をご提案します。' } },
   { path: '/contact',                  name: 'contact',  component: ContactView,
     meta: { title: 'お問い合わせ｜REISTI', desc: 'REISTI へのお問い合わせ・見積依頼はこちら。' } },
   { path: '/privacy',                  name: 'privacy',  component: PrivacyView,
