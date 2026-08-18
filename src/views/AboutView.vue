@@ -9,16 +9,30 @@
     </div>
 
     <!-- Brand story -->
-    <section class="mb-14" v-reveal>
-      <p class="mb-4 text-sm font-semibold uppercase tracking-widest text-pink-600">{{ t('about.story_label') }}</p>
-      <h2 class="mb-8 max-w-2xl text-2xl font-extrabold leading-snug text-zinc-900 sm:text-3xl">
-        {{ t('about.story_title') }}
-      </h2>
-      <div class="grid gap-8 sm:grid-cols-3">
-        <div v-for="(para, i) in storyParagraphs" :key="i" class="flex gap-4">
-          <div class="mt-1.5 h-12 w-0.5 shrink-0 rounded-full bg-pink-300" />
-          <p class="whitespace-pre-line text-[15px] leading-relaxed text-zinc-600">{{ t(para) }}</p>
-        </div>
+    <section class="mb-20" v-reveal>
+      <div class="pb-6">
+        <p class="text-sm font-semibold uppercase tracking-[0.2em] text-pink-600">{{ t('about.story_label') }}</p>
+        <h2 class="mt-2 text-xl font-extrabold leading-snug text-zinc-950 sm:text-2xl">
+          {{ t('about.story_title') }}
+        </h2>
+      </div>
+
+      <div class="border-t border-zinc-900">
+        <article
+          v-for="(item, i) in storyItems"
+          :key="item.body"
+          class="grid gap-3 border-b border-zinc-200 py-6 sm:grid-cols-[2.75rem_minmax(0,1fr)] sm:gap-x-6 sm:py-7 lg:grid-cols-[2.75rem_minmax(12rem,0.58fr)_minmax(0,1.42fr)] lg:gap-x-8">
+          <p class="pt-1 text-xs font-bold tracking-[0.2em] text-pink-600">{{ String(i + 1).padStart(2, '0') }}</p>
+          <h3 class="text-base font-bold leading-relaxed text-zinc-950 sm:text-lg">{{ t(item.title) }}</h3>
+          <div class="space-y-4 sm:col-start-2 lg:col-start-3">
+            <p
+              v-for="paragraph in t(item.body).split('\n\n')"
+              :key="paragraph"
+              class="max-w-3xl text-sm leading-7 text-zinc-600">
+              {{ paragraph }}
+            </p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -61,7 +75,11 @@
 import { useI18n } from '../i18n/index.js'
 const { t } = useI18n()
 
-const storyParagraphs = ['about.story_p1', 'about.story_p2', 'about.story_p3']
+const storyItems = [
+  { title: 'about.story_step1_title', body: 'about.story_p1' },
+  { title: 'about.story_step2_title', body: 'about.story_p2' },
+  { title: 'about.story_step3_title', body: 'about.story_p3' },
+]
 
 const companyRows = [
   { label: 'about.label_name',     value: '瑞士釘株式会社 REISTI（レイスティ）' },
