@@ -9,8 +9,8 @@
     <!-- Copy -->
     <div class="relative z-10 mx-auto flex min-h-[78vh] max-w-7xl flex-col justify-end px-6 pb-16 pt-24 w-full">
       <p class="text-sm font-semibold uppercase tracking-widest text-pink-400">{{ t('home.hero_lead') }}</p>
-      <h1 class="mt-4 max-w-3xl text-4xl font-black leading-tight text-white md:text-6xl lg:text-7xl">
-        {{ t('home.hero_title') }}
+      <h1 :aria-label="t('home.hero_title')" class="mt-4 max-w-3xl text-4xl font-black leading-tight text-white md:text-6xl lg:text-7xl">
+        <span>{{ heroTitle.before }}</span><span :class="lang === 'en' ? 'md:whitespace-nowrap' : ''"><span class="whitespace-nowrap">{{ heroTitle.keepTogether }}</span><span>{{ heroTitle.after }}</span></span>
       </h1>
       <p class="mt-4 max-w-xl text-zinc-400 md:text-lg">{{ t('home.hero_sub') }}</p>
       <div class="mt-8 flex flex-wrap gap-3">
@@ -98,8 +98,23 @@ import { CATEGORIES, FAMILIES } from '../data/products.js'
 import ProductScroller from '../components/ProductScroller.vue'
 import CountUp from '../components/CountUp.vue'
 
-const { t } = useI18n()
+const { t, lang } = useI18n()
 const categories = CATEGORIES
+
+// 產品類別是標題的語意單位；空間不足時整組換行，避免「先端／工具」被拆開。
+const heroTitle = computed(() => {
+  const text = t('home.hero_title')
+  const keepTogether = lang.value === 'ja' ? '先端工具' : 'Cutting Tools'
+  const splitAt = text.indexOf(keepTogether)
+
+  return splitAt === -1
+    ? { before: text, keepTogether: '', after: '' }
+    : {
+        before: text.slice(0, splitAt),
+        keepTogether,
+        after: text.slice(splitAt + keepTogether.length),
+      }
+})
 
 const catImg = {
   'drill-bit': '/products/scroller/multi.webp',
