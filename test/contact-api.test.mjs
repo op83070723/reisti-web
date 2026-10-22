@@ -124,6 +124,24 @@ test('type が allowlist 外は 400', async () => {
   assert.equal(res.statusCode, 400)
 })
 
+test('流入経路は allowlist のみ受け付け、メールに表示する', async () => {
+  const labels = {
+    search: 'Googleなどの検索',
+    referral: '取引先・知人からの紹介',
+    event: '展示会・イベント',
+    social: 'SNS',
+    other: 'その他',
+  }
+  for (const [source, label] of Object.entries(labels)) {
+    const ok = await run({ ...VALID, source })
+    assert.equal(ok.res.statusCode, 200, source)
+    assert.ok(ok.sent[0].html.includes(label), source)
+  }
+
+  const ng = await run({ ...VALID, source: 'ads' })
+  assert.equal(ng.res.statusCode, 400)
+})
+
 test('型違い（配列など）は 400', async () => {
   const { res } = await run({ ...VALID, phone: ['x'] })
   assert.equal(res.statusCode, 400)

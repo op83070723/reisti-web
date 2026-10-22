@@ -67,6 +67,12 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
     const variant = family?.variants[0]
     assert.ok(family && variant, `${slug}: family/variant`)
     assert.equal(family.name.en, contract.nameEn, `${slug}: 説明書の公式英語名`)
+    for (const locale of ['ja', 'en']) {
+      assert.equal(typeof family.seo?.[locale]?.title, 'string', `${slug}: ${locale} SEO title`)
+      assert.equal(typeof family.seo?.[locale]?.description, 'string', `${slug}: ${locale} SEO description`)
+      assert.ok(family.seo[locale].title.length > 0, `${slug}: ${locale} SEO title is not empty`)
+      assert.ok(family.seo[locale].description.length > 0, `${slug}: ${locale} SEO description is not empty`)
+    }
     assert.equal(variant.materials.ja, contract.materials, `${slug}: 用途材料・条件`)
     assert.equal(variant.tools.ja, contract.tools, `${slug}: 適合電動機`)
     assert.deepEqual(variant.driveBadges, contract.driveBadges, `${slug}: 使用可能モード表示`)
@@ -125,6 +131,7 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
   }
 
   const detailSource = readFileSync(join(ROOT, 'src/views/FamilyDetail.vue'), 'utf8')
+  assert.match(detailSource, /fam\.value\.seo/, '製品詳細の meta 情報を SEO データから導出')
   assert.match(detailSource, /<DriveBadges v-if="variant\.driveBadges\?\.length"/, '駆動方式ラベルを製品名の近くに表示')
   assert.match(detailSource, /v-if="fam\.variants\.length > 1"/, '単一バリエーションの「標準」タブを表示しない')
 
@@ -137,4 +144,10 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
 
   assert.match(ja.products.catalog_sub, /取扱説明書/, 'カタログより取扱説明書を優先する案内')
   assert.match(en.products.catalog_sub, /product manual/i, '英語表示も説明書優先を明示')
+
+  const sourceCodes = ['search', 'referral', 'event', 'social', 'other']
+  const contactSource = readFileSync(join(ROOT, 'src/views/ContactView.vue'), 'utf8')
+  assert.match(contactSource, /const SOURCE_CODES = \['search', 'referral', 'event', 'social', 'other'\]/, '流入経路コードをフォームで固定する')
+  assert.equal(ja.contact.source_options.length, sourceCodes.length, '日本語の流入経路ラベル数をコードと揃える')
+  assert.equal(en.contact.source_options.length, sourceCodes.length, '英語の流入経路ラベル数をコードと揃える')
 })

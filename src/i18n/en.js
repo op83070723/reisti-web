@@ -3,6 +3,7 @@ export default {
     skip: 'Skip to content',
     home: 'Home',
     products: 'Products',
+    products_all: 'All Products',
     about: 'About',
     oem: 'OEM',
     contact: 'Contact',
@@ -29,8 +30,8 @@ export default {
     cta_oem: 'Learn about OEM',
   },
   products: {
-    title: 'Products',
-    sub: 'REISTI brand products (own factory) and OEM-handled products.',
+    title: 'Drill Bits & Hole Saws',
+    sub: 'Explore REISTI brand products for drilling stainless steel, concrete, tile, and more, as well as OEM products.',
     featured: 'Featured Products',
     drillbit: 'Drill Bits',
     holesaw: 'Hole Saws',
@@ -169,6 +170,7 @@ export default {
     label_qty: 'Estimated Quantity / MOQ',
     label_type: 'Inquiry Type',
     label_message: 'Message',
+    label_source: 'How did you hear about REISTI? (optional)',
     ph_company: 'ACME Corp.',
     ph_name: 'John Smith',
     ph_email: 'john@example.com',
@@ -176,6 +178,8 @@ export default {
     ph_product: 'e.g. Hex Cobalt Drill Bit Ø6mm',
     ph_qty: 'e.g. 500 pcs/month',
     ph_message: 'Please describe your requirements…',
+    source_options: ['Search engine (e.g. Google)', 'Referral', 'Trade show or event', 'Social media', 'Other'],
+    select_source: 'Select',
     types: ['OEM / Private Label', 'Bulk Order (Stock Products)', 'Sample Request', 'Catalog / Technical Docs', 'Other'],
     select_type: 'Select inquiry type',
     submit: 'Send Message',
@@ -213,7 +217,7 @@ export default {
       },
       {
         h: 'Purpose of Use',
-        body: 'We use the collected personal information only for the following purposes:\n・Responding to inquiries, quotation requests, and sample requests\n・Communications and document delivery related to business transactions\n・Providing information about our products and services\nWe do not use it for any other purpose.',
+        body: 'We use the collected personal information only for the following purposes:\n・Responding to inquiries, quotation requests, and sample requests\n・Communications and document delivery related to business transactions\n・Providing information about our products and services\n・Analysis to improve this Site and our services\nWe do not use it for any other purpose.',
       },
       {
         h: 'Disclosure to Third Parties',
@@ -241,6 +245,7 @@ export default {
       },
     ],
     established: 'Established: July 7, 2026',
+    revised: 'Last revised: October 22, 2026',
   },
   footer: {
     tagline: 'Pro-Grade Cutting Tools for the Japanese Market',

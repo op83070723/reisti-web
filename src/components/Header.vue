@@ -40,7 +40,7 @@
                 </div>
                 <div class="mt-4 border-t border-zinc-100 pt-3">
                   <RouterLink to="/products" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors" @click="megaOpen = false">
-                    {{ t('products.title') }} →
+                    {{ t('nav.products_all') }} →
                   </RouterLink>
                 </div>
               </div>

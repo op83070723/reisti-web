@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 33 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 36 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -112,10 +112,12 @@
 - Origin 邏輯：無 Origin 放行（非瀏覽器交給其他防線）；localhost 放行；
   `www.reisti.com`／`reisti.com` 需 https；其餘只允許 **hostname 與請求 Host 一致**
   （自家 preview 部署可用；不可放寬成 `*.vercel.app`——那會放行任何人的部署）。
-- `LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, message: 5000 }`
+- `LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, source: 50, message: 5000 }`
   ——**必須與 `ContactView.vue` 各欄位的 `maxlength` 一致**，改一邊就要同步另一邊。
 - type 是語言無關代碼：`oem`／`bulk`／`sample`／`catalog`／`other`。改動要同步三處：
   `ContactView.vue` 的 `TYPE_CODES`、i18n 的 `contact.types`（以 index 對應）、API 的 `TYPE_LABELS`。
+- source 是流入經路代碼：`search`／`referral`／`event`／`social`／`other`。改動要同步三處：
+  `ContactView.vue` 的 `SOURCE_CODES`、i18n 的 `contact.source_options`（以 index 對應）、API 的 `SOURCE_LABELS`。
 - 錯誤回應不可洩內部細節：寄信失敗一律回 `'send failed'`，細節只進 `console.error`。
 - **嚴禁 in-memory rate limit**（serverless 實例不共享記憶體，是假防護、過審查不過生產）。
   durable 方案（Turnstile／Upstash／Vercel WAF）是已知待辦，等使用者開 Cloudflare 帳號。
@@ -141,6 +143,7 @@
 
 - **「30年の実績」＝台灣母體「瑞士釘」；「2025年」＝日本法人設立。兩者並存不是矛盾**，
   全站以「母体」表述，會社概要頁有母体列。任何審查認為年份不一致時，答案是本段。
+- 自家工廠在中國；台灣是母體企業與協力工廠所在地。可寫「台湾発」「台湾の母体企業」或「台湾・中国の工場ネットワーク」，**禁止寫「台湾製」**或任何暗示產品在台灣製造的說法。
 - REISTI 品牌產品＝4 支自家工廠產品（充電マルチドリルビット、六角軸コバルトドリル、
   バイメタルホールソー、超硬ホールソー）。**step drill 與 pipe saw 是 OEM 專用品**，
   不得掛 REISTI 品牌敘述、不得出現在品牌產品列表。
@@ -184,6 +187,7 @@
 - **不得**把 `materials` 映射到 schema.org 的 `material`（原因見 §9）。
 - **family 層級的 `Product` 不得放單一 `gtin13`**（一個 family 有 33 種尺寸變體）。
   正確做法是 `ProductGroup`＋`hasVariant`——那是獨立的資料建模工程（§14），不要當小修帶進來。
+- 首頁與 OEM title 刻意保留「台湾」：2026-10 GSC 的非品牌主力字為「台湾 工具 oem」（23 次曝光；含「台湾工具」「台湾 工具」合計約 27 次）。調整 SEO 時不得拿掉；措辭仍遵守 §9，不得暗示台灣製造。
 
 ## 12. vercel.json
 

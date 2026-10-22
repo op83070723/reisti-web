@@ -206,6 +206,16 @@ export const FAMILIES = [
       ja: '異なる材料が重なる場所でもビット交換不要。回転・インパクトの両モードで使用できる多用途ドリルビット。',
       en: 'A multi-purpose bit for overlapping materials without bit changes, supporting both rotation and impact operation.',
     },
+    seo: {
+      ja: {
+        title: '充電マルチドリルビット｜コンクリート・タイル・薄鉄板対応｜REISTI',
+        description: 'コンクリート、タイル、薄鉄板（t3.0mm以下）などの穴あけに対応する充電マルチドリルビット。6.35mm六角軸で、回転・インパクトの両モードに対応します。',
+      },
+      en: {
+        title: 'Hex Multi Drill Bit for Concrete, Tile & Thin Steel | REISTI',
+        description: 'A hex multi drill bit for concrete, tile, and thin sheet steel up to 3.0 mm. Its 6.35 mm hex shank supports rotation and impact operation.',
+      },
+    },
     variants: [
       {
         slug: 'multi',
@@ -268,6 +278,16 @@ export const FAMILIES = [
     intro: {
       ja: 'コバルトハイス鋼 M35（HSS-Co5／JIS SKH55 相当）を採用。ステンレス鋼・難削材の穴あけに対応。',
       en: 'M35 cobalt HSS (HSS-Co5 / JIS SKH55 equivalent) for drilling stainless steel and hard-to-cut materials.',
+    },
+    seo: {
+      ja: {
+        title: '六角軸コバルトドリル｜ステンレス・インパクト対応｜REISTI',
+        description: 'M35コバルトハイス鋼を採用した六角軸コバルトドリル。ステンレス、鉄、アルミなどの穴あけに対応し、6.35mm六角軸でインパクトドライバーに装着できます。',
+      },
+      en: {
+        title: 'Hex Cobalt Drill Bit for Stainless Steel & Impact Drivers | REISTI',
+        description: 'An M35 cobalt HSS drill bit for stainless steel, iron, and aluminium. The 6.35 mm hex shank fits an impact driver.',
+      },
     },
     variants: [
       {
@@ -335,6 +355,16 @@ export const FAMILIES = [
       ja: '高速度鋼（H.S.S.）の刃先と柔軟なバックボーンを組み合わせた、ツバ無し設計のバイメタルホールソー。',
       en: 'A flange-free bimetal hole saw combining high-speed steel (H.S.S.) teeth with a flexible backbone.',
     },
+    seo: {
+      ja: {
+        title: 'ハイスホールソー｜バイメタル・ツバ無し設計｜REISTI',
+        description: 'ステンレス板（t1.0mm以下）・鉄板／アルミ板（t3.0mm以下）などの穴あけに対応するバイメタルハイスホールソー。ツバ無し設計で、壁際や狭所でも扱いやすい仕様です。',
+      },
+      en: {
+        title: 'HSS Bimetal Hole Saw with Flange-Free Design | REISTI',
+        description: 'A flange-free bimetal HSS hole saw for stainless steel sheet up to 1.0 mm and steel or aluminium sheet up to 3.0 mm. Designed for work near walls and in tight spaces.',
+      },
+    },
     variants: [
       {
         slug: 'hss',
@@ -393,6 +423,16 @@ export const FAMILIES = [
     intro: {
       ja: 'トリプル刃・超硬チップ採用。ステンレス板・FRPなど難削材の精密穴あけに。',
       en: 'Triple-blade carbide tips for precision holes in stainless sheet, FRP, and other hard materials.',
+    },
+    seo: {
+      ja: {
+        title: '超硬ホールソー｜ステンレス板・FRPの穴あけに｜REISTI',
+        description: 'トリプル刃・超硬チップを採用した超硬ホールソー。ステンレス板（t10.0mm以下）、金属パイプ材、FRPなどの精密穴あけに対応します。',
+      },
+      en: {
+        title: 'TCT Carbide Hole Saw for Stainless Steel & FRP | REISTI',
+        description: 'A triple-blade carbide-tipped hole saw for precision drilling in stainless steel sheet up to 10.0 mm, metal pipe, and FRP.',
+      },
     },
     variants: [
       {

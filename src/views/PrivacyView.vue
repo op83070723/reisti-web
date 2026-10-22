@@ -17,7 +17,10 @@
     </div>
 
     <!-- Established date -->
-    <p class="mt-12 border-t border-zinc-100 pt-6 text-xs text-zinc-500">{{ t('privacy.established') }}</p>
+    <div class="mt-12 border-t border-zinc-100 pt-6 text-xs text-zinc-500">
+      <p>{{ t('privacy.established') }}</p>
+      <p class="mt-1">{{ t('privacy.revised') }}</p>
+    </div>
   </div>
 </template>
 

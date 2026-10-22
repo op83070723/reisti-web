@@ -385,17 +385,20 @@ async function copyText(text) {
 
 /* 製品ごとの title / description / Product 構造化データ。
    useHead は SSG 時に静的 HTML へ焼き込み、言語切替にもリアクティブに追従する */
+const seoTitle = computed(() => fam.value ? (tField(fam.value.seo?.[lang.value]?.title) || `${tField(fam.value.name)}｜REISTI`) : 'REISTI｜公式サイト')
+const seoDescription = computed(() => fam.value ? (tField(fam.value.seo?.[lang.value]?.description) || tField(fam.value.intro)) : '')
+
 useHead({
-  title: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト'),
+  title: seoTitle,
   meta: [
-    { name: 'description', content: computed(() => tField(fam.value?.intro) || '') },
+    { name: 'description', content: seoDescription },
     // OG は App.vue の全站定義を property キーで上書き（og:image は製品写真）。
     // og:image は WebP 非対応の SNS クローラーがあるため JPG 版を指す（各 hero の -1.jpg が public/products/ に併存）
-    { property: 'og:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
-    { property: 'og:description', content: computed(() => tField(fam.value?.intro) || '') },
+    { property: 'og:title',       content: seoTitle },
+    { property: 'og:description', content: seoDescription },
     { property: 'og:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.jpg') : `${SITE}/og.jpg`) },
-    { name: 'twitter:title',       content: computed(() => fam.value ? `${tField(fam.value.name)}｜REISTI` : 'REISTI｜公式サイト') },
-    { name: 'twitter:description', content: computed(() => tField(fam.value?.intro) || '') },
+    { name: 'twitter:title',       content: seoTitle },
+    { name: 'twitter:description', content: seoDescription },
     { name: 'twitter:image',       content: computed(() => variant.value?.hero ? SITE + variant.value.hero.replace(/\.webp$/, '.jpg') : `${SITE}/og.jpg`) },
   ],
   script: [
@@ -412,7 +415,7 @@ useHead({
         url: `https://www.reisti.com${route.path}`,
         category: CATEGORIES.find(c => c.slug === fam.value.category)?.name.ja || fam.value.category,
         image: `https://www.reisti.com${variant.value?.hero || ''}`,
-        description: fam.value.intro.ja,
+        description: fam.value.seo?.ja?.description || fam.value.intro.ja,
         // material は使わない：products.js の materials は「加工対象の材料」であり製品自体の素材ではない
         additionalProperty: [
           variant.value?.materials && { '@type': 'PropertyValue', name: '用途材料', value: variant.value.materials.ja },

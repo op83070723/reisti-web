@@ -7,7 +7,7 @@ function esc(str = '') {
 }
 
 // 上限は ContactView.vue の maxlength と一致させること
-const LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, message: 5000 }
+const LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, source: 50, message: 5000 }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // type は ContactView.vue の TYPE_CODES と共通のコード。メール表示用ラベルへここで変換する
 const TYPE_LABELS = {
@@ -15,6 +15,13 @@ const TYPE_LABELS = {
   bulk: '既製品の大量発注',
   sample: 'サンプル依頼',
   catalog: 'カタログ・技術資料',
+  other: 'その他',
+}
+const SOURCE_LABELS = {
+  search: 'Googleなどの検索',
+  referral: '取引先・知人からの紹介',
+  event: '展示会・イベント',
+  social: 'SNS',
   other: 'その他',
 }
 // 正当な最大ケース（message 5000 字の日本語 ≈ 15KB）に余裕を持たせつつ濫用を遮断する
@@ -82,7 +89,7 @@ export function createHandler({ send } = {}) {
 
     const pick = f => (typeof body[f] === 'string' ? body[f].trim() : '')
     const company = pick('company'), name = pick('name'), email = pick('email'), phone = pick('phone')
-    const type = pick('type'), product = pick('product'), qty = pick('qty'), message = pick('message')
+    const type = pick('type'), product = pick('product'), qty = pick('qty'), source = pick('source'), message = pick('message')
 
     if (!company || !name || !email || !message)
       return res.status(400).json({ ok: false, error: 'company, name, email, message are required' })
@@ -90,8 +97,11 @@ export function createHandler({ send } = {}) {
       return res.status(400).json({ ok: false, error: 'invalid email' })
     if (type && !(type in TYPE_LABELS))
       return res.status(400).json({ ok: false, error: 'invalid type' })
+    if (source && !(source in SOURCE_LABELS))
+      return res.status(400).json({ ok: false, error: 'invalid source' })
 
     const typeLabel = TYPE_LABELS[type] || 'お問い合わせ'
+    const sourceLabel = SOURCE_LABELS[source] || ''
 
     try {
       await send({
@@ -110,6 +120,7 @@ export function createHandler({ send } = {}) {
               ${type    ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">種別</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(typeLabel)}</td></tr>` : ''}
               ${product ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">関心製品</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(product)}</td></tr>` : ''}
               ${qty     ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">数量目安</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(qty)}</td></tr>` : ''}
+              ${source  ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">REISTIを知ったきっかけ</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(sourceLabel)}</td></tr>` : ''}
             </table>
             <h3 style="color:#18181b;margin-top:20px">ご用件</h3>
             <pre style="white-space:pre-wrap;background:#f4f4f5;padding:12px 16px;border-radius:8px;font-size:14px">${esc(message)}</pre>

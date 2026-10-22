@@ -59,6 +59,14 @@
         <textarea id="contact-message" v-model="form.message" class="input mt-1" rows="5" required maxlength="5000" :placeholder="t('contact.ph_message')" />
       </div>
 
+      <div>
+        <label class="label" for="contact-source">{{ t('contact.label_source') }}</label>
+        <select id="contact-source" v-model="form.source" class="input mt-1">
+          <option value="">{{ t('contact.select_source') }}</option>
+          <option v-for="(code, i) in SOURCE_CODES" :key="code" :value="code">{{ t('contact.source_options')[i] }}</option>
+        </select>
+      </div>
+
       <!-- Honeypot -->
       <input v-model="hp" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px" autocomplete="off" />
 
@@ -120,7 +128,7 @@ const hp       = ref('')
 
 const form = reactive({
   company: '', name: '', email: '', phone: '',
-  type: '', product: '', qty: '', message: '',
+  type: '', product: '', qty: '', source: '', message: '',
 })
 
 /* クエリからの事前入力（例：製品ページの「お見積もり」→ /contact?type=bulk&product=…）。
@@ -128,6 +136,7 @@ const form = reactive({
    （翻訳文字列を value にすると言語切替で選択が失われるため）。
    SSG の静的 HTML はクエリなしで焼かれるため、onMounted で反映する（hydration 不一致回避） */
 const TYPE_CODES = ['oem', 'bulk', 'sample', 'catalog', 'other']
+const SOURCE_CODES = ['search', 'referral', 'event', 'social', 'other']
 onMounted(() => {
   const q = route.query
   if (typeof q.product === 'string' && q.product) form.product = q.product

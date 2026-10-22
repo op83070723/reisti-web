@@ -3,6 +3,7 @@ export default {
     skip: '本文へスキップ',
     home: 'ホーム',
     products: '製品情報',
+    products_all: '製品一覧',
     about: '会社概要',
     oem: 'OEM',
     contact: 'お問い合わせ',
@@ -29,8 +30,8 @@ export default {
     cta_oem: 'OEM詳細を見る',
   },
   products: {
-    title: '製品情報',
-    sub: 'REISTIブランド製品（自社製造）とOEM取扱製品をご紹介します。',
+    title: 'ドリルビット・ホールソー 製品一覧',
+    sub: 'ステンレス・コンクリート・タイルなどの穴あけに対応する、REISTIブランド製品（自社製造）とOEM取扱製品をご紹介します。',
     featured: '注目の製品',
     drillbit: 'ドリルビット',
     holesaw: 'ホールソー',
@@ -169,6 +170,7 @@ export default {
     label_qty: '数量・ロットの目安',
     label_type: 'お問い合わせ種別',
     label_message: 'ご用件・ご要望',
+    label_source: 'REISTIを知ったきっかけ（任意）',
     ph_company: '株式会社〇〇',
     ph_name: '山田 太郎',
     ph_email: 'taro@example.com',
@@ -176,6 +178,8 @@ export default {
     ph_product: '例：六角軸コバルトドリル Ø6mm',
     ph_qty: '例：月500本',
     ph_message: 'ご質問・ご要望をご記入ください',
+    source_options: ['Googleなどの検索', '取引先・知人からの紹介', '展示会・イベント', 'SNS', 'その他'],
+    select_source: '選択してください',
     types: ['OEM / プライベートブランド', '既製品の大量発注', 'サンプル依頼', 'カタログ・技術資料', 'その他'],
     select_type: '選択してください',
     submit: '送信する',
@@ -213,7 +217,7 @@ export default {
       },
       {
         h: '利用目的',
-        body: '取得した個人情報は、次の目的の範囲内で利用します。\n・お問い合わせ、お見積もり、サンプル依頼への対応\n・お取引に関するご連絡、資料の送付\n・当社の製品・サービスに関するご案内\n上記の目的以外で利用することはありません。',
+        body: '取得した個人情報は、次の目的の範囲内で利用します。\n・お問い合わせ、お見積もり、サンプル依頼への対応\n・お取引に関するご連絡、資料の送付\n・当社の製品・サービスに関するご案内\n・本サイトおよびサービス改善のための分析\n上記の目的以外で利用することはありません。',
       },
       {
         h: '第三者への提供',
@@ -241,6 +245,7 @@ export default {
       },
     ],
     established: '制定日：2026年7月7日',
+    revised: '最終改定日：2026年10月22日',
   },
   footer: {
     tagline: 'プロ仕様の先端工具・日本市場向け',
