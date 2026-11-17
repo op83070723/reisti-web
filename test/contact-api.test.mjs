@@ -186,3 +186,39 @@ test('HTML エスケープ：本文へのタグ混入は無害化される', asy
   assert.ok(!sent[0].html.includes('<script>alert(1)'))
   assert.ok(sent[0].html.includes('&lt;script&gt;'))
 })
+
+test('country／lang を通知し、旧 payload も受け付ける', async () => {
+  const { res, sent } = await run({ ...VALID, country: 'United Kingdom', lang: 'en' })
+  assert.equal(res.statusCode, 200)
+  assert.match(sent[0].html, /国・地域/)
+  assert.match(sent[0].html, /United Kingdom/)
+  assert.match(sent[0].html, /サイト言語/)
+  assert.match(sent[0].html, /English \(en\)/)
+  assert.equal((await run({ ...VALID, lang: 'ja' })).res.statusCode, 200)
+  const old = await run(VALID)
+  assert.equal(old.res.statusCode, 200)
+  assert.equal(old.sent.length, 1)
+})
+
+test('lang は ja／en のみ、source の検証後に拒否する', async () => {
+  for (const lang of ['fr', '', null, 1, ['en'], { value: 'en' }]) {
+    const { res, sent } = await run({ ...VALID, lang })
+    assert.equal(res.statusCode, 400)
+    assert.equal(res.body.error, 'invalid lang')
+    assert.equal(sent.length, 0)
+  }
+  const { res } = await run({ ...VALID, source: 'invalid', lang: 'fr' })
+  assert.equal(res.body.error, 'invalid source')
+})
+
+test('country の上限・型・制御文字と HTML escape を維持する', async () => {
+  assert.equal((await run({ ...VALID, country: 'x'.repeat(100) })).res.statusCode, 200)
+  for (const country of ['x'.repeat(101), ['US'], 'US\nCA']) {
+    const { res, sent } = await run({ ...VALID, country })
+    assert.equal(res.statusCode, 400)
+    assert.equal(res.body.error, 'invalid country')
+    assert.equal(sent.length, 0)
+  }
+  const { sent } = await run({ ...VALID, country: '<b>US</b>', lang: 'en' })
+  assert.match(sent[0].html, /&lt;b&gt;US&lt;\/b&gt;/)
+})

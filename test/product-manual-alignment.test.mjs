@@ -22,7 +22,7 @@ const ean13IsValid = value => {
 test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カタログ規格準拠で一元管理する', () => {
   const expected = {
     multi: {
-      nameEn: 'Hex Multi Drill Bit',
+      nameEn: 'Carbide-Tipped Multi-Material Drill Bit',
       count: 20,
       specDigest: 'be8aa24c5f1fc27ba8aa352dc02e12f9f0baa4954d25e87d7e96f84c64855c62',
       materials: '薄鉄板（t3.0mm以下）・アルミ・コンクリート・モルタル・ブロック・レンガ・ALC・陶器タイル・石膏ボード・木材・プラスチック',
@@ -31,7 +31,7 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
       facts: ['回転・インパクト', '振動モード', '逆回転', '超硬チップ', '非対称刃先'],
     },
     cobalt: {
-      nameEn: 'Hex Cobalt Drill Bit',
+      nameEn: 'Hex Shank Cobalt Drill Bit',
       count: 27,
       specDigest: '03e6e1cd27957063f128f563c65abf50c038f82f442dcaf37a8439000c802231',
       materials: 'ステンレス・鉄・アルミ・その他難削材・プラスチック・木材',
@@ -40,9 +40,9 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
       facts: ['回転・インパクト', '振動モード', 'M35', 'HSS-Co5', 'JIS SKH55', '削り出し一体構造', '135°', 'X型シンニング'],
     },
     hss: {
-      nameEn: 'HSS Bimetal Hole Saw',
+      nameEn: 'Bi-Metal Hole Saw',
       count: 33,
-      specDigest: '72f789c744efffa34989845a237637f82abeb9117b93d2b39d453cc7d15e51d6',
+      specDigest: '339a9e2db82f793750effaee17a77a03c1468bfabe5c73acfd0229eb72d40d67',
       materials: 'ステンレス板（t1.0mm以下）・鉄板／アルミ板（t3.0mm以下）・木材・合板・石膏ボード・塩ビ板・アクリル板',
       tools: 'インパクトドライバー（口径45mm以下）・充電ドリル・電気ドリル（回転専用・回転モード）・振動ドリル（回転モード）',
       driveBadges: [
@@ -52,7 +52,7 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
       facts: ['回転・インパクト', '口径45mm以下', 'バイメタル構造', 'ツバ無し設計', 'チタンコーティングセンタードリル', 'カステルスプリング', '3,000rpm以下'],
     },
     tct: {
-      nameEn: 'TCT Carbide Hole Saw',
+      nameEn: 'Carbide-Tipped Hole Saw (TCT)',
       count: 28,
       specDigest: 'b73fb5ff20c5d2e901d968797c14f344b19e8103e24ae3836d5ba8e543f10db0',
       materials: 'ステンレス板（t10.0mm以下）・鋼板（HB200以下）・アルミ板（t5.0mm以下）・金属パイプ材・FRP',
@@ -66,7 +66,7 @@ test('4 製品の表示情報を確認済み仕様・取扱説明書優先・カ
     const family = bySlug[slug]
     const variant = family?.variants[0]
     assert.ok(family && variant, `${slug}: family/variant`)
-    assert.equal(family.name.en, contract.nameEn, `${slug}: 説明書の公式英語名`)
+    assert.equal(family.name.en, contract.nameEn, `${slug}: 確認済みの海外向け製品名`)
     for (const locale of ['ja', 'en']) {
       assert.equal(typeof family.seo?.[locale]?.title, 'string', `${slug}: ${locale} SEO title`)
       assert.equal(typeof family.seo?.[locale]?.description, 'string', `${slug}: ${locale} SEO description`)

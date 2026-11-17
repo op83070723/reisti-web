@@ -101,7 +101,7 @@ const companyValuesEn = [
   'REISTI Co., Ltd. (Taiwan) — hardware and tool wholesaler, nearly 30 years in business',
   'Chen Yu Tsen, President and Representative Director',
   'JPY 5,000,000',
-  'Manufacture and sale of hardware, tools, and power tool accessories; OEM/ODM and private label supply',
+  'Manufacture and sale of hardware, tools, and power tool accessories; OEM and private label supply',
   '+81-50-8894-8687',
   'www.reisti.com',
 ]

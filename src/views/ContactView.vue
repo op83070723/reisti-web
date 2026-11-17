@@ -34,6 +34,11 @@
         </div>
       </div>
 
+      <div v-if="lang === 'en'">
+        <label class="label" for="contact-country">{{ t('contact.label_country') }} *</label>
+        <input id="contact-country" v-model="form.country" class="input mt-1" type="text" autocomplete="country-name" required maxlength="100" :placeholder="t('contact.ph_country')" />
+      </div>
+
       <div>
         <label class="label" for="contact-type">{{ t('contact.label_type') }}</label>
         <select id="contact-type" v-model="form.type" class="input mt-1">
@@ -85,12 +90,12 @@
     <!-- Alternative contact methods -->
     <div v-reveal class="mt-12 border-t border-zinc-100 pt-10">
       <p class="text-sm font-semibold text-zinc-500 uppercase tracking-widest">{{ t('contact.also_label') }}</p>
-      <div class="mt-4 grid gap-4 sm:grid-cols-3">
-        <a href="tel:05088948687" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
+      <div class="mt-4 grid gap-4" :class="lang === 'en' ? 'sm:grid-cols-2' : 'sm:grid-cols-3'">
+        <a :href="lang === 'en' ? 'tel:+815088948687' : 'tel:05088948687'" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-100 text-lg">☎</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ t('contact.phone_label') }}</p>
-            <p class="text-zinc-500 text-xs">050-8894-8687</p>
+            <p class="text-zinc-500 text-xs">{{ lang === 'en' ? '+81-50-8894-8687' : '050-8894-8687' }}</p>
           </div>
         </a>
         <a href="mailto:chenytbiz@reisti.com" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
@@ -100,7 +105,7 @@
             <p class="text-zinc-500 text-xs">chenytbiz@reisti.com</p>
           </div>
         </a>
-        <a href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
+        <a v-if="lang === 'ja'" href="https://lin.ee/yLb33tW" target="_blank" rel="noopener" class="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-4 text-sm transition-colors hover:border-zinc-400">
           <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#06C755] text-[9px] font-bold tracking-wide text-white">LINE</span>
           <div class="min-w-0 flex-1">
             <p class="font-semibold text-zinc-700">{{ t('contact.line_label') }}</p>
@@ -119,7 +124,7 @@ import { useRoute } from 'vue-router'
 import { useI18n } from '../i18n/index.js'
 import { track } from '../utils/track.js'
 
-const { t, localePath } = useI18n()
+const { t, localePath, lang } = useI18n()
 const route    = useRoute()
 const loading  = ref(false)
 const done     = ref(false)
@@ -128,7 +133,7 @@ const hp       = ref('')
 
 const form = reactive({
   company: '', name: '', email: '', phone: '',
-  type: '', product: '', qty: '', source: '', message: '',
+  type: '', product: '', qty: '', source: '', message: '', country: '',
 })
 
 /* クエリからの事前入力（例：製品ページの「お見積もり」→ /contact?type=bulk&product=…）。
@@ -156,17 +161,18 @@ async function submit() {
   done.value     = false
   errorMsg.value = ''
 
-  if (!form.company || !form.name || !form.email || !form.message) {
+  if (!form.company || !form.name || !form.email || !form.message || (lang.value === 'en' && !form.country.trim())) {
     errorMsg.value = t('contact.err_required')
     return
   }
 
   loading.value = true
   try {
+    const { country, ...fields } = form
     const res  = await fetch('/api/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...form, hp: hp.value }),
+      body: JSON.stringify({ ...fields, ...(lang.value === 'en' ? { country } : {}), lang: lang.value, hp: hp.value }),
     })
     const data = await res.json()
     if (!res.ok || !data.ok) throw new Error(data.error || t('contact.err_send'))

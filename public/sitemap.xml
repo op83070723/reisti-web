@@ -57,28 +57,28 @@
     <loc>https://www.reisti.com/en/products/drill-bit/multi</loc><changefreq>monthly</changefreq><priority>0.8</priority>
     <image:image>
       <image:loc>https://www.reisti.com/products/multi-1.jpg</image:loc>
-      <image:title>Hex Multi Drill Bit（REISTI）</image:title>
+      <image:title>Carbide-Tipped Multi-Material Drill Bit（REISTI）</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://www.reisti.com/en/products/drill-bit/cobalt</loc><changefreq>monthly</changefreq><priority>0.8</priority>
     <image:image>
       <image:loc>https://www.reisti.com/products/cobalt-1.jpg</image:loc>
-      <image:title>Hex Cobalt Drill Bit（REISTI）</image:title>
+      <image:title>Hex Shank Cobalt Drill Bit（REISTI）</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://www.reisti.com/en/products/hole-saw/hss</loc><changefreq>monthly</changefreq><priority>0.8</priority>
     <image:image>
       <image:loc>https://www.reisti.com/products/hss-1.jpg</image:loc>
-      <image:title>HSS Bimetal Hole Saw（REISTI）</image:title>
+      <image:title>Bi-Metal Hole Saw（REISTI）</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://www.reisti.com/en/products/hole-saw/tct</loc><changefreq>monthly</changefreq><priority>0.8</priority>
     <image:image>
       <image:loc>https://www.reisti.com/products/tct-1.jpg</image:loc>
-      <image:title>TCT Carbide Hole Saw（REISTI）</image:title>
+      <image:title>Carbide-Tipped Hole Saw (TCT)（REISTI）</image:title>
     </image:image>
   </url>
   <url>

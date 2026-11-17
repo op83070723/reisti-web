@@ -21,8 +21,8 @@
           <p class="mt-3 text-sm font-bold tracking-wide text-pink-400">No Dull Moments.</p>
           <p class="mt-1.5 text-xs leading-relaxed text-zinc-400">{{ t('footer.tagline') }}</p>
           <p class="mt-3 text-xs text-zinc-500">{{ t('footer.address') }}</p>
-          <a href="tel:05088948687" class="mt-2 block text-xs text-zinc-400 hover:text-white transition-colors">
-            TEL: 050-8894-8687
+          <a :href="lang === 'en' ? 'tel:+815088948687' : 'tel:05088948687'" class="mt-2 block text-xs text-zinc-400 hover:text-white transition-colors">
+            TEL: {{ lang === 'en' ? '+81-50-8894-8687' : '050-8894-8687' }}
           </a>
           <a href="mailto:chenytbiz@reisti.com" class="mt-1 block text-xs text-zinc-400 hover:text-white transition-colors">
             chenytbiz@reisti.com
@@ -54,7 +54,7 @@
           <ul class="mt-3 space-y-2 text-sm">
             <li><RouterLink class="footer-link" :to="localePath('/contact')">{{ t('footer.link_contact') }}</RouterLink></li>
             <li><a class="footer-link" :href="CATALOG_PDF" target="_blank" rel="noopener">{{ t('footer.link_catalog') }}</a></li>
-            <li><a class="footer-link" href="https://lin.ee/yLb33tW" target="_blank" rel="noopener">LINE</a></li>
+            <li v-if="lang === 'ja'"><a class="footer-link" href="https://lin.ee/yLb33tW" target="_blank" rel="noopener">LINE</a></li>
           </ul>
         </div>
       </div>
@@ -73,7 +73,7 @@
 <script setup>
 import { useI18n } from '../i18n/index.js'
 import { CATALOG_PDF } from '../data/products.js'
-const { t, localePath } = useI18n()
+const { t, localePath, lang } = useI18n()
 </script>
 
 <style scoped>

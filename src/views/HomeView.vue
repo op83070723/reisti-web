@@ -9,7 +9,8 @@
     <!-- Copy -->
     <div class="relative z-10 mx-auto flex min-h-[78vh] max-w-7xl flex-col justify-end px-6 pb-16 pt-24 w-full">
       <p class="text-sm font-semibold uppercase tracking-widest text-pink-400">{{ t('home.hero_lead') }}</p>
-      <h1 :aria-label="t('home.hero_title')" class="mt-4 max-w-3xl text-4xl font-black leading-tight text-white md:text-6xl lg:text-7xl">
+      <h1 v-if="lang === 'en'" class="mt-4 max-w-4xl text-4xl font-black leading-tight text-white md:text-6xl lg:text-7xl">{{ t('home.hero_title') }}</h1>
+      <h1 v-else :aria-label="t('home.hero_title')" class="mt-4 max-w-3xl text-4xl font-black leading-tight text-white md:text-6xl lg:text-7xl">
         <span>{{ heroTitle.before }}</span><span :class="lang === 'en' ? 'md:whitespace-nowrap' : ''"><span class="whitespace-nowrap">{{ heroTitle.keepTogether }}</span><span>{{ heroTitle.after }}</span></span>
       </h1>
       <p class="mt-4 max-w-xl text-zinc-400 md:text-lg">{{ t('home.hero_sub') }}</p>
@@ -36,6 +37,18 @@
   </section>
 
   <!-- ===== PRODUCTS ===== -->
+  <section v-if="lang === 'en'" class="border-b border-zinc-100 py-16 sm:py-20" v-reveal>
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <h2 class="mb-8 text-3xl font-extrabold text-zinc-900">{{ t('home.reasons_title') }}</h2>
+      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div v-for="reason in t('home.reasons')" :key="reason.title" class="rounded-xl border border-zinc-200 p-6">
+          <h3 class="font-bold text-zinc-900">{{ reason.title }}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-zinc-500">{{ reason.body }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="py-16 sm:py-20" v-reveal>
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="mb-10">

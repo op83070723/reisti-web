@@ -18,7 +18,7 @@
 |---|---|
 | `npm run dev` | Vite dev server |
 | `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（21 頁：日英各 10 頁＋單一 404）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 42 案例，必須全綠） |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 48 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -46,6 +46,7 @@
   自動導出——新增產品只要加 data；但新增**非產品頁**必須把日英兩個網址加進路由、`includedRoutes` 與 sitemap。
 - **語言唯一來源為 `route.meta.locale`**。`useI18n()` 每次在元件 setup 內建立 computed `lang`；禁止模組層可變語言狀態、以 path 判語言、偏好儲存或依瀏覽器／IP 自動轉址，避免並行 SSG 串語言。
 - 站內頁面連結一律經 `localePath(to)`，支援字串與 `{ path, query, hash }`；英文自動加 `/en`，靜態 PDF／圖片不加前綴。`localePath(to, locale)` 供同頁語言切換使用。
+- 純 fragment 連結維持 `#…`，skip link 日英一律 `href="#main"`，不得換成不帶 query 的頁面網址，否則會清掉詢價預填 query。站內英文連結稽核須排除純 fragment。
 - **所有元件程式碼必須 SSR-safe**：setup 頂層不可碰 `window`／`document`／`navigator`／
   `localStorage`。瀏覽器 API 一律放 `onMounted` 或事件 handler 內，或加
   `typeof window !== 'undefined'` 守衛。違反時 build 會炸或預渲染出錯頁。
@@ -111,16 +112,18 @@
 - 驗證順序（有先後意義，不要調換）：非 POST 405 → Content-Type 非 JSON 415 →
   Origin 檢查 403 → Content-Length 413 → 解析後 `Buffer.byteLength` > 32KB 413 →
   honeypot（`hp` 欄位非空 → **假裝成功回 200**，不給 bot 訊號）→ 型別／長度／控制字元 400 →
-  必填 400 → email 格式 400 → type 白名單 400 → 寄信。
+  必填 400 → email 格式 400 → type 白名單 400 → source 白名單 400 → lang 白名單 400 → 寄信。
 - Origin 邏輯：無 Origin 放行（非瀏覽器交給其他防線）；localhost 放行；
   `www.reisti.com`／`reisti.com` 需 https；其餘只允許 **hostname 與請求 Host 一致**
   （自家 preview 部署可用；不可放寬成 `*.vercel.app`——那會放行任何人的部署）。
-- `LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, source: 50, message: 5000 }`
+- `LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, source: 50, country: 100, message: 5000 }`
   ——**必須與 `ContactView.vue` 各欄位的 `maxlength` 一致**，改一邊就要同步另一邊。
 - type 是語言無關代碼：`oem`／`bulk`／`sample`／`catalog`／`other`。改動要同步三處：
   `ContactView.vue` 的 `TYPE_CODES`、i18n 的 `contact.types`（以 index 對應）、API 的 `TYPE_LABELS`。
 - source 是流入經路代碼：`search`／`referral`／`event`／`social`／`other`。改動要同步三處：
   `ContactView.vue` 的 `SOURCE_CODES`、i18n 的 `contact.source_options`（以 index 對應）、API 的 `SOURCE_LABELS`。
+- 英文聯絡頁的 `country`（Country / Region）必填且 maxlength 100；日文頁不顯示也不送出此欄。API 的 country 選填以相容舊 payload，依一般單行欄位驗型別／長度／控制字元。
+- 表單送出 `lang: 'ja' | 'en'`；API 允許省略以相容舊 payload，但提供時只接受這兩個值（檢查在 source 之後，非法值回 `invalid lang`）。通知信顯示「国・地域」「サイト言語」。country 不得進追蹤事件。
 - 錯誤回應不可洩內部細節：寄信失敗一律回 `'send failed'`，細節只進 `console.error`。
 - **嚴禁 in-memory rate limit**（serverless 實例不共享記憶體，是假防護、過審查不過生產）。
   durable 方案（Turnstile／Upstash／Vercel WAF）是已知待辦，等使用者開 Cloudflare 帳號。
@@ -163,6 +166,9 @@
   回転。RP／RC 現行 PDF 的「回転モード専用／振動・打撃禁止」是已知待更正文字，不得拿它把網站改回
   回転のみ。部署前必須由使用者提供修正版 RP／RC PDF 並覆蓋固定公開檔名。
 - 文案語氣：日文 B2B 商用敬體。程式碼註解慣例：日文、寫「為什麼」不寫「做了什麼」。
+- **海外版文案事實**（僅英文）：MOQ **1,000 pcs per size**；FOB Shanghai（Incoterms® 2020）；交期 **45–60 days after receipt of deposit**，自收到訂金起算；付款條件逐筆協議，不得自行補訂金比例、T/T、L/C 等。貨物從中國自家工廠直出。
+- MOQ／出口表與產品摘要只放在 en 資料與英文專用區塊；日文字串及日文 HTML 不得出現此 MOQ。兩家公司英文同名 **REISTI Co., Ltd.**，同時出現或可能混淆時以 **(Japan)／(Taiwan)** 區分。約 30 年與跨市場經驗屬母體／集團，不得歸給 2025 年成立的日本法人。
+- 英文產品名依確認用語：Carbide-Tipped Multi-Material Drill Bit、Hex Shank Cobalt Drill Bit、Bi-Metal Hole Saw、Carbide-Tipped Hole Saw (TCT)。品質形容限 premium-grade；禁用 best、No.1、highest quality 等無公開佐證的最高級，以及暗示台／日產地或品質來源的說法。
 
 ## 10. 設計系統與 a11y
 

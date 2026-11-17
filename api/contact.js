@@ -7,7 +7,7 @@ function esc(str = '') {
 }
 
 // 上限は ContactView.vue の maxlength と一致させること
-const LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, source: 50, message: 5000 }
+const LIMITS = { company: 100, name: 100, email: 254, phone: 50, type: 50, product: 100, qty: 50, source: 50, country: 100, message: 5000 }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // type は ContactView.vue の TYPE_CODES と共通のコード。メール表示用ラベルへここで変換する
 const TYPE_LABELS = {
@@ -90,6 +90,7 @@ export function createHandler({ send } = {}) {
     const pick = f => (typeof body[f] === 'string' ? body[f].trim() : '')
     const company = pick('company'), name = pick('name'), email = pick('email'), phone = pick('phone')
     const type = pick('type'), product = pick('product'), qty = pick('qty'), source = pick('source'), message = pick('message')
+    const country = pick('country'), lang = body.lang
 
     if (!company || !name || !email || !message)
       return res.status(400).json({ ok: false, error: 'company, name, email, message are required' })
@@ -99,9 +100,12 @@ export function createHandler({ send } = {}) {
       return res.status(400).json({ ok: false, error: 'invalid type' })
     if (source && !(source in SOURCE_LABELS))
       return res.status(400).json({ ok: false, error: 'invalid source' })
+    if (lang !== undefined && !['ja', 'en'].includes(lang))
+      return res.status(400).json({ ok: false, error: 'invalid lang' })
 
     const typeLabel = TYPE_LABELS[type] || 'お問い合わせ'
     const sourceLabel = SOURCE_LABELS[source] || ''
+    const langLabel = lang ? `${lang === 'en' ? 'English' : '日本語'} (${lang})` : '—'
 
     try {
       await send({
@@ -121,6 +125,8 @@ export function createHandler({ send } = {}) {
               ${product ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">関心製品</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(product)}</td></tr>` : ''}
               ${qty     ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">数量目安</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(qty)}</td></tr>` : ''}
               ${source  ? `<tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">REISTIを知ったきっかけ</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(sourceLabel)}</td></tr>` : ''}
+              <tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">国・地域</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(country || '—')}</td></tr>
+              <tr><td style="padding:8px 12px;background:#f4f4f5;font-weight:600">サイト言語</td><td style="padding:8px 12px;border-bottom:1px solid #e4e4e7">${esc(langLabel)}</td></tr>
             </table>
             <h3 style="color:#18181b;margin-top:20px">ご用件</h3>
             <pre style="white-space:pre-wrap;background:#f4f4f5;padding:12px 16px;border-radius:8px;font-size:14px">${esc(message)}</pre>

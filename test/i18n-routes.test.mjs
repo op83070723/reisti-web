@@ -55,6 +55,7 @@ test('未知の /en URL も単一の日本語 404 に一致する', () => {
 })
 
 test('localePath は問い合わせ query、manual hash、静的リソースを維持する', () => {
+  assert.match(read('src/App.vue'), /<a href="#main"/, 'skip link は純粋な fragment とし問い合わせ query を維持する')
   assert.equal(localizePath('/', 'en'), '/en')
   assert.equal(localizePath('/en', 'ja'), '/')
   assert.equal(localizePath('/en/oem', 'en'), '/en/oem')

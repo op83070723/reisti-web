@@ -17,7 +17,7 @@
       <div class="mb-10 text-center">
         <h2 class="text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.why_title') }}</h2>
       </div>
-      <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid gap-5 sm:grid-cols-2" :class="lang === 'en' ? 'lg:grid-cols-3' : 'lg:grid-cols-4'">
         <div
           v-for="(r, i) in t('oem.reasons')" :key="i"
           class="rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm">
@@ -109,7 +109,13 @@
           <p class="text-sm font-semibold uppercase tracking-widest text-pink-600">Capabilities</p>
           <h2 class="mt-1 text-3xl font-extrabold text-zinc-900 sm:text-4xl">{{ t('oem.specs_title') }}</h2>
         </div>
-        <div class="divide-y divide-zinc-100 rounded-2xl border border-zinc-200 overflow-hidden">
+        <dl v-if="lang === 'en'" class="divide-y divide-zinc-100 overflow-hidden rounded-2xl border border-zinc-200">
+          <div v-for="term in t('oem.export_terms')" :key="term.label" class="grid grid-cols-1 gap-2 px-6 py-5 text-sm sm:grid-cols-2 sm:gap-4">
+            <dt class="font-semibold text-zinc-500">{{ term.label }}</dt>
+            <dd class="text-zinc-900">{{ term.value }}</dd>
+          </div>
+        </dl>
+        <div v-else class="divide-y divide-zinc-100 rounded-2xl border border-zinc-200 overflow-hidden">
           <div class="grid grid-cols-2 gap-4 px-6 py-5 text-sm">
             <dt class="font-semibold text-zinc-500">{{ t('oem.spec_moq_label') }}</dt>
             <dd class="text-zinc-900">{{ t('oem.spec_moq') }}</dd>

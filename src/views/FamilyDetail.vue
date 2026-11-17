@@ -46,6 +46,10 @@
     </div>
 
     <!-- Main: description + gallery -->
+    <p v-if="lang === 'en'" class="mt-3 text-sm leading-relaxed text-zinc-600">
+      <RouterLink :to="localePath('/oem')" class="underline decoration-zinc-300 underline-offset-4 hover:text-pink-700">{{ t('product.export_summary') }}</RouterLink>
+    </p>
+
     <div class="mt-8 grid gap-8 md:grid-cols-12">
       <div class="md:col-span-5">
         <div class="rounded-xl border border-zinc-100 bg-zinc-50 p-5 text-sm leading-7 text-zinc-700 whitespace-pre-line">
@@ -250,7 +254,7 @@
           <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-lg">📄</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ tField(doc.label) }}</p>
-            <p class="text-xs text-zinc-500">{{ lang === 'ja' ? 'PDF' : '(PDF, Japanese)' }}</p>
+            <p class="text-xs text-zinc-500">PDF</p>
             <p v-if="doc.note" class="mt-1 text-xs leading-relaxed text-zinc-500">{{ tField(doc.note) }}</p>
           </div>
         </a>

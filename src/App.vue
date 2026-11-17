@@ -1,5 +1,5 @@
 <template>
-  <a :href="lang === 'en' ? localePath(route.path + '#main') : '#main'" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-pink-600 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg">{{ t('nav.skip') }}</a>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-pink-600 focus:px-4 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-white focus:shadow-lg">{{ t('nav.skip') }}</a>
   <Header />
   <main id="main">
     <RouterView />
