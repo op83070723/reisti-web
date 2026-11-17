@@ -114,6 +114,14 @@
             <dt class="font-semibold text-zinc-500">{{ term.label }}</dt>
             <dd class="text-zinc-900">{{ term.value }}</dd>
           </div>
+          <div class="grid grid-cols-1 gap-2 px-6 py-5 text-sm sm:grid-cols-2 sm:gap-4">
+            <dt class="font-semibold text-zinc-500">{{ t('oem.spec_custom_label') }}</dt>
+            <dd class="text-zinc-900">{{ t('oem.spec_custom') }}</dd>
+          </div>
+          <div class="grid grid-cols-1 gap-2 px-6 py-5 text-sm sm:grid-cols-2 sm:gap-4">
+            <dt class="font-semibold text-zinc-500">{{ t('oem.spec_items_label') }}</dt>
+            <dd class="text-zinc-900">{{ t('oem.spec_items') }}</dd>
+          </div>
         </dl>
         <div v-else class="divide-y divide-zinc-100 rounded-2xl border border-zinc-200 overflow-hidden">
           <div class="grid grid-cols-2 gap-4 px-6 py-5 text-sm">

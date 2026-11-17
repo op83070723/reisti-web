@@ -234,7 +234,7 @@ export default {
       },
       {
         h: 'Information We Collect',
-        body: 'Through the contact form on this Site, or via email or phone, we collect information such as your company name, name, email address, phone number, country or region, how you heard about REISTI, and the content of your inquiry.',
+        body: 'Through the contact form on this Site, or via email, phone, or LINE, we collect information such as your company name, name, email address, phone number, country or region, how you heard about REISTI, and the content of your inquiry.',
       },
       {
         h: 'Purpose of Use',
