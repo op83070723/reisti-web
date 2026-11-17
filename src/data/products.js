@@ -14,7 +14,7 @@ export const CATEGORIES = [
 /* ---- カタログ PDF（全製品共通） ---- */
 export const CATALOG_PDF = '/pdf/REISTI_製品カタログ_2026.pdf'
 const DOC_CATALOG = {
-  label: { ja: '製品カタログ 2026', en: 'Product Catalogue 2026' },
+  label: { ja: '製品カタログ 2026', en: 'Product Catalogue 2026 (PDF, Japanese)' },
   note: {
     ja: '最新の仕様・使用条件は各製品の取扱説明書をご確認ください。',
     en: 'Refer to each product manual for the latest specifications and operating limits.',
@@ -212,8 +212,8 @@ export const FAMILIES = [
         description: 'コンクリート、タイル、薄鉄板（t3.0mm以下）などの穴あけに対応する充電マルチドリルビット。6.35mm六角軸で、回転・インパクトの両モードに対応します。',
       },
       en: {
-        title: 'Hex Multi Drill Bit for Concrete, Tile & Thin Steel | REISTI',
-        description: 'A hex multi drill bit for concrete, tile, and thin sheet steel up to 3.0 mm. Its 6.35 mm hex shank supports rotation and impact operation.',
+        title: 'Carbide-Tipped Multi-Material Drill Bit Manufacturer | REISTI',
+        description: 'Hex shank carbide-tipped multi-material drill bit for concrete, ceramic tile, and thin sheet steel up to 3.0 mm. Ø3.0–12.7 mm, 20 sizes. OEM and private label available.',
       },
     },
     variants: [
@@ -285,8 +285,8 @@ export const FAMILIES = [
         description: 'M35コバルトハイス鋼を採用した六角軸コバルトドリル。ステンレス、鉄、アルミなどの穴あけに対応し、6.35mm六角軸でインパクトドライバーに装着できます。',
       },
       en: {
-        title: 'Hex Cobalt Drill Bit for Stainless Steel & Impact Drivers | REISTI',
-        description: 'An M35 cobalt HSS drill bit for stainless steel, iron, and aluminium. The 6.35 mm hex shank fits an impact driver.',
+        title: 'M35 Cobalt Drill Bit Manufacturer | Hex Shank HSS-Co 5% | REISTI',
+        description: 'Hex shank M35 cobalt (HSS-Co 5%) drill bit for stainless steel, steel, and aluminium. 6.35 mm (1/4") hex shank. OEM and private label available.',
       },
     },
     variants: [
@@ -361,8 +361,8 @@ export const FAMILIES = [
         description: 'ステンレス板（t1.0mm以下）・鉄板／アルミ板（t3.0mm以下）などの穴あけに対応するバイメタルハイスホールソー。ツバ無し設計で、壁際や狭所でも扱いやすい仕様です。',
       },
       en: {
-        title: 'HSS Bimetal Hole Saw with Flange-Free Design | REISTI',
-        description: 'A flange-free bimetal HSS hole saw for stainless steel sheet up to 1.0 mm and steel or aluminium sheet up to 3.0 mm. Designed for work near walls and in tight spaces.',
+        title: 'Bi-Metal Hole Saw Manufacturer | OEM & Private Label | REISTI',
+        description: 'HSS bi-metal hole saw with a flange-free design for stainless steel sheet up to 1.0 mm and steel or aluminium sheet up to 3.0 mm. OEM and private label available.',
       },
     },
     variants: [
@@ -430,8 +430,8 @@ export const FAMILIES = [
         description: 'トリプル刃・超硬チップを採用した超硬ホールソー。ステンレス板（t10.0mm以下）、金属パイプ材、FRPなどの精密穴あけに対応します。',
       },
       en: {
-        title: 'TCT Carbide Hole Saw for Stainless Steel & FRP | REISTI',
-        description: 'A triple-blade carbide-tipped hole saw for precision drilling in stainless steel sheet up to 10.0 mm, metal pipe, and FRP.',
+        title: 'Carbide-Tipped (TCT) Hole Saw Manufacturer | OEM | REISTI',
+        description: 'Carbide-tipped (TCT) hole saw with triple-blade carbide tips for stainless steel sheet up to 10.0 mm, metal pipe, and FRP. OEM and private label available.',
       },
     },
     variants: [

@@ -14,8 +14,8 @@
       </h1>
       <p class="mt-4 max-w-xl text-zinc-400 md:text-lg">{{ t('home.hero_sub') }}</p>
       <div class="mt-8 flex flex-wrap gap-3">
-        <RouterLink to="/products" class="btn-red text-base px-7 py-3">{{ t('home.btn_products') }}</RouterLink>
-        <RouterLink to="/contact" class="inline-flex items-center justify-center rounded-xl border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white">
+        <RouterLink :to="localePath('/products')" class="btn-red text-base px-7 py-3">{{ t('home.btn_products') }}</RouterLink>
+        <RouterLink :to="localePath('/contact')" class="inline-flex items-center justify-center rounded-xl border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-500 hover:text-white">
           {{ t('home.btn_contact') }}
         </RouterLink>
       </div>
@@ -47,7 +47,7 @@
       <div class="grid gap-5 sm:grid-cols-2">
         <RouterLink
           v-for="cat in categories" :key="cat.slug"
-          :to="`/products`"
+          :to="localePath(`/products`)"
           class="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-white p-6 shadow-sm transition hover:shadow-md hover:-translate-y-0.5">
           <p class="text-xs font-semibold uppercase tracking-widest text-pink-600">{{ tField(cat.lead) }}</p>
           <h3 class="mt-2 text-xl font-extrabold text-zinc-900">{{ tField(cat.name) }}</h3>
@@ -81,8 +81,8 @@
         <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{{ t('home.cta_title') }}</h2>
         <p class="mt-4 text-zinc-400">{{ t('home.cta_sub') }}</p>
         <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <RouterLink to="/contact?type=oem" class="btn-red">{{ t('home.cta_contact') }}</RouterLink>
-          <RouterLink to="/oem" class="inline-flex items-center justify-center rounded-xl border border-zinc-600 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white">
+          <RouterLink :to="localePath('/contact?type=oem')" class="btn-red">{{ t('home.cta_contact') }}</RouterLink>
+          <RouterLink :to="localePath('/oem')" class="inline-flex items-center justify-center rounded-xl border border-zinc-600 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white">
             {{ t('home.cta_oem') }}
           </RouterLink>
         </div>
@@ -93,12 +93,12 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useI18n, tField } from '../i18n/index.js'
+import { useI18n } from '../i18n/index.js'
 import { CATEGORIES, FAMILIES } from '../data/products.js'
 import ProductScroller from '../components/ProductScroller.vue'
 import CountUp from '../components/CountUp.vue'
 
-const { t, lang } = useI18n()
+const { t, lang, tField, localePath } = useI18n()
 const categories = CATEGORIES
 
 // 產品類別是標題的語意單位；空間不足時整組換行，避免「先端／工具」被拆開。

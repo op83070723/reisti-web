@@ -78,7 +78,7 @@
       </button>
 
       <p class="text-xs text-zinc-500">
-        {{ t('contact.privacy_pre') }}<RouterLink to="/privacy" class="underline hover:text-zinc-700">{{ t('contact.privacy_link') }}</RouterLink>{{ t('contact.privacy_post') }}
+        {{ t('contact.privacy_pre') }}<RouterLink :to="localePath('/privacy')" class="underline hover:text-zinc-700">{{ t('contact.privacy_link') }}</RouterLink>{{ t('contact.privacy_post') }}
       </p>
     </form>
 
@@ -119,7 +119,7 @@ import { useRoute } from 'vue-router'
 import { useI18n } from '../i18n/index.js'
 import { track } from '../utils/track.js'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 const route    = useRoute()
 const loading  = ref(false)
 const done     = ref(false)

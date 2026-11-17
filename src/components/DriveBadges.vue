@@ -20,13 +20,13 @@
 </template>
 
 <script setup>
-import { useI18n, tField } from '../i18n/index.js'
+import { useI18n } from '../i18n/index.js'
 
 defineProps({
   modes: { type: Array, required: true },
 })
 
-const { t } = useI18n()
+const { t, tField } = useI18n()
 
 const modeAssistiveText = mode => {
   if (mode.type === 'rotation') {

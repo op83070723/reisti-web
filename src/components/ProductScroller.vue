@@ -12,7 +12,7 @@
         ref="track"
         class="track hide-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto"
         role="region"
-        :aria-label="heading || '製品スライダー'"
+        :aria-label="heading || (lang === 'ja' ? '製品スライダー' : 'Product slider')"
         @wheel.passive="onWheel"
         @scroll.passive="sync"
         tabindex="0"
@@ -21,7 +21,7 @@
         <RouterLink
           v-for="(p, i) in items"
           :key="i"
-          :to="p.to || '#'"
+          :to="localePath(p.to || '#')"
           class="card snap-center sm:snap-start shrink-0">
           <div class="card-inner relative h-full overflow-hidden">
             <div class="copy px-4 pt-4">
@@ -49,14 +49,16 @@
       </div>
 
       <div class="pointer-events-none absolute inset-0 z-10 flex items-center justify-between">
-        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30': !canL }" :disabled="!canL" @click="scroll(-1)" aria-label="前へ">‹</button>
-        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30': !canR }" :disabled="!canR" @click="scroll(1)"  aria-label="次へ">›</button>
+        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30': !canL }" :disabled="!canL" @click="scroll(-1)" :aria-label="lang === 'ja' ? '前へ' : 'Previous'">‹</button>
+        <button class="ctrl pointer-events-auto" :class="{ 'opacity-30': !canR }" :disabled="!canR" @click="scroll(1)"  :aria-label="lang === 'ja' ? '次へ' : 'Next'">›</button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup>
+import { useI18n } from '../i18n/index.js'
+const { localePath, lang } = useI18n()
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 
 const props = defineProps({

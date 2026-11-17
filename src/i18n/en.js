@@ -37,9 +37,9 @@ export default {
     holesaw: 'Hole Saws',
     oem_section_title: 'OEM Partnership Products',
     oem_section_sub: 'Supplied through partner factories. Not sold under the REISTI brand.',
-    catalog_title: 'Product Catalogue 2026 (PDF)',
+    catalog_title: 'Product Catalogue 2026 (PDF, Japanese)',
     catalog_sub: 'Includes item numbers and JAN codes. Refer to each product manual for the latest specifications and operating limits.',
-    catalog_btn: 'Download',
+    catalog_btn: 'Download (PDF, Japanese)',
   },
   product: {
     breadcrumb: 'Products',
@@ -79,7 +79,7 @@ export default {
     gallery_empty: 'Image coming soon',
     manual_title: 'Instruction Manual',
     manual_description: 'Please read the instruction manual carefully before use.',
-    manual_btn: 'View Instruction Manual (PDF)',
+    manual_btn: 'View Instruction Manual (PDF, Japanese)',
   },
   about: {
     title: 'About',
@@ -89,7 +89,7 @@ export default {
     story_step1_title: 'Nearly 30 Years of Experience in Taiwan',
     story_step2_title: 'Our Factory & Manufacturing Network',
     story_step3_title: 'Full-Scale Expansion in Japan, 2025',
-    story_p1: 'REISTI\'s parent company, Taiwan-based Zuishidin, has worked in hardware and industrial tool distribution for nearly 30 years. Through that experience, we developed a practical understanding of the precision and durability professionals expect from their tools.',
+    story_p1: 'REISTI\'s parent company, REISTI Co., Ltd. (Taiwan), has worked in hardware and industrial tool distribution for nearly 30 years. Through that experience, we developed a practical understanding of the precision and durability professionals expect from their tools.',
     story_p2: 'To manage quality directly, we established our own factory in China to manufacture drilling and cutting tools, including drill bits and hole saws, with an integrated system from R&D through production. We also draw on the network built through years of distribution and work with partner factories according to each product\'s requirements.',
     story_p3: 'In 2025, we began full-scale expansion in Japan with the REISTI brand we had cultivated over many years.\n\nOur mission is to provide tools that genuinely support construction and metalworking professionals, combining high quality with competitive pricing.\n\nWe also connect Japanese manufacturers and brands with our partner factories to build new manufacturing partnerships.',
     company_title: 'Company Information',
@@ -225,7 +225,7 @@ export default {
       },
       {
         h: 'External Services',
-        body: 'This Site relies on the following external services:\n・Email delivery for form submissions: Resend (US)\n・Hosting and site analytics: Vercel (US)\nSite analytics (Vercel Analytics) does not use cookies and collects data in a form that does not identify individuals. We also use your browser’s localStorage to remember your language preference; it contains no personal information.',
+        body: 'This Site relies on the following external services:\n・Email delivery for form submissions: Resend (US)\n・Hosting and site analytics: Vercel (US)\nSite analytics (Vercel Analytics) does not use cookies and collects data in a form that does not identify individuals.',
       },
       {
         h: 'Security',
@@ -245,7 +245,7 @@ export default {
       },
     ],
     established: 'Established: July 7, 2026',
-    revised: 'Last revised: October 22, 2026',
+    revised: 'Last revised: November 17, 2026',
   },
   footer: {
     tagline: 'Pro-Grade Cutting Tools for the Japanese Market',
@@ -258,7 +258,7 @@ export default {
     link_about: 'About',
     link_oem: 'OEM',
     link_contact: 'Contact',
-    link_catalog: 'Product Catalogue (PDF)',
+    link_catalog: 'Product Catalogue (PDF, Japanese)',
     address: '2-4-15 Kamishinjō, Nakahara-ku, Kawasaki, Kanagawa',
     copyright: 'Copyright © REISTI Co., Ltd. All rights reserved.',
     privacy: 'Privacy Policy',

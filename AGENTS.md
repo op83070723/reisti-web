@@ -2,7 +2,7 @@
 
 寫給所有在此 repo 工作的 AI agent 與開發者。本檔記載「不寫下來就會踩雷」的專案約定，
 是實際踩過坑之後的紀錄，不是官樣文章。**動手前先讀完，改動涉及哪節就重讀哪節。**
-最後更新：2026-07-22。
+最後更新：2026-11-17。
 
 ## 0. 專案概觀
 
@@ -10,15 +10,15 @@
   （使用者父親的公司，金物・工具批發，30 年實績）；2025 年使用者在日本設立 REISTI 法人。
 - 技術棧：Vue 3（`<script setup>`）＋ vue-router ＋ **vite-ssg（SSG 預渲染）** ＋ Tailwind CSS 3 ＋ @unhead/vue。
 - 部署：Vercel。push 到 `main` 即自動部署 https://www.reisti.com 。serverless function 只有 `api/contact.js`。
-- 語言：日文為主；英文字串存在，但英文版策略未定（見 §14）。
+- 語言：日文原網址、英文 `/en` 前綴，各自預渲染。同一組 view 共用兩種語言，海外買家文案分階段導入。
 
 ## 1. 指令與環境
 
 | 指令 | 內容 |
 |---|---|
 | `npm run dev` | Vite dev server |
-| `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（11 頁）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
-| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 36 案例，必須全綠） |
+| `npm run build` | `scripts/generate-sitemap.mjs` → `vite-ssg build`（21 頁：日英各 10 頁＋單一 404）→ 複製 `dist/404/index.html` 為 `dist/404.html` |
+| `npm test` | `node --test 'test/**/*.test.mjs'`（目前 42 案例，必須全綠） |
 
 - Node：`engines` 為 **24.x**（對齊 Vercel 設定）。本機若用 nvm 22 會出 `EBADENGINE` 警告，屬預期；正式驗證建議 `nvm use 24`。
 - packageManager：`npm@11.16.0`。
@@ -29,7 +29,8 @@
 - `src/views/` — 各頁面：`HomeView`、`ProductsView`、`FamilyDetail`（產品詳頁，最複雜）、`OemView`、`AboutView`、`ContactView`、`PrivacyView`、`NotFoundView`
 - `src/components/` — `Header`、`Footer`、`ProductGallery`（輪播圖庫）、`ProductScroller`（首頁橫捲產品帶）、`SuitabilityMatrix`（適合素材表）、`FloatingContact`（浮動 CTA）、`CountUp`
 - `src/data/products.js` — **單一資料來源**：`FAMILIES`（產品家族＋variants＋規格表＋圖庫路徑）、`CATEGORIES`。路由、sitemap、JSON-LD 都從這裡導出
-- `src/i18n/` — `ja.js`（主）、`en.js`、`index.js`（`useI18n`、`t()`、`tField()`）
+- `src/i18n/` — `ja.js`、`en.js`、`index.js`（`useI18n()` 提供 route-local 的 `t`／`tField`／`localePath`／`lang`）；`paths.js` 為純 URL 轉換函式
+- `src/router/index.js` — 日英路由與 metadata；`test/i18n-routes.test.mjs` 驗雙語 URL、並行 SSR 語言隔離、站內連結
 - `src/utils/track.js` — 轉換事件（見 §8）
 - `src/directives/reveal.js` — 進場動畫 directive（`v-reveal`）
 - `api/contact.js` — 表單 API（見 §6）；測試在 `test/contact-api.test.mjs`
@@ -42,7 +43,9 @@
 
 - vite-ssg 預渲染、`dirStyle: 'nested'`、**沒有 SPA fallback**：路由必須列在
   `vite.config.js` 的 `includedRoutes`，否則該頁線上直接 404。產品頁路由由 `FAMILIES`
-  自動導出——新增產品只要加 data；但新增**非產品頁**必須手動加 `includedRoutes`。
+  自動導出——新增產品只要加 data；但新增**非產品頁**必須把日英兩個網址加進路由、`includedRoutes` 與 sitemap。
+- **語言唯一來源為 `route.meta.locale`**。`useI18n()` 每次在元件 setup 內建立 computed `lang`；禁止模組層可變語言狀態、以 path 判語言、偏好儲存或依瀏覽器／IP 自動轉址，避免並行 SSG 串語言。
+- 站內頁面連結一律經 `localePath(to)`，支援字串與 `{ path, query, hash }`；英文自動加 `/en`，靜態 PDF／圖片不加前綴。`localePath(to, locale)` 供同頁語言切換使用。
 - **所有元件程式碼必須 SSR-safe**：setup 頂層不可碰 `window`／`document`／`navigator`／
   `localStorage`。瀏覽器 API 一律放 `onMounted` 或事件 handler 內，或加
   `typeof window !== 'undefined'` 守衛。違反時 build 會炸或預渲染出錯頁。
@@ -50,7 +53,7 @@
   會 hydration mismatch。範本：`ContactView.vue` 的預填邏輯。
 - meta 一律用 `useHead()`（@unhead/vue）：會烤進靜態 HTML，並隨語言切換 reactive 更新。
   頁面級 og 以 `property` 鍵覆寫 `App.vue` 的全站預設。
-- `/404` 由 catch-all route 渲染，build 時複製為 `dist/404.html`（Vercel 慣例）。
+- `/404` 由單一 `locale: 'ja'` catch-all route 渲染，build 時複製為 `dist/404.html`。未知 `/en/*` 也維持日文，以匹配 Vercel 提供的同一份 404 HTML；404 不輸出 hreflang。
 
 ## 4. 字體（改文案必看）
 
@@ -128,6 +131,7 @@
 ## 7. 詢價預填協定
 
 - 全站 CTA 連到 `/contact?type=<代碼>&product=<品名>&qty=<數量>`，type 用 §6 的代碼。
+- CTA 以 `localePath()` 產生所在語言的 contact URL（英文 `/en/contact`）；query／hash 必須保留，產品名用當前語言。印刷用的日文 `#manual` URL 不變。
 - `ContactView` 在 `onMounted` 讀 query 預填（原因見 §3）。vue-router 會把空格編碼成 `+`，正常現象。
 - 規格表的逐尺寸詢價把尺寸帶進 product（如 `充電マルチドリルビット Ø3.4mm`）。
 - 新增 CTA 沿用此協定，並照 §8 加 track。
@@ -175,7 +179,7 @@
 - 規格表的橫向捲動提示只在手機、且表格確實溢出時，等規格區進入畫面才顯示；動畫 3 次、
   5 秒或首次操作後消失，並尊重 `prefers-reduced-motion`。不要改成自動捲動表格或無限動畫。
 - 風格：Apple 式極簡——大量留白、zinc 灰階、rounded-xl、細邊框。不要引入重陰影、漸層。
-- 既有頁面的 aria-label 多數仍是日文 only；`ProductGallery` 已走 i18n。英文版路由策略見 §14。
+- `ProductGallery` 操作標籤走 i18n；新增操作標籤亦須提供日英文字。
 
 ## 11. SEO／結構化資料
 
@@ -188,6 +192,8 @@
 - **family 層級的 `Product` 不得放單一 `gtin13`**（一個 family 有 33 種尺寸變體）。
   正確做法是 `ProductGroup`＋`hasVariant`——那是獨立的資料建模工程（§14），不要當小修帶進來。
 - 首頁與 OEM title 刻意保留「台湾」：2026-10 GSC 的非品牌主力字為「台湾 工具 oem」（23 次曝光；含「台湾工具」「台湾 工具」合計約 27 次）。調整 SEO 時不得拿掉；措辭仍遵守 §9，不得暗示台灣製造。
+- 雙語頁各自 self-canonical（英文首頁固定 `/en`，不帶結尾斜線），head 輸出 `ja`／`en`／`x-default` 三條 hreflang；`x-default` 指英文。hreflang 只維護於 HTML head，sitemap 不加 `xhtml:link` 或 `lastmod`。
+- 各語言的 title、description、`html lang`、`og:locale` 與 Product／Breadcrumb JSON-LD 跟隨 route locale；英文 JSON-LD 標明 `inLanguage: 'en'`。日本語內容與印刷永久網址不因英文版改寫。
 
 ## 12. vercel.json
 
@@ -216,7 +222,6 @@
 這些是**刻意還沒做**的，各有前置條件，未經使用者同意不要動手：
 
 - Turnstile ＋ durable rate limit — 等使用者開 Cloudflare 帳號
-- 英文版（獨立 URL＋hreflang，或隱藏 EN 切換）— 等使用者確認海外客群策略
 - `ProductGroup`＋`hasVariant`＋GTIN 結構化資料 — 獨立建模工程
 - 認證頁／案例頁／產品 FAQ／Blog — 等使用者提供素材
 - critical CSS 內嵌 — 中型工程，PageSpeed render-blocking 的主因

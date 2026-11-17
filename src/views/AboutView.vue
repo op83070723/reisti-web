@@ -62,8 +62,8 @@
       <h2 class="text-2xl font-extrabold text-white">{{ t('about.cta_title') }}</h2>
       <p class="mt-2 text-zinc-400">{{ t('about.cta_sub') }}</p>
       <div class="mt-6 flex flex-wrap justify-center gap-3">
-        <RouterLink to="/contact?type=oem" class="btn-red">{{ t('about.cta_btn') }}</RouterLink>
-        <RouterLink to="/oem" class="inline-flex items-center justify-center rounded-xl border border-zinc-600 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white">
+        <RouterLink :to="localePath('/contact?type=oem')" class="btn-red">{{ t('about.cta_btn') }}</RouterLink>
+        <RouterLink :to="localePath('/oem')" class="inline-flex items-center justify-center rounded-xl border border-zinc-600 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition-colors hover:border-zinc-400 hover:text-white">
           {{ t('nav.oem') }} →
         </RouterLink>
       </div>
@@ -72,8 +72,9 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useI18n } from '../i18n/index.js'
-const { t } = useI18n()
+const { t, lang, localePath } = useI18n()
 
 const storyItems = [
   { title: 'about.story_step1_title', body: 'about.story_p1' },
@@ -81,7 +82,7 @@ const storyItems = [
   { title: 'about.story_step3_title', body: 'about.story_p3' },
 ]
 
-const companyRows = [
+const companyRowsJa = [
   { label: 'about.label_name',     value: '瑞士釘株式会社 REISTI（レイスティ）' },
   { label: 'about.label_address',  value: '〒211-0045 神奈川県川崎市中原区上新城 2-4-15' },
   { label: 'about.label_founded',  value: '2025年8月1日' },
@@ -92,6 +93,21 @@ const companyRows = [
   { label: 'about.label_tel',      value: '050-8894-8687' },
   { label: 'about.label_web',      value: 'www.reisti.com' },
 ]
+
+const companyValuesEn = [
+  'REISTI Co., Ltd. (瑞士釘株式会社)',
+  '2-4-15 Kamishinjō, Nakahara-ku, Kawasaki, Kanagawa 211-0045, Japan',
+  'August 1, 2025',
+  'REISTI Co., Ltd. (Taiwan) — hardware and tool wholesaler, nearly 30 years in business',
+  'Chen Yu Tsen, President and Representative Director',
+  'JPY 5,000,000',
+  'Manufacture and sale of hardware, tools, and power tool accessories; OEM/ODM and private label supply',
+  '+81-50-8894-8687',
+  'www.reisti.com',
+]
+const companyRows = computed(() => lang.value === 'ja' ? companyRowsJa : companyRowsJa.map((row, index) => ({
+  ...row, value: companyValuesEn[index],
+})))
 
 const cards = [
   { title: 'about.mission_title', body: 'about.mission_body' },

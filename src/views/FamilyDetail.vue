@@ -3,7 +3,7 @@
 
     <!-- Breadcrumb -->
     <nav class="text-sm text-zinc-500">
-      <RouterLink to="/products" class="hover:text-zinc-700 transition-colors">{{ t('product.breadcrumb') }}</RouterLink>
+      <RouterLink :to="localePath('/products')" class="hover:text-zinc-700 transition-colors">{{ t('product.breadcrumb') }}</RouterLink>
       <span class="mx-2">/</span>
       <span class="text-zinc-600">{{ tField(fam.name) }}</span>
     </nav>
@@ -32,13 +32,13 @@
     <!-- ファーストビュー CTA：見積もり・サンプル（製品名を自動プリフィル） -->
     <div class="mt-5 flex flex-wrap gap-2.5">
       <RouterLink
-        :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }"
+        :to="localePath({ path: '/contact', query: { type: 'bulk', product: quoteProduct } })"
         class="btn-red"
         @click="track('cta_click', { cta: 'quote', product: quoteProduct })">
         {{ t('product.quote_btn') }}
       </RouterLink>
       <RouterLink
-        :to="{ path: '/contact', query: { type: 'sample', product: quoteProduct } }"
+        :to="localePath({ path: '/contact', query: { type: 'sample', product: quoteProduct } })"
         class="btn-outline"
         @click="track('cta_click', { cta: 'sample', product: quoteProduct })">
         {{ t('product.sample_btn') }}
@@ -112,7 +112,7 @@
             class="w-36 rounded-lg border border-zinc-500 px-3 py-1.5 text-xs text-zinc-700 placeholder-zinc-500 focus:border-pink-600 focus:outline-none focus:ring-1 focus:ring-pink-600" />
           <span v-if="sizeQuery.trim()" class="text-xs text-zinc-500">{{ hitCount }}{{ lang === 'ja' ? '件' : ' found' }}</span>
         </div>
-        <RouterLink :to="{ path: '/contact', query: { type: 'bulk', product: quoteProduct } }" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
+        <RouterLink :to="localePath({ path: '/contact', query: { type: 'bulk', product: quoteProduct } })" class="ml-auto btn-outline text-xs">{{ t('product.quote_btn') }}</RouterLink>
       </div>
       <div class="relative">
         <Transition name="scroll-hint">
@@ -172,7 +172,7 @@
               <!-- 行単位の見積もり CTA：製品名＋サイズをプリフィルして遷移 -->
               <td class="px-4 py-3 whitespace-nowrap text-right">
                 <RouterLink
-                  :to="{ path: '/contact', query: { type: 'bulk', product: `${quoteProduct} Ø${row.size}mm` } }"
+                  :to="localePath({ path: '/contact', query: { type: 'bulk', product: `${quoteProduct} Ø${row.size}mm` } })"
                   class="text-xs font-medium text-pink-600 hover:text-pink-700"
                   :aria-label="`Ø${row.size}mm ${t('product.quote_btn')}`"
                   @click.stop="track('cta_click', { cta: 'quote_size', product: quoteProduct, size: `${row.size}mm` })">
@@ -250,7 +250,7 @@
           <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-zinc-100 text-lg">📄</span>
           <div>
             <p class="font-semibold text-zinc-700">{{ tField(doc.label) }}</p>
-            <p class="text-xs text-zinc-500">PDF</p>
+            <p class="text-xs text-zinc-500">{{ lang === 'ja' ? 'PDF' : '(PDF, Japanese)' }}</p>
             <p v-if="doc.note" class="mt-1 text-xs leading-relaxed text-zinc-500">{{ tField(doc.note) }}</p>
           </div>
         </a>
@@ -264,7 +264,7 @@
 import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useHead } from '@unhead/vue'
-import { useI18n, tField } from '../i18n/index.js'
+import { useI18n } from '../i18n/index.js'
 import { findFamily, CATEGORIES } from '../data/products.js'
 import { track } from '../utils/track.js'
 import { SITE } from '../router/index.js'
@@ -274,7 +274,7 @@ import DriveBadges       from '../components/DriveBadges.vue'
 
 const COLLAPSE_AT = 12
 
-const { t, lang } = useI18n()
+const { t, lang, tField, localePath } = useI18n()
 const route  = useRoute()
 const router = useRouter()
 const fam    = ref(null)
@@ -408,19 +408,20 @@ useHead({
       innerHTML: computed(() => fam.value ? JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Product',
-        name: fam.value.name.ja,
-        alternateName: fam.value.name.en,
+        name: tField(fam.value.name),
+        alternateName: fam.value.name[lang.value === 'en' ? 'ja' : 'en'],
+        ...(lang.value === 'en' ? { inLanguage: 'en' } : {}),
         brand: { '@type': 'Brand', name: 'REISTI' },
-        manufacturer: { '@type': 'Organization', name: '瑞士釘株式会社', '@id': 'https://www.reisti.com/#org' },
+        manufacturer: { '@type': 'Organization', name: lang.value === 'ja' ? '瑞士釘株式会社' : 'REISTI Co., Ltd.', '@id': 'https://www.reisti.com/#org' },
         url: `https://www.reisti.com${route.path}`,
-        category: CATEGORIES.find(c => c.slug === fam.value.category)?.name.ja || fam.value.category,
+        category: tField(CATEGORIES.find(c => c.slug === fam.value.category)?.name) || fam.value.category,
         image: `https://www.reisti.com${variant.value?.hero || ''}`,
-        description: fam.value.seo?.ja?.description || fam.value.intro.ja,
+        description: seoDescription.value,
         // material は使わない：products.js の materials は「加工対象の材料」であり製品自体の素材ではない
         additionalProperty: [
-          variant.value?.materials && { '@type': 'PropertyValue', name: '用途材料', value: variant.value.materials.ja },
-          variant.value?.shank     && { '@type': 'PropertyValue', name: 'シャンク', value: variant.value.shank.ja },
-          variant.value?.tools     && { '@type': 'PropertyValue', name: '適合電動機', value: variant.value.tools.ja },
+          variant.value?.materials && { '@type': 'PropertyValue', name: lang.value === 'ja' ? '用途材料' : 'Work materials', value: tField(variant.value.materials) },
+          variant.value?.shank     && { '@type': 'PropertyValue', name: lang.value === 'ja' ? 'シャンク' : 'Shank', value: tField(variant.value.shank) },
+          variant.value?.tools     && { '@type': 'PropertyValue', name: lang.value === 'ja' ? '適合電動機' : 'Compatible tools', value: tField(variant.value.tools) },
         ].filter(Boolean),
       }) : ''),
     },
@@ -430,16 +431,17 @@ useHead({
       innerHTML: computed(() => fam.value ? JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
+        ...(lang.value === 'en' ? { inLanguage: 'en' } : {}),
         itemListElement: [
-          { '@type': 'ListItem', position: 1, name: '製品一覧', item: `${SITE}/products` },
-          { '@type': 'ListItem', position: 2, name: fam.value.name.ja, item: SITE + route.path },
+          { '@type': 'ListItem', position: 1, name: lang.value === 'ja' ? '製品一覧' : 'Products', item: SITE + localePath('/products') },
+          { '@type': 'ListItem', position: 2, name: tField(fam.value.name), item: SITE + route.path },
         ],
       }) : ''),
     },
   ],
 })
 
-const goVariant = (slug) => router.replace({ name: 'family', params: { category: fam.value.category, slug } })
+const goVariant = (slug) => router.replace(localePath(`/products/${fam.value.category}/${slug}`))
 
 /* 見積フォームへ渡す製品名（バリエーションが複数ある場合はラベルも付ける） */
 const quoteProduct = computed(() => {

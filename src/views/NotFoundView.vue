@@ -5,9 +5,10 @@
     <p class="mt-3 text-sm leading-7 text-zinc-500">{{ t('notfound.sub') }}</p>
 
     <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <RouterLink to="/" class="btn-primary text-sm">{{ t('notfound.btn_home') }}</RouterLink>
-      <RouterLink to="/products" class="btn-outline text-sm">{{ t('notfound.btn_products') }}</RouterLink>
-      <RouterLink to="/contact" class="btn-outline text-sm">{{ t('notfound.btn_contact') }}</RouterLink>
+      <RouterLink :to="localePath('/')" class="btn-primary text-sm">{{ t('notfound.btn_home') }}</RouterLink>
+      <RouterLink :to="localePath('/products')" class="btn-outline text-sm">{{ t('notfound.btn_products') }}</RouterLink>
+      <RouterLink :to="localePath('/contact')" class="btn-outline text-sm">{{ t('notfound.btn_contact') }}</RouterLink>
+      <RouterLink :to="localePath('/', 'en')" lang="en" hreflang="en" class="btn-outline text-sm">English homepage</RouterLink>
     </div>
   </div>
 </template>
@@ -16,7 +17,7 @@
 import { useHead } from '@unhead/vue'
 import { useI18n } from '../i18n/index.js'
 
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 
 // 404 は検索エンジンにインデックスさせない
 useHead({

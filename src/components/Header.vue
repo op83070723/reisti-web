@@ -3,18 +3,18 @@
     <div class="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
 
       <!-- Logo -->
-      <RouterLink to="/" class="flex items-center gap-1 shrink-0">
+      <RouterLink :to="localePath('/')" class="flex items-center gap-1 shrink-0">
         <img src="/logo.png" width="1050" height="600" class="h-[42px] w-auto" alt="" />
         <img src="/logo-text.png" width="426" height="240" class="h-[60px] w-auto -ml-7 translate-y-[2.5px]" alt="REISTI" />
       </RouterLink>
 
       <!-- Desktop nav -->
       <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-        <RouterLink class="nav-link" to="/">{{ t('nav.home') }}</RouterLink>
+        <RouterLink class="nav-link" :to="localePath('/')">{{ t('nav.home') }}</RouterLink>
 
         <!-- Products mega menu -->
         <div class="relative" @mouseenter="megaOpen = true" @mouseleave="megaOpen = false">
-          <RouterLink to="/products" class="nav-link" :class="{ 'bg-zinc-100 text-zinc-900': megaOpen }">
+          <RouterLink :to="localePath('/products')" class="nav-link" :class="{ 'bg-zinc-100 text-zinc-900': megaOpen }">
             {{ t('nav.products') }}
           </RouterLink>
           <Transition name="dropdown">
@@ -29,7 +29,7 @@
                     <ul class="space-y-1">
                       <li v-for="f in byCategory(cat.slug)" :key="f.family">
                         <RouterLink
-                          :to="`/products/${cat.slug}/${f.variants[0].slug}`"
+                          :to="localePath(`/products/${cat.slug}/${f.variants[0].slug}`)"
                           class="block rounded-lg px-2 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900 transition-colors"
                           @click="megaOpen = false">
                           {{ tField(f.name) }}
@@ -39,7 +39,7 @@
                   </div>
                 </div>
                 <div class="mt-4 border-t border-zinc-100 pt-3">
-                  <RouterLink to="/products" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors" @click="megaOpen = false">
+                  <RouterLink :to="localePath('/products')" class="text-xs text-zinc-500 hover:text-zinc-900 transition-colors" @click="megaOpen = false">
                     {{ t('nav.products_all') }} →
                   </RouterLink>
                 </div>
@@ -48,30 +48,32 @@
           </Transition>
         </div>
 
-        <RouterLink class="nav-link" to="/about">{{ t('nav.about') }}</RouterLink>
-        <RouterLink class="nav-link" to="/oem">{{ t('nav.oem') }}</RouterLink>
-        <RouterLink class="nav-link" to="/contact">{{ t('nav.contact') }}</RouterLink>
+        <RouterLink class="nav-link" :to="localePath('/about')">{{ t('nav.about') }}</RouterLink>
+        <RouterLink class="nav-link" :to="localePath('/oem')">{{ t('nav.oem') }}</RouterLink>
+        <RouterLink class="nav-link" :to="localePath('/contact')">{{ t('nav.contact') }}</RouterLink>
       </nav>
 
       <!-- Right controls -->
       <div class="flex items-center gap-2">
         <!-- Language switcher -->
         <div class="hidden md:flex items-center rounded-lg border border-zinc-200 p-0.5 text-xs font-semibold">
-          <button
-            @click="setLang('ja')"
+          <a
+            :href="languageLink('ja')" hreflang="ja" lang="ja"
+            :aria-current="lang === 'ja' ? 'true' : undefined"
             class="rounded-md px-2.5 py-1 transition-colors"
             :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:text-zinc-700'">
             JA
-          </button>
-          <button
-            @click="setLang('en')"
+          </a>
+          <a
+            :href="languageLink('en')" hreflang="en" lang="en"
+            :aria-current="lang === 'en' ? 'true' : undefined"
             class="rounded-md px-2.5 py-1 transition-colors"
             :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-500 hover:text-zinc-700'">
             EN
-          </button>
+          </a>
         </div>
 
-        <RouterLink to="/contact" class="hidden md:inline-flex btn-primary text-sm">
+        <RouterLink :to="localePath('/contact')" class="hidden md:inline-flex btn-primary text-sm">
           {{ t('nav.quote') }}
         </RouterLink>
 
@@ -91,7 +93,7 @@
     <Transition name="slide">
       <div v-if="mobileOpen" class="md:hidden border-t border-zinc-100 bg-white">
         <div class="mx-auto max-w-7xl px-4 py-3 space-y-1">
-          <RouterLink class="m-link" to="/" @click="mobileOpen = false">{{ t('nav.home') }}</RouterLink>
+          <RouterLink class="m-link" :to="localePath('/')" @click="mobileOpen = false">{{ t('nav.home') }}</RouterLink>
 
           <!-- Products accordion -->
           <div>
@@ -108,7 +110,7 @@
                 </p>
                 <RouterLink
                   v-for="f in byCategory(cat.slug)" :key="f.family"
-                  :to="`/products/${cat.slug}/${f.variants[0].slug}`"
+                  :to="localePath(`/products/${cat.slug}/${f.variants[0].slug}`)"
                   class="block rounded-lg px-2 py-1.5 text-sm text-zinc-700 hover:bg-zinc-50"
                   @click="mobileOpen = false; mProd = false">
                   {{ tField(f.name) }}
@@ -117,17 +119,17 @@
             </div>
           </div>
 
-          <RouterLink class="m-link" to="/about"   @click="mobileOpen = false">{{ t('nav.about') }}</RouterLink>
-          <RouterLink class="m-link" to="/oem"     @click="mobileOpen = false">{{ t('nav.oem') }}</RouterLink>
-          <RouterLink class="m-link" to="/contact" @click="mobileOpen = false">{{ t('nav.contact') }}</RouterLink>
+          <RouterLink class="m-link" :to="localePath('/about')"   @click="mobileOpen = false">{{ t('nav.about') }}</RouterLink>
+          <RouterLink class="m-link" :to="localePath('/oem')"     @click="mobileOpen = false">{{ t('nav.oem') }}</RouterLink>
+          <RouterLink class="m-link" :to="localePath('/contact')" @click="mobileOpen = false">{{ t('nav.contact') }}</RouterLink>
 
           <!-- Mobile lang + CTA -->
           <div class="flex items-center justify-between pt-2 border-t border-zinc-100">
             <div class="flex items-center rounded-lg border border-zinc-200 p-0.5 text-xs font-semibold">
-              <button @click="setLang('ja')" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-500'">JA</button>
-              <button @click="setLang('en')" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-500'">EN</button>
+              <a :href="languageLink('ja')" hreflang="ja" lang="ja" :aria-current="lang === 'ja' ? 'true' : undefined" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'ja' ? 'bg-zinc-900 text-white' : 'text-zinc-500'">JA</a>
+              <a :href="languageLink('en')" hreflang="en" lang="en" :aria-current="lang === 'en' ? 'true' : undefined" class="rounded-md px-2.5 py-1 transition-colors" :class="lang === 'en' ? 'bg-zinc-900 text-white' : 'text-zinc-500'">EN</a>
             </div>
-            <RouterLink to="/contact" class="btn-primary text-xs" @click="mobileOpen = false">{{ t('nav.quote') }}</RouterLink>
+            <RouterLink :to="localePath('/contact')" class="btn-primary text-xs" @click="mobileOpen = false">{{ t('nav.quote') }}</RouterLink>
           </div>
         </div>
       </div>
@@ -136,11 +138,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useI18n, tField } from '../i18n/index.js'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from '../i18n/index.js'
 import { CATEGORIES, FAMILIES } from '../data/products.js'
 
-const { t, lang, setLang } = useI18n()
+const { t, lang, tField, localePath } = useI18n()
+const route = useRoute()
+const router = useRouter()
+const mounted = ref(false)
+onMounted(() => { mounted.value = true })
+// query/hash は mount 後のみ引き継ぎ、SSG のクエリなし HTML と一致させる。
+const languageLink = locale => router.resolve(localePath({
+  path: route.name === 'notfound' ? '/' : route.path,
+  ...(mounted.value ? { query: route.query, hash: route.hash } : {}),
+}, locale)).href
 const megaOpen  = ref(false)
 const mobileOpen = ref(false)
 const mProd     = ref(false)

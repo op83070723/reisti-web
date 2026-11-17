@@ -47,4 +47,50 @@
   <url>
     <loc>https://www.reisti.com/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority>
   </url>
+  <url>
+    <loc>https://www.reisti.com/en</loc><changefreq>weekly</changefreq><priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/products</loc><changefreq>weekly</changefreq><priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/products/drill-bit/multi</loc><changefreq>monthly</changefreq><priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.reisti.com/products/multi-1.jpg</image:loc>
+      <image:title>Hex Multi Drill Bit（REISTI）</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/products/drill-bit/cobalt</loc><changefreq>monthly</changefreq><priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.reisti.com/products/cobalt-1.jpg</image:loc>
+      <image:title>Hex Cobalt Drill Bit（REISTI）</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/products/hole-saw/hss</loc><changefreq>monthly</changefreq><priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.reisti.com/products/hss-1.jpg</image:loc>
+      <image:title>HSS Bimetal Hole Saw（REISTI）</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/products/hole-saw/tct</loc><changefreq>monthly</changefreq><priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.reisti.com/products/tct-1.jpg</image:loc>
+      <image:title>TCT Carbide Hole Saw（REISTI）</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/about</loc><changefreq>monthly</changefreq><priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/oem</loc><changefreq>monthly</changefreq><priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/contact</loc><changefreq>yearly</changefreq><priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.reisti.com/en/privacy</loc><changefreq>yearly</changefreq><priority>0.3</priority>
+  </url>
 </urlset>

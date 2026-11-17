@@ -47,7 +47,7 @@
           <h2 class="text-xl font-extrabold text-zinc-900">{{ t('products.oem_section_title') }}</h2>
           <p class="mt-1 text-sm text-zinc-500">{{ t('products.oem_section_sub') }}</p>
         </div>
-        <RouterLink to="/oem" class="shrink-0 inline-flex items-center gap-1 text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">
+        <RouterLink :to="localePath('/oem')" class="shrink-0 inline-flex items-center gap-1 text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors">
           {{ t('nav.oem') }} →
         </RouterLink>
       </div>
@@ -60,7 +60,7 @@
           <h3 class="mt-1 text-base font-extrabold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-1 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
           <RouterLink
-            :to="{ path: '/contact', query: { type: 'oem', product: tField(p.name) } }"
+            :to="localePath({ path: '/contact', query: { type: 'oem', product: tField(p.name) } })"
             class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors"
             @click="track('cta_click', { cta: 'oem_card', product: p.name.ja })">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
@@ -74,12 +74,12 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useI18n, tField } from '../i18n/index.js'
+import { useI18n } from '../i18n/index.js'
 import { FAMILIES, OEM_FAMILIES, CATALOG_PDF } from '../data/products.js'
 import { track } from '../utils/track.js'
 import ProductScroller from '../components/ProductScroller.vue'
 
-const { t, lang } = useI18n()
+const { t, lang, tField, localePath } = useI18n()
 
 const oemProducts = OEM_FAMILIES
 

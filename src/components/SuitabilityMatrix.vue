@@ -20,6 +20,7 @@
 </template>
 
 <script setup>
-import { tField } from '../i18n/index.js'
+import { useI18n } from '../i18n/index.js'
+const { tField } = useI18n()
 defineProps({ items: { type: Array, default: () => [] } })
 </script>

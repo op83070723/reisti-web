@@ -7,7 +7,7 @@
         LINE
       </a>
       <RouterLink
-        to="/contact"
+        :to="localePath('/contact')"
         class="inline-flex items-center justify-center rounded-full bg-pink-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg transition-colors hover:bg-pink-700">
         {{ lang === 'ja' ? 'お見積もり' : 'Get a Quote' }}
       </RouterLink>
@@ -22,7 +22,7 @@ import { useI18n } from '../i18n/index.js'
 
 /* スクロール後に現れる問い合わせ導線。SSR 初期状態は非表示（scrolled=false）なのでハイドレーション安全。
    フッターが見えたら退場（プライバシーポリシー等のリンクを塞がない） */
-const { lang } = useI18n()
+const { lang, localePath } = useI18n()
 const route = useRoute()
 const scrolled = ref(false)
 const footerVisible = ref(false)
@@ -46,7 +46,7 @@ onBeforeUnmount(() => {
   io?.disconnect()
 })
 
-const show = computed(() => scrolled.value && !footerVisible.value && route.path !== '/contact')
+const show = computed(() => scrolled.value && !footerVisible.value && route.path !== localePath('/contact'))
 </script>
 
 <style scoped>

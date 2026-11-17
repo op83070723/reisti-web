@@ -6,7 +6,7 @@
         <p class="text-sm font-semibold uppercase tracking-widest text-pink-400">{{ t('oem.hero_label') }}</p>
         <h1 class="mt-4 text-4xl font-black leading-tight text-white sm:text-5xl lg:text-6xl" style="white-space: pre-line">{{ t('oem.hero_title') }}</h1>
         <p class="mt-6 text-lg text-zinc-400">{{ t('oem.hero_sub') }}</p>
-        <RouterLink to="/contact?type=oem" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.hero_btn') }}</RouterLink>
+        <RouterLink :to="localePath('/contact?type=oem')" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.hero_btn') }}</RouterLink>
       </div>
     </div>
   </section>
@@ -47,7 +47,7 @@
           <h3 class="font-bold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
           <RouterLink
-            :to="`/products/${p.category}/${p.variants[0].slug}`"
+            :to="localePath(`/products/${p.category}/${p.variants[0].slug}`)"
             class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? '製品詳細' : 'Details' }} →
           </RouterLink>
@@ -72,7 +72,7 @@
           <h3 class="mt-1 font-bold text-zinc-900">{{ tField(p.name) }}</h3>
           <p class="mt-2 text-sm text-zinc-500 leading-relaxed">{{ tField(p.intro) }}</p>
           <RouterLink
-            :to="{ path: '/contact', query: { type: 'oem', product: tField(p.name) } }"
+            :to="localePath({ path: '/contact', query: { type: 'oem', product: tField(p.name) } })"
             class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-pink-600 hover:text-pink-700 transition-colors">
             {{ lang === 'ja' ? 'お問い合わせ' : 'Inquire' }} →
           </RouterLink>
@@ -159,37 +159,37 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 text-center">
       <h2 class="text-3xl font-extrabold text-white sm:text-4xl">{{ t('oem.cta_title') }}</h2>
       <p class="mt-3 text-zinc-400">{{ t('oem.cta_sub') }}</p>
-      <RouterLink to="/contact?type=oem" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.cta_btn') }}</RouterLink>
+      <RouterLink :to="localePath('/contact?type=oem')" class="mt-8 inline-flex btn-red text-base px-7 py-3">{{ t('oem.cta_btn') }}</RouterLink>
     </div>
   </section>
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { useHead } from '@unhead/vue'
-import { useI18n, tField } from '../i18n/index.js'
+import { useI18n } from '../i18n/index.js'
 import { FAMILIES, OEM_FAMILIES } from '../data/products.js'
-import ja from '../i18n/ja.js'
 
-const { t, lang } = useI18n()
+const { t, lang, tField, localePath } = useI18n()
 
 const ownProducts     = FAMILIES
 const partnerProducts = OEM_FAMILIES
 
-/* FAQ structured data（常に日本語＝インデックス対象と一致）。SSG 時に静的 HTML へ焼き込み */
+/* FAQ は表示中の言語と一致させ、別言語の回答が検索結果に出ないようにする。 */
 useHead({
   script: [
     {
       id: 'oem-faq-jsonld',
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({
+      innerHTML: computed(() => JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: ja.oem.faqs.map(f => ({
+        mainEntity: t('oem.faqs').map(f => ({
           '@type': 'Question',
           name: f.q,
           acceptedAnswer: { '@type': 'Answer', text: f.a },
         })),
-      }),
+      })),
     },
   ],
 })

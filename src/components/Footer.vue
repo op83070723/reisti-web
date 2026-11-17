@@ -33,9 +33,9 @@
         <div>
           <h3 class="footer-title">{{ t('footer.col_products') }}</h3>
           <ul class="mt-3 space-y-2 text-sm">
-            <li><RouterLink class="footer-link" to="/products/drill-bit/multi">{{ t('footer.link_drillbit') }}</RouterLink></li>
-            <li><RouterLink class="footer-link" to="/products/hole-saw/hss">{{ t('footer.link_holesaw') }}</RouterLink></li>
-            <li><RouterLink class="footer-link" to="/products">{{ t('footer.link_all_products') }}</RouterLink></li>
+            <li><RouterLink class="footer-link" :to="localePath('/products/drill-bit/multi')">{{ t('footer.link_drillbit') }}</RouterLink></li>
+            <li><RouterLink class="footer-link" :to="localePath('/products/hole-saw/hss')">{{ t('footer.link_holesaw') }}</RouterLink></li>
+            <li><RouterLink class="footer-link" :to="localePath('/products')">{{ t('footer.link_all_products') }}</RouterLink></li>
           </ul>
         </div>
 
@@ -43,8 +43,8 @@
         <div>
           <h3 class="footer-title">{{ t('footer.col_company') }}</h3>
           <ul class="mt-3 space-y-2 text-sm">
-            <li><RouterLink class="footer-link" to="/about">{{ t('footer.link_about') }}</RouterLink></li>
-            <li><RouterLink class="footer-link" to="/oem">{{ t('footer.link_oem') }}</RouterLink></li>
+            <li><RouterLink class="footer-link" :to="localePath('/about')">{{ t('footer.link_about') }}</RouterLink></li>
+            <li><RouterLink class="footer-link" :to="localePath('/oem')">{{ t('footer.link_oem') }}</RouterLink></li>
           </ul>
         </div>
 
@@ -52,7 +52,7 @@
         <div>
           <h3 class="footer-title">{{ t('footer.col_support') }}</h3>
           <ul class="mt-3 space-y-2 text-sm">
-            <li><RouterLink class="footer-link" to="/contact">{{ t('footer.link_contact') }}</RouterLink></li>
+            <li><RouterLink class="footer-link" :to="localePath('/contact')">{{ t('footer.link_contact') }}</RouterLink></li>
             <li><a class="footer-link" :href="CATALOG_PDF" target="_blank" rel="noopener">{{ t('footer.link_catalog') }}</a></li>
             <li><a class="footer-link" href="https://lin.ee/yLb33tW" target="_blank" rel="noopener">LINE</a></li>
           </ul>
@@ -62,7 +62,7 @@
       <!-- Bottom -->
       <div class="mt-10 flex flex-col gap-3 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center sm:justify-between">
         <p class="text-xs text-zinc-500">{{ t('footer.copyright') }}</p>
-        <RouterLink to="/privacy" class="text-xs text-zinc-400 hover:text-white transition-colors">
+        <RouterLink :to="localePath('/privacy')" class="text-xs text-zinc-400 hover:text-white transition-colors">
           {{ t('footer.privacy') }}
         </RouterLink>
       </div>
@@ -73,7 +73,7 @@
 <script setup>
 import { useI18n } from '../i18n/index.js'
 import { CATALOG_PDF } from '../data/products.js'
-const { t } = useI18n()
+const { t, localePath } = useI18n()
 </script>
 
 <style scoped>
